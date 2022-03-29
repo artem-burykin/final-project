@@ -1,27 +1,38 @@
 package publish.db.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Account {
+/**
+ * Account entity
+ * @author Burykin
+ */
+public class Account implements Serializable {
     private int id;
     private String login;
     private String password;
+    private String email;
+    private String first_name;
+    private String last_name;
     private int role_id;
     private Date create_date;
     private Date last_update;
 
-    public Account() {
+    private Account() {
     }
 
-    private Account(int id, String login, String password, int role_id) {
+    private Account(int id, String login, String password, String email, String first_name, String last_name, int role_id) {
         this.id = id;
         this.login = login;
         this.password = password;
+        this.email = email;
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.role_id = role_id;
     }
 
-    public static Account createAccount(String login, String password, int role_id) {
-        return new Account(0, login, password, role_id);
+    public static Account createAccount(String login, String password, String email, String first_name, String last_name, int role_id) {
+        return new Account(0, login, password, email, first_name, last_name, role_id);
     }
 
     public int getId() {
@@ -46,6 +57,30 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
     public int getRole_id() {

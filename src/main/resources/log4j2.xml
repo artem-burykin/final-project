@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" strict="true" name="XMLConfigTest"
+               packages="com.epam.training">
+    <Properties>
+        <Property name="basedir">${catalina.home}</Property>
+        <!-- ${catalina.home} -->
+        <Property name="filename">${basedir}/log/app.log</Property>
+        <Property name="rollingfilename">${basedir}/rollingapp.log</Property>
+        <Property name="def_pattern">%d [%-5p] %-10.20c [%t] %m %ex%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Appender type="Console" name="STDOUT">
+            <Layout type="PatternLayout" pattern="%d [%-5p] %-10.20c [%t] %m %ex%n"/>
+        </Appender>
+        <Appender type="File" name="File" fileName="${filename}">
+            <Layout type="PatternLayout">
+                <Pattern>${def_pattern}</Pattern>
+            </Layout>
+            <!--<Layout type="JsonLayout">
+                <Compact>false</Compact>
+                <Complete>true</Complete>
+            </Layout>-->
+        </Appender>
+        <Appender type="RollingFile" name="RollingFile" fileName="${rollingfilename}"
+                  filePattern="${basedir}/%d{yyyy-MM}/app-%d{yyyy-MM-dd}.%i.log">
+            <Layout type="PatternLayout">
+                <Pattern>${def_pattern}</Pattern>
+            </Layout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1 KB" />
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </Appender>
+    </Appenders>
+
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

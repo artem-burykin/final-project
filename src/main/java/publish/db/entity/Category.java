@@ -2,21 +2,20 @@ package publish.db.entity;
 
 import java.io.Serializable;
 
-public class Role implements Serializable {
+public class Category implements Serializable {
     private int id;
     private String name;
+    private int parent_id;
     private String description;
 
-    private Role() {
-    }
+    private Category(){}
 
-    private Role(int id, String name) {
-        this.id = id;
+    public Category(String name){
         this.name = name;
     }
 
-    public static Role createRole(String name) {
-        return new Role(0, name);
+    public static Category createCategory(String name){
+        return new Category(name);
     }
 
     public int getId() {
@@ -35,19 +34,19 @@ public class Role implements Serializable {
         this.name = name;
     }
 
+    public int getParent_id() {
+        return parent_id;
+    }
+
+    public void setParent_id(int parent_id) {
+        this.parent_id = parent_id;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "name = '" + name + '\'' +
-                ", description = '" + description + '\'' +
-                '}';
     }
 }

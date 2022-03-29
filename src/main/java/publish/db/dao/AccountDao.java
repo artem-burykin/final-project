@@ -4,11 +4,14 @@ import publish.db.entity.Account;
 
 import java.util.List;
 
+/**
+ * Interface with method, which realization in MysqlAccountDao.
+ * @author Byrukin
+ */
 public interface AccountDao {
-    Account getAccountByLogin(String login) throws DBException;
+    Account findByLogin(String login) throws DBException;
     boolean insertAccount (Account account) throws DBException;
-    List<Account> findAllUsers() throws DBException;
-    List<Account> findAllAdmins() throws DBException;
-    boolean deleteUsers(Account... users) throws DBException;
-    boolean deleteAdmins(Account... admins) throws DBException;
+    boolean findByLoginAndPassword(String login, String password) throws DBException;
+    void changingUserBlock(int isBlocked, String login) throws DBException;
+    int checkingUserBlock(String login) throws DBException;
 }

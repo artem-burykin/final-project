@@ -8,6 +8,10 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Class, which create connection to db
+ * @author Burykin
+ */
 public class ConnectionPool {
     private static ConnectionPool instance = null;
     private static Object synh = new Object();
@@ -15,6 +19,10 @@ public class ConnectionPool {
     private ConnectionPool(){
     }
 
+    /**
+     * Created or return instance ConnectionPool.
+     * @return instance ConnectionPool.
+     */
     public static ConnectionPool getInstance(){
         System.out.println("ConnectionPool@getInstance() start");
         if (instance==null)
@@ -26,6 +34,11 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Created connection to db.
+     * @return connection to db.
+     * @throws DBException
+     */
     public Connection getConnection() throws DBException {
         System.out.println("ConnectionPool@getConnection() start");
         Connection con = null;
