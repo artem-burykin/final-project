@@ -1,6 +1,6 @@
 package publish.db.dao;
 
-import publish.db.entity.Category;
+
 import publish.db.entity.Product;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public interface ProductDao {
     boolean insertProduct(Product product) throws DBException;
     List<Product> findAllProducts() throws DBException;
     boolean deleteProduct(String name) throws DBException;
-    List<Product> findProductsByCategory(Category category) throws DBException;
+    List<Product> findProductsByCategory(String name) throws DBException;
     void updateProductPrice(double price, String name) throws DBException;
     void updateProductLogo(String logo, String name) throws DBException;
     void updateProductDescription(String description, String name) throws DBException;

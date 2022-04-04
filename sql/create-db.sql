@@ -1,8 +1,8 @@
 CREATE DATABASE IF NOT EXISTS publisherhouse;
 USE publisherhouse;
 
-DROP TABLE IF EXISTS receipt_has_product;
-DROP TABLE IF EXISTS receipt;
+DROP TABLE IF EXISTS order_has_product;
+DROP TABLE IF EXISTS publisherhouse.order;
 DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS status;
@@ -21,9 +21,13 @@ CREATE TABLE account (
     id INT PRIMARY KEY AUTO_INCREMENT,
     login VARCHAR(32) NOT NULL UNIQUE,
     password VARCHAR(32) NOT NULL,
+    email VARCHAR(32) NOT NULL,
+    first_name VARCHAR(32) NOT NULL,
+    last_name VARCHAR(32) NOT NULL,
     role_id INT,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    isBlocked boolean DEFAULT false,
     CONSTRAINT fk_account_role_id FOREIGN KEY (role_id)
         REFERENCES role (id)
         ON UPDATE CASCADE ON DELETE RESTRICT
@@ -70,7 +74,7 @@ CREATE TABLE status (
     description VARCHAR(1024)
 );
 
-CREATE TABLE receipt (
+CREATE TABLE publisherhouse.order (
     id INT PRIMARY KEY AUTO_INCREMENT,
     total DOUBLE CONSTRAINT ch_total CHECK (total >= 0),
     account_id INT,
@@ -80,23 +84,23 @@ CREATE TABLE receipt (
     date_end TIMESTAMP NOT NULL,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_receipt_account_id FOREIGN KEY (account_id)
+    CONSTRAINT fk_order_account_id FOREIGN KEY (account_id)
         REFERENCES account (id) 
         ON UPDATE CASCADE ON DELETE SET NULL,
-    CONSTRAINT fk_receipt_status_id FOREIGN KEY (status_id)
+    CONSTRAINT fk_order_status_id FOREIGN KEY (status_id)
         REFERENCES status (id) 
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-CREATE TABLE receipt_has_product (
-    receipt_id INT,
+CREATE TABLE order_has_product (
+    order_id INT,
     product_id INT,
-    price DOUBLE NOT NULL DEFAULT 0 CONSTRAINT ck_receipt_has_product_price CHECK (price >= 0),
-    PRIMARY KEY (receipt_id , product_id),
-    CONSTRAINT fk_receipt_has_product_receipt_id FOREIGN KEY (receipt_id)
-        REFERENCES receipt (id)
+    price DOUBLE NOT NULL DEFAULT 0 CONSTRAINT ck_order_has_product_price CHECK (price >= 0),
+    PRIMARY KEY (order_id , product_id),
+    CONSTRAINT fk_order_has_product_order_id FOREIGN KEY (order_id)
+        REFERENCES publisherhouse.order (id)
         ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT fk_receipt_has_product_product_id FOREIGN KEY (product_id)
+    CONSTRAINT fk_oder_has_product_product_id FOREIGN KEY (product_id)
         REFERENCES product (id)
         ON UPDATE CASCADE ON DELETE RESTRICT
 );

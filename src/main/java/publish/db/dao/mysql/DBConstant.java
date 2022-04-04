@@ -15,11 +15,11 @@ public abstract class DBConstant {
     public static final String IS_ACCOUNT_BLOCKED = "SELECT isBlocked FROM account WHERE login = (?);";
 
 
-    //Queries of ROLE
-    public static final String GET_ROLE_BY_ID = "SELECT * FROM role WHERE id = (?);";
-    public static final String GET_ROLE_BY_NAME = "SELECT * FROM role WHERE name = (?);";
-    public static final String INSERT_ROLE = "INSERT INTO role (name, description) VALUES ((?), (?));";
-    public static final String DELETE_ROLE = "DELETE FROM role WHERE name = (?);";
+//    //Queries of ROLE
+//    public static final String GET_ROLE_BY_ID = "SELECT * FROM role WHERE id = (?);";
+//    public static final String GET_ROLE_BY_NAME = "SELECT * FROM role WHERE name = (?);";
+//    public static final String INSERT_ROLE = "INSERT INTO role (name, description) VALUES ((?), (?));";
+//    public static final String DELETE_ROLE = "DELETE FROM role WHERE name = (?);";
 
     //Queries of PRODUCT
     public static final String FIND_ALL_PRODUCTS = "SELECT * FROM product;";
@@ -39,8 +39,21 @@ public abstract class DBConstant {
     public static final String UPDATE_PRODUCT_DESCRIPTION = "UPDATE product SET description = (?) WHERE name = (?);";
 
 
-    //Queries of CATEGORY
-    public static final String GET_CATEGORY_BY_NAME = "SELECT * FROM category WHERE name = (?);";
+//    //Queries of CATEGORY
+//    public static final String GET_CATEGORY_BY_NAME = "SELECT * FROM category WHERE name = (?);";
+
+    //Queries of ORDER
+    public static final String INSERT_ORDER = "INSERT INTO publisherhouse.order (total, account_id, status_id, description, date_start, date_end, create_date, last_update) VALUES ((?), (?), (?), (?), (?), (?), '', '');";
+    public static final String UPDATE_ORDER_STATUS = "UPDATE publisherhouse.order SET status_id = (?) WHERE id = (?);";
+    public static final String FIND_ORDER_BY_STATUS_NAME = "SELECT id FROM publicherhouse.order JOIN status ON publisherhouse.order.status_id = status.id WHERE status.name = (?);";
+    public static final String FIND_ORDER_BY_ID = "SELECT * FROM publisherhouse.order WHERE id = (?);";
+    public static final String FIND_ORDER_BY_ACCOUNT_ID = "SELECT * FROM publisherhouse.order WHERE account_id = (?);";
+
+    //Queries of PUBLICATION
+    public static final String INSERT_PUBLICATION = "INSERT INTO publication(product_id, name, content, create_date) VALUES ((?),(?), (?), (?));";
+    public static final String FIND_PUBLICATION_BY_PRODUCT_ID = "SELECT * FROM publication WHERE product_id = (?);";
+    public static final String UPDATE_PUBLICATION_NAME = "UPDATE publication SET name = (?) WHERE id = (?);";
+    public static final String UPDATE_PUBLICATION_CONTENT = "UPDATE publication SET content = (?) WHERE name = (?);";
 
     //Fields of ACCOUNT
     public static final String F_ACCOUNT_ID = "id";
@@ -53,10 +66,10 @@ public abstract class DBConstant {
     public static final String F_ACCOUNT_CREATE_DATE = "create_date";
     public static final String F_ACCOUNT_LAST_UPDATE = "last_update";
 
-    //Fields of ROLE
-    public static final String F_ROLE_ID = "id";
-    public static final String F_ROLE_NAME = "name";
-    public static final String F_ROLE_DESCRIPTION = "description";
+//    //Fields of ROLE
+//    public static final String F_ROLE_ID = "id";
+//    public static final String F_ROLE_NAME = "name";
+//    public static final String F_ROLE_DESCRIPTION = "description";
 
     //Fields of PRODUCT
     public static final String F_PRODUCT_ID = "id";
@@ -68,9 +81,27 @@ public abstract class DBConstant {
     public static final String F_PRODUCT_CREATE_DATE = "create_date";
     public static final String F_PRODUCT_LAST_UPDATE = "last_update";
 
-    //Fields of CATEGORY
-    public static final String F_CATEGORY_ID = "id";
-    public static final String F_CATEGORY_NAME = "name";
-    public static final String F_CATEGORY_PARENT_ID = "parent_id";
-    public static final String F_CATEGORY_DESCRIPTION = "description";
+//    //Fields of CATEGORY
+//    public static final String F_CATEGORY_ID = "id";
+//    public static final String F_CATEGORY_NAME = "name";
+//    public static final String F_CATEGORY_PARENT_ID = "parent_id";
+//    public static final String F_CATEGORY_DESCRIPTION = "description";
+
+    //Fields of ORDER
+    public static final String F_ORDER_ID = "id";
+    public static final String F_ORDER_TOTAL = "total";
+    public static final String F_ORDER_ACCOUNT_ID = "account_id";
+    public static final String F_ORDER_STATUS_ID = "status_id";
+    public static final String F_ORDER_DESCRIPTION = "description";
+    public static final String F_ORDER_DATE_START = "date_start";
+    public static final String F_ORDER_DATE_END = "date_end";
+    public static final String F_ORDER_CREATE_DATE = "create_date";
+    public static final String F_ORDER_LAST_UPDATE = "last_update";
+
+    //Fields of PUBLICATION
+    public static final String F_PUBLICATION_ID = "id";
+    public static final String F_PUBLICATION_NAME = "name";
+    public static final String F_PUBLICATION_PRODUCT_ID = "product_id";
+    public static final String F_PUBLICATION_CONTENT = "content";
+    public static final String F_PUBLICATION_CREATE_DATE = "create_date";
 }

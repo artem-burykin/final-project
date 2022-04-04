@@ -2,7 +2,6 @@ package publish.db.dao.mysql;
 
 import publish.db.dao.DBException;
 import publish.db.dao.ProductDao;
-import publish.db.entity.Category;
 import publish.db.entity.Product;
 import publish.service.ProductServiceImpl;
 
@@ -366,16 +365,16 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Filter product by category.
-     * @param category category, which product user found.
+     * @param name category's name, by which product user found.
      * @return product's list.
      * @throws DBException
      */
-    public List<Product> findProductsByCategory(Category category) throws DBException{
+    public List<Product> findProductsByCategory(String name) throws DBException{
         try (Connection con = ConnectionPool.getInstance().getConnection();
              PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_PRODUCT_BY_CATEGORY)) {
             con.setAutoCommit(false);
             int i = 0;
-            stmt.setString(++i, category.getName());
+            stmt.setString(++i, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 List<Product> result = new ArrayList<>();
                 while (rs.next()) {
@@ -400,7 +399,7 @@ public class MysqlProductDao implements ProductDao {
      * Changes certain product's price.
      * @param price new price for product.
      * @param name product's name, which price we need to change.
-     * @throws SQLException
+     * @throws DBException
      */
     public void updateProductPrice(double price, String name) throws DBException {
         try (Connection con = ConnectionPool.getInstance().getConnection();
@@ -419,7 +418,7 @@ public class MysqlProductDao implements ProductDao {
      * Changes certain product's logo.
      * @param logo new logo for product.
      * @param name product's name, which price we need to change.
-     * @throws SQLException
+     * @throws DBException
      */
     public void updateProductLogo(String logo, String name) throws DBException {
         try (Connection con = ConnectionPool.getInstance().getConnection();
@@ -438,7 +437,7 @@ public class MysqlProductDao implements ProductDao {
      * Changes certain product's description.
      * @param description new description for product.
      * @param name product's name, which price we need to change.
-     * @throws SQLException
+     * @throws DBException
      */
     public void updateProductDescription(String description, String name) throws DBException {
         try (Connection con = ConnectionPool.getInstance().getConnection();

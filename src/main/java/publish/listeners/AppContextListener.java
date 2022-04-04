@@ -1,7 +1,5 @@
 package publish.listeners;
 
-import publish.db.dao.AccountDao;
-import publish.db.dao.DaoFactory;
 import publish.service.AccountService;
 import publish.service.AccountServiceImpl;
 
@@ -14,9 +12,7 @@ public class AppContextListener implements ServletContextListener, ServletContex
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-
-        AccountDao accountDao = DaoFactory.getInstance().getAccountDao();
-        AccountService userService = new AccountServiceImpl(accountDao);
+        AccountService userService = new AccountServiceImpl();
         ServletContext servletContext = sce.getServletContext();
         servletContext.setAttribute("accountService", userService);
         System.out.println(sce.getServletContext().getAttribute("accountService"));

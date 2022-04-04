@@ -9,6 +9,8 @@ import publish.db.dao.*;
 public class MysqlDaoFactory extends DaoFactory {
     private AccountDao instanceAccount;
     private ProductDao instanceProduct;
+    private OrderDao instanceOrder;
+    private PublicationDao instancePublication;
     private static final Object synh = new Object();
 
     /**
@@ -41,5 +43,31 @@ public class MysqlDaoFactory extends DaoFactory {
         }
         System.out.println("MysqlDaoFactory@getProductDao() exit. Instance: " + instanceProduct);
         return instanceProduct;
+    }
+
+    /**
+     * Method, which give us possibility manage table with orders in db
+     * @return instance OrderDao
+     */
+    public OrderDao getOrderDao(){
+        if(instanceOrder == null){
+            synchronized (synh){
+                instanceOrder = new MysqlOrderDao();
+            }
+        }
+        return instanceOrder;
+    }
+
+    /**
+     * Method, which give us possibility to manage table with orders in db
+     * @return instance PublicationDAo
+     */
+    public PublicationDao getPublicationDao(){
+        if (instancePublication == null){
+            synchronized (synh){
+                instancePublication = new MysqlPublicationDao();
+            }
+        }
+        return instancePublication;
     }
 }

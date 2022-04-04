@@ -13,8 +13,6 @@ import java.sql.*;
  */
 
 public class MysqlAccountDao implements AccountDao {
-    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(MysqlAccountDao.class);
-
     MysqlAccountDao() {}
 
     /**
@@ -63,7 +61,9 @@ public class MysqlAccountDao implements AccountDao {
             int i = 0;
             st.setString(++i, account.getLogin());
             st.setString(++i, account.getPassword());
-
+            st.setString(++i, account.getEmail());
+            st.setString(++i, account.getFirst_name());
+            st.setString(++i, account.getLast_name());
             st.setInt(++i, account.getRole_id());
             int c = st.executeUpdate();
             if (c > 0) {
@@ -93,7 +93,7 @@ public class MysqlAccountDao implements AccountDao {
                 while (rs.next()) {
                     account = AccountServiceImpl.getAccount(rs.getString(DBConstant.F_ACCOUNT_LOGIN),
                             rs.getString(DBConstant.F_ACCOUNT_PASSWORD), rs.getString(DBConstant.F_ACCOUNT_EMAIL),
-                            rs.getString(DBConstant.F_ACCOUNT_FIRST_NAME), rs.getString(DBConstant.F_ACCOUNT_LAST_UPDATE),
+                            rs.getString(DBConstant.F_ACCOUNT_FIRST_NAME), rs.getString(DBConstant.F_ACCOUNT_LAST_NAME),
                             rs.getInt(DBConstant.F_ACCOUNT_ROLE_ID));
                     account.setId(rs.getInt(DBConstant.F_ACCOUNT_ID));
                     account.setCreate_date(rs.getDate(DBConstant.F_ACCOUNT_CREATE_DATE));
