@@ -14,6 +14,7 @@ public class RegistrationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
+        System.out.println("hello from filter");
         servletRequest.setCharacterEncoding("UTF-8");
         String name = servletRequest.getParameter("firstName");
         String surname = servletRequest.getParameter("lastName");
@@ -61,17 +62,18 @@ public class RegistrationFilter implements Filter {
                     "top: 50%; " +
                     "left: 50%; " +
                     "transform: translate(-50%, -50%);\">");
-            out.println("<h1>Следующие данные введены не корректно:" + incorrect.toString() + "</h1>");
-            out.println("<div style=\"margin-top: 40px;\"><a href=\"/FinalTask/website/registration.jsp\" style=\"" +
+            out.println("<h1>Next data is incorrect:" + incorrect.toString() + "</h1>");
+            out.println("<div style=\"margin-top: 40px;\"><a href=\"/publish/registration.jsp\" style=\"" +
                     "text-align: center; " +
                     "font-size: 18pt; " +
                     "color: #F8F2CA; " +
                     "border-radius: 4px; " +
                     "background-color: #925C32; " +
                     "padding: 20px 14px; " +
-                    "text-decoration: none;\">На страницу регистрации</a></div>");
+                    "text-decoration: none;\">On the page registration</a></div>");
             out.println("</div>");
             out.println("</center>");
         }
     }
+
 }

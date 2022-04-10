@@ -31,6 +31,17 @@ public class MysqlProductDao implements ProductDao {
         }
     }
 
+    private Product creatingNewProduct (ResultSet rs) throws SQLException {
+        Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
+                rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
+        product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
+        product.setDescription(rs.getString(DBConstant.F_PRODUCT_DESCRIPTION));
+        product.setLogo(rs.getString(DBConstant.F_PRODUCT_LOGO));
+        product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
+        product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
+        return product;
+    }
+
     /**
      * Insert product to db.
      * @param product product, which we needed to insert.
@@ -107,18 +118,36 @@ public class MysqlProductDao implements ProductDao {
             con.setAutoCommit(false);
             List<Product> result = new ArrayList<>();
             while(rs.next()){
-                Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
-                        rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
-                product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-                product.setDescription(DBConstant.F_PRODUCT_DESCRIPTION);
-                product.setLogo(DBConstant.F_PRODUCT_LOGO);
-                product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
-                product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
-                result.add(product);
+                result.add(creatingNewProduct(rs));
             }
             return result;
         }
         catch (SQLException e){
+            e.printStackTrace();
+            throw new DBException("There aren't products in the database", e);
+        }
+    }
+
+    /**
+     * Find all not subscribe product
+     * @param login account's login, by which we found not subscribe products.
+     * @return product's list.
+     * @throws DBException
+     */
+    public List<Product> findAllNotSubscribeProduct(String login) throws DBException{
+        try (Connection con = ConnectionPool.getInstance().getConnection();
+             PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ALL_NOT_SUBSCRIBE_PRODUCTS)){
+            con.setAutoCommit(false);
+            int i = 0;
+            stmt.setString(++i, login);
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<Product> result = new ArrayList<>();
+                while (rs.next()) {
+                    result.add(creatingNewProduct(rs));
+                }
+                return result;
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new DBException("There aren't products in the database", e);
         }
@@ -136,14 +165,7 @@ public class MysqlProductDao implements ProductDao {
             con.setAutoCommit(false);
             List<Product> result = new ArrayList<>();
             while(rs.next()){
-                Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
-                        rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
-                product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-                product.setDescription(DBConstant.F_PRODUCT_DESCRIPTION);
-                product.setLogo(DBConstant.F_PRODUCT_LOGO);
-                product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
-                product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
-                result.add(product);
+                result.add(creatingNewProduct(rs));
             }
             return result;
         }
@@ -165,14 +187,7 @@ public class MysqlProductDao implements ProductDao {
             con.setAutoCommit(false);
             List<Product> result = new ArrayList<>();
             while(rs.next()){
-                Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
-                        rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
-                product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-                product.setDescription(DBConstant.F_PRODUCT_DESCRIPTION);
-                product.setLogo(DBConstant.F_PRODUCT_LOGO);
-                product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
-                product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
-                result.add(product);
+                result.add(creatingNewProduct(rs));
             }
             return result;
         }
@@ -194,14 +209,7 @@ public class MysqlProductDao implements ProductDao {
             con.setAutoCommit(false);
             List<Product> result = new ArrayList<>();
             while(rs.next()){
-                Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
-                        rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
-                product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-                product.setDescription(DBConstant.F_PRODUCT_DESCRIPTION);
-                product.setLogo(DBConstant.F_PRODUCT_LOGO);
-                product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
-                product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
-                result.add(product);
+                result.add(creatingNewProduct(rs));
             }
             return result;
         }
@@ -223,14 +231,7 @@ public class MysqlProductDao implements ProductDao {
             con.setAutoCommit(false);
             List<Product> result = new ArrayList<>();
             while(rs.next()){
-                Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
-                        rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
-                product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-                product.setDescription(DBConstant.F_PRODUCT_DESCRIPTION);
-                product.setLogo(DBConstant.F_PRODUCT_LOGO);
-                product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
-                product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
-                result.add(product);
+                result.add(creatingNewProduct(rs));
             }
             return result;
         }
@@ -252,14 +253,7 @@ public class MysqlProductDao implements ProductDao {
             con.setAutoCommit(false);
             List<Product> result = new ArrayList<>();
             while(rs.next()){
-                Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
-                        rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
-                product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-                product.setDescription(DBConstant.F_PRODUCT_DESCRIPTION);
-                product.setLogo(DBConstant.F_PRODUCT_LOGO);
-                product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
-                product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
-                result.add(product);
+                result.add(creatingNewProduct(rs));
             }
             return result;
         }
@@ -281,14 +275,7 @@ public class MysqlProductDao implements ProductDao {
             con.setAutoCommit(false);
             List<Product> result = new ArrayList<>();
             while(rs.next()){
-                Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
-                        rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
-                product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-                product.setDescription(DBConstant.F_PRODUCT_DESCRIPTION);
-                product.setLogo(DBConstant.F_PRODUCT_LOGO);
-                product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
-                product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
-                result.add(product);
+                result.add(creatingNewProduct(rs));
             }
             return result;
         }
@@ -308,18 +295,13 @@ public class MysqlProductDao implements ProductDao {
         try (Connection con = ConnectionPool.getInstance().getConnection();
              PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_PRODUCT_BY_NAME)) {
             con.setAutoCommit(false);
+            name = "%" + name + "%";
             int i = 0;
             stmt.setString(++i, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 Product product = null;
                 while (rs.next()) {
-                    product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
-                            rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
-                    product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-                    product.setDescription(DBConstant.F_PRODUCT_DESCRIPTION);
-                    product.setLogo(DBConstant.F_PRODUCT_LOGO);
-                    product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
-                    product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
+                    product = creatingNewProduct(rs);
                 }
                 return product;
             }
@@ -346,14 +328,7 @@ public class MysqlProductDao implements ProductDao {
             try (ResultSet rs = stmt.executeQuery()) {
                 List<Product> result = new ArrayList<>();
                 while (rs.next()) {
-                    Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
-                            rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
-                    product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-                    product.setDescription(DBConstant.F_PRODUCT_DESCRIPTION);
-                    product.setLogo(DBConstant.F_PRODUCT_LOGO);
-                    product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
-                    product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
-                    result.add(product);
+                    result.add(creatingNewProduct(rs));
                 }
                 return result;
             }
@@ -378,14 +353,7 @@ public class MysqlProductDao implements ProductDao {
             try (ResultSet rs = stmt.executeQuery()) {
                 List<Product> result = new ArrayList<>();
                 while (rs.next()) {
-                    Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
-                            rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
-                    product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-                    product.setDescription(DBConstant.F_PRODUCT_DESCRIPTION);
-                    product.setLogo(DBConstant.F_PRODUCT_LOGO);
-                    product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
-                    product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
-                    result.add(product);
+                    result.add(creatingNewProduct(rs));
                 }
                 return result;
             }

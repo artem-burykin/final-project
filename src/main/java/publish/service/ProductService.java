@@ -16,6 +16,7 @@ public interface ProductService {
     List<Product> sortFromNewToOld() throws DBException;
     boolean insertProduct(Product product) throws DBException;
     List<Product> findAllProducts() throws DBException;
+    List<Product> findAllNotSubscribeProduct(String login) throws DBException;
     boolean deleteProduct(String name) throws DBException;
     List<Product> findProductsByCategory(String name) throws DBException;
     void updateProductPrice(double price, String name) throws DBException;

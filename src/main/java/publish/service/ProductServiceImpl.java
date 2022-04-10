@@ -7,7 +7,7 @@ import publish.db.entity.Product;
 
 import java.util.List;
 
-public class ProductServiceImpl implements ProductDao {
+public class ProductServiceImpl implements ProductService {
     private final ProductDao productDao = DaoFactory.getInstance().getProductDao();
 
     public static Product getProduct(String name, double price, int category_id){
@@ -63,6 +63,11 @@ public class ProductServiceImpl implements ProductDao {
     @Override
     public List<Product> findAllProducts() throws DBException {
         return productDao.findAllProducts();
+    }
+
+    @Override
+    public List<Product> findAllNotSubscribeProduct(String login) throws DBException {
+        return productDao.findAllNotSubscribeProduct(login);
     }
 
     @Override

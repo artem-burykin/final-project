@@ -11,25 +11,21 @@ public class Order implements Serializable {
     private int id;
     private double total;
     private int account_id;
-    private int status_id;
+    private int product_id;
     private String description;
-    private Date date_start;
-    private Date date_end;
     private Date create_date;
     private Date last_update;
 
     private Order(){}
 
-    private Order(double total, int account_id, int status_id, Date date_start, Date date_end){
+    private Order(double total, int account_id, int product_id){
         this.total = total;
         this.account_id = account_id;
-        this.status_id = status_id;
-        this.date_start = date_start;
-        this.date_end = date_end;
+        this.product_id = product_id;
     }
 
-    public static Order createOrder (double total, int account_id, int status_id, Date date_start, Date date_end){
-        return new Order(total, account_id, status_id, date_start, date_end);
+    public static Order createOrder (double total, int account_id, int product_id){
+        return new Order(total, account_id, product_id);
     }
 
     public int getId() {
@@ -56,12 +52,12 @@ public class Order implements Serializable {
         this.account_id = account_id;
     }
 
-    public int getStatus_id() {
-        return status_id;
+    public int getProduct_id() {
+        return product_id;
     }
 
-    public void setStatus_id(int status_id) {
-        this.status_id = status_id;
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
     }
 
     public String getDescription() {
@@ -70,22 +66,6 @@ public class Order implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Date getDate_start() {
-        return date_start;
-    }
-
-    public void setDate_start(Date date_start) {
-        this.date_start = date_start;
-    }
-
-    public Date getDate_end() {
-        return date_end;
-    }
-
-    public void setDate_end(Date date_end) {
-        this.date_end = date_end;
     }
 
     public Date getCreate_date() {
@@ -108,10 +88,8 @@ public class Order implements Serializable {
         return "Order{" +
                 "total=" + total +
                 ", account_id=" + account_id +
-                ", status_id=" + status_id +
-                ", description='" + description + '\'' +
-                ", date_start=" + date_start +
-                ", date_end=" + date_end +
+                ", product_id=" + product_id +
+                ", description='" + description +
                 ", create_date=" + create_date +
                 ", last_update=" + last_update +
                 '}';

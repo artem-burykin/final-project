@@ -1,14 +1,9 @@
 package publish.db.dao.mysql;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import publish.db.dao.DBException;
 import publish.db.dao.OrderDao;
-import publish.db.entity.Account;
 import publish.db.entity.Order;
-import publish.db.entity.Product;
-import publish.service.AccountServiceImpl;
 import publish.service.OrderServiceImpl;
-import publish.service.ProductServiceImpl;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,6 +24,16 @@ public class MysqlOrderDao implements OrderDao {
                 e.printStackTrace();
             }
         }
+    }
+
+    private Order creatingNewOrder(ResultSet rs) throws SQLException {
+        Order order = OrderServiceImpl.getOrder(rs.getDouble(DBConstant.F_ORDER_TOTAL), rs.getInt(DBConstant.F_ORDER_ACCOUNT_ID),
+                rs.getInt(DBConstant.F_ORDER_PRODUCT_ID));
+        order.setDescription(rs.getString(DBConstant.F_ORDER_DESCRIPTION));
+        order.setId(rs.getInt(DBConstant.F_ORDER_ID));
+        order.setCreate_date(rs.getDate(DBConstant.F_ORDER_CREATE_DATE));
+        order.setLast_update(rs.getDate(DBConstant.F_ORDER_LAST_UPDATE));
+        return order;
     }
 
     /**
@@ -63,10 +68,8 @@ public class MysqlOrderDao implements OrderDao {
             int i = 0;
             st.setDouble(++i, order.getTotal());
             st.setInt(++i, order.getAccount_id());
-            st.setInt(++i, order.getStatus_id());
+            st.setInt(++i, order.getProduct_id());
             st.setString(++i, order.getDescription());
-            st.setDate(++i, order.getDate_start());
-            st.setDate(++i, order.getDate_end());
             int c = st.executeUpdate();
             if (c > 0) {
                 try (ResultSet keys = st.getGeneratedKeys()) {
@@ -75,57 +78,6 @@ public class MysqlOrderDao implements OrderDao {
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Changes certain order's status.
-     * @param status_id new status for order.
-     * @param id order's id, by which status we need to change.
-     * @throws DBException
-     */
-    public void updateOrderStatus(int status_id, int id) throws DBException {
-        try (Connection con = ConnectionPool.getInstance().getConnection();
-             PreparedStatement stmt = con.prepareStatement(DBConstant.UPDATE_ORDER_STATUS)) {
-            int i = 0;
-            stmt.setInt(++i, status_id);
-            stmt.setInt(++i, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DBException("This order not found", e);
-        }
-    }
-
-    /**
-     * Find list of orders by status name.
-     * @param name status's name, by which orders found.
-     * @return order's list.
-     * @throws DBException
-     */
-    public List<Order> findOrdersByStatus(String name) throws DBException{
-        try (Connection con = ConnectionPool.getInstance().getConnection();
-             PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ORDER_BY_STATUS_NAME)) {
-            con.setAutoCommit(false);
-            int i = 0;
-            stmt.setString(++i, name);
-            try (ResultSet rs = stmt.executeQuery()) {
-                List<Order> result = new ArrayList<>();
-                while (rs.next()) {
-                    Order order = OrderServiceImpl.getOrder(rs.getDouble(DBConstant.F_ORDER_TOTAL),
-                            rs.getInt(DBConstant.F_ORDER_ACCOUNT_ID), rs.getInt(DBConstant.F_ORDER_STATUS_ID),
-                            rs.getDate(DBConstant.F_ORDER_DATE_START), rs.getDate(DBConstant.F_ORDER_DATE_END));
-                    order.setId(rs.getInt(DBConstant.F_ORDER_ID));
-                    order.setDescription(rs.getString(DBConstant.F_ORDER_DESCRIPTION));
-                    order.setCreate_date(rs.getDate(DBConstant.F_ORDER_CREATE_DATE));
-                    order.setLast_update(rs.getDate(DBConstant.F_ORDER_LAST_UPDATE));
-                    result.add(order);
-                }
-                return result;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DBException("This order not found", e);
         }
     }
 
@@ -144,13 +96,7 @@ public class MysqlOrderDao implements OrderDao {
             try (ResultSet rs = stmt.executeQuery()) {
                 Order order = null;
                 while (rs.next()) {
-                    order = OrderServiceImpl.getOrder(rs.getDouble(DBConstant.F_ORDER_TOTAL),
-                            rs.getInt(DBConstant.F_ORDER_ACCOUNT_ID), rs.getInt(DBConstant.F_ORDER_STATUS_ID),
-                            rs.getDate(DBConstant.F_ORDER_DATE_START), rs.getDate(DBConstant.F_ORDER_DATE_END));
-                    order.setId(rs.getInt(DBConstant.F_ORDER_ID));
-                    order.setDescription(rs.getString(DBConstant.F_ORDER_DESCRIPTION));
-                    order.setCreate_date(rs.getDate(DBConstant.F_ORDER_CREATE_DATE));
-                    order.setLast_update(rs.getDate(DBConstant.F_ORDER_LAST_UPDATE));
+                    order = creatingNewOrder(rs);
                 }
                 return order;
             }
@@ -166,29 +112,23 @@ public class MysqlOrderDao implements OrderDao {
      * @return order's list.
      * @throws DBException
      */
-    public List<Order> findOrdersByAccountId (int account_id) throws DBException{
+    public List<Order> findByAccountId (int account_id) throws DBException{
         try (Connection con = ConnectionPool.getInstance().getConnection();
-             PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ORDER_BY_ACCOUNT_ID)) {
+             PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ORDERS_BY_ACCOUNT_ID)) {
             con.setAutoCommit(false);
             int i = 0;
             stmt.setInt(++i, account_id);
             try (ResultSet rs = stmt.executeQuery()) {
                 List<Order> result = new ArrayList<>();
                 while (rs.next()) {
-                    Order order = OrderServiceImpl.getOrder(rs.getDouble(DBConstant.F_ORDER_TOTAL),
-                            rs.getInt(DBConstant.F_ORDER_ACCOUNT_ID), rs.getInt(DBConstant.F_ORDER_STATUS_ID),
-                            rs.getDate(DBConstant.F_ORDER_DATE_START), rs.getDate(DBConstant.F_ORDER_DATE_END));
-                    order.setId(rs.getInt(DBConstant.F_ORDER_ID));
-                    order.setDescription(rs.getString(DBConstant.F_ORDER_DESCRIPTION));
-                    order.setCreate_date(rs.getDate(DBConstant.F_ORDER_CREATE_DATE));
-                    order.setLast_update(rs.getDate(DBConstant.F_ORDER_LAST_UPDATE));
+                    Order order = creatingNewOrder(rs);
                     result.add(order);
                 }
                 return result;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DBException("This order not found", e);
+            throw new DBException("Orders by this user not found", e);
         }
     }
 }

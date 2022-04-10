@@ -13,6 +13,7 @@ public abstract class DBConstant {
     public static final String FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD = "SELECT * FROM account WHERE login = (?) AND password = (?);";
     public static final String BLOCKING_ACCOUNT = "UPDATE account SET isBlocked = (?) WHERE login = (?);";
     public static final String IS_ACCOUNT_BLOCKED = "SELECT isBlocked FROM account WHERE login = (?);";
+    public static final String FIND_ALL_NOT_SUBSCRIBE_PRODUCTS = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?) ));";
 
 
 //    //Queries of ROLE
@@ -27,7 +28,7 @@ public abstract class DBConstant {
     public static final String GET_PRODUCT_FROM_HIGH_TO_LOW = "SELECT * FROM product ORDER BY price DESC;";
     public static final String GET_PRODUCT_FROM_Z_TO_A = "SELECT * FROM product ORDER BY name DESC;";
     public static final String GET_PRODUCT_FROM_A_TO_Z = "SELECT * FROM product ORDER BY name;";
-    public static final String FIND_PRODUCT_BY_NAME = "SELECT * FROM product WHERE name like '%(?)%';";
+    public static final String FIND_PRODUCT_BY_NAME = "SELECT * FROM product WHERE name like ?;";
     public static final String GET_PRODUCT_BY_PRICE = "SELECT * FROM product WHERE price BETWEEN (?) and (?);";
     public static final String GET_PRODUCT_FROM_OLD_TO_NEW = "SELECT * FROM product ORDER BY create_date;";
     public static final String GET_PRODUCT_FROM_NEW_TO_OLD = "SELECT * FROM product ORDER BY create_date DESC;";
@@ -43,11 +44,9 @@ public abstract class DBConstant {
 //    public static final String GET_CATEGORY_BY_NAME = "SELECT * FROM category WHERE name = (?);";
 
     //Queries of ORDER
-    public static final String INSERT_ORDER = "INSERT INTO publisherhouse.order (total, account_id, status_id, description, date_start, date_end, create_date, last_update) VALUES ((?), (?), (?), (?), (?), (?), '', '');";
-    public static final String UPDATE_ORDER_STATUS = "UPDATE publisherhouse.order SET status_id = (?) WHERE id = (?);";
-    public static final String FIND_ORDER_BY_STATUS_NAME = "SELECT id FROM publicherhouse.order JOIN status ON publisherhouse.order.status_id = status.id WHERE status.name = (?);";
+    public static final String INSERT_ORDER = "INSERT INTO publisherhouse.order (total, account_id, product_id, description, create_date, last_update) VALUES ((?), (?), (?) (?), '', '');";
     public static final String FIND_ORDER_BY_ID = "SELECT * FROM publisherhouse.order WHERE id = (?);";
-    public static final String FIND_ORDER_BY_ACCOUNT_ID = "SELECT * FROM publisherhouse.order WHERE account_id = (?);";
+    public static final String FIND_ORDERS_BY_ACCOUNT_ID = "SELECT * FROM publisherhouse.order WHERE account_id = (?);";
 
     //Queries of PUBLICATION
     public static final String INSERT_PUBLICATION = "INSERT INTO publication(product_id, name, content, create_date) VALUES ((?),(?), (?), (?));";
@@ -91,10 +90,8 @@ public abstract class DBConstant {
     public static final String F_ORDER_ID = "id";
     public static final String F_ORDER_TOTAL = "total";
     public static final String F_ORDER_ACCOUNT_ID = "account_id";
-    public static final String F_ORDER_STATUS_ID = "status_id";
+    public static final String F_ORDER_PRODUCT_ID = "product_id";
     public static final String F_ORDER_DESCRIPTION = "description";
-    public static final String F_ORDER_DATE_START = "date_start";
-    public static final String F_ORDER_DATE_END = "date_end";
     public static final String F_ORDER_CREATE_DATE = "create_date";
     public static final String F_ORDER_LAST_UPDATE = "last_update";
 

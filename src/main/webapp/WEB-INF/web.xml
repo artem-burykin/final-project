@@ -8,4 +8,26 @@
         <param-name>javax.faces.CONFIG_FILES</param-name>
         <param-value>/META-INF/context.xml</param-value>
     </context-param>
+
+    <filter>
+        <filter-name>RegistrationFilter</filter-name>
+        <filter-class>publish.filters.RegistrationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RegistrationFilter</filter-name>
+        <url-pattern>/registration</url-pattern>
+    </filter-mapping>
+
+    <welcome-file-list>
+        <welcome-file>showAllProducts</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>publish.db.dao.DBException</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
 </web-app>
