@@ -71,6 +71,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findAllSubscribeProduct(String login) throws DBException {
+        return productDao.findAllSubscribeProduct(login);
+    }
+
+    @Override
     public boolean deleteProduct(String name) throws DBException {
         return productDao.deleteProduct(name);
     }

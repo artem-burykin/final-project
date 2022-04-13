@@ -19,7 +19,10 @@
         </ul>
         <c:choose>
             <c:when test="${sessionScope.login ne null}">
-                <a href="logoutServlet" class="btn btn-primary">Log out</a>
+                <div class="col-md-3 text-end">
+                    <a href="showProductWithSubscription" class="btn btn-outline-primary me-2">My profile</a>
+                    <a href="logoutServlet" class="btn btn-outline-primary me-2">Log out</a>
+                </div>
             </c:when>
             <c:otherwise>
                 <div class="col-md-3 text-end">

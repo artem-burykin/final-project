@@ -11,6 +11,7 @@ public class MysqlDaoFactory extends DaoFactory {
     private ProductDao instanceProduct;
     private OrderDao instanceOrder;
     private PublicationDao instancePublication;
+    private CategoryDao instanceCategory;
     private static final Object synh = new Object();
 
     /**
@@ -69,5 +70,15 @@ public class MysqlDaoFactory extends DaoFactory {
             }
         }
         return instancePublication;
+    }
+
+    @Override
+    public CategoryDao getCategoryDao() {
+        if (instanceCategory == null){
+            synchronized (synh){
+                instanceCategory = new MysqlCategoryDao();
+            }
+        }
+        return instanceCategory;
     }
 }

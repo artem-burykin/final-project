@@ -65,7 +65,7 @@
                                 Minimum price:
                             </div>
                             <div class="col-12">
-                                <input type="number" name="startPrice" min="0" max="4999" maxlength="5">
+                                <input type="number" name="startPrice" min="0" max="4999" maxlength="5" >
                             </div>
                             <div class="col-12">
                                 Maximum price:
@@ -74,7 +74,29 @@
                                 <input type="number" name="endPrice" min="1" max="5000">
                             </div>
                             <div class="col-12 margin">
-                                <input type="submit" value="Enter">
+                                <input class="btn btn-primary" type="submit" value="Enter">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form action="filterProductByCategory" method="get">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                Filter by category:
+                            </div>
+                            <div class="col-12">
+                                <c:forEach var="category" items="${categories}">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="categoryName" value="${category.name}" id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            ${category.name}
+                                        </label>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                            <div class="col-12 margin">
+                                <input class="btn btn-primary" type="submit" value="Enter">
                             </div>
                         </div>
                     </div>

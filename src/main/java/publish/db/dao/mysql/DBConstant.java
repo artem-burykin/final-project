@@ -11,9 +11,11 @@ public abstract class DBConstant {
     public static final String INSERT_ACCOUNT = "INSERT INTO account (login, password, email, first_name, last_name, role_id) VALUES ((?), (?), (?), (?), (?), (?));";
     public static final String FIND_ACCOUNT_BY_LOGIN = "SELECT * FROM account WHERE login = (?);";
     public static final String FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD = "SELECT * FROM account WHERE login = (?) AND password = (?);";
+    public static final String UPDATE_ACCOUNT_SCORE = "UPDATE account SET score = (?) WHERE login = (?);";
     public static final String BLOCKING_ACCOUNT = "UPDATE account SET isBlocked = (?) WHERE login = (?);";
     public static final String IS_ACCOUNT_BLOCKED = "SELECT isBlocked FROM account WHERE login = (?);";
     public static final String FIND_ALL_NOT_SUBSCRIBE_PRODUCTS = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?) ));";
+    public static final String FIND_ALL_SUBSCRIBE_PRODUCTS = "SELECT product.* FROM product join publisherhouse.order on product.id = publisherhouse.order.product_id join account on account.id = publisherhouse.order.account_id WHERE publisherhouse.order.account_id = (SELECT account.id FROM account WHERE login = (?));";
 
 
 //    //Queries of ROLE
@@ -40,11 +42,12 @@ public abstract class DBConstant {
     public static final String UPDATE_PRODUCT_DESCRIPTION = "UPDATE product SET description = (?) WHERE name = (?);";
 
 
-//    //Queries of CATEGORY
+//    Queries of CATEGORY
 //    public static final String GET_CATEGORY_BY_NAME = "SELECT * FROM category WHERE name = (?);";
+    public static final String FIND_ALL_CATEGORIES = "SELECT * FROM category;";
 
     //Queries of ORDER
-    public static final String INSERT_ORDER = "INSERT INTO publisherhouse.order (total, account_id, product_id, description, create_date, last_update) VALUES ((?), (?), (?) (?), '', '');";
+    public static final String INSERT_ORDER = "INSERT INTO publisherhouse.order (total, account_id, product_id, description) VALUES ((?), (?), (?), (?));";
     public static final String FIND_ORDER_BY_ID = "SELECT * FROM publisherhouse.order WHERE id = (?);";
     public static final String FIND_ORDERS_BY_ACCOUNT_ID = "SELECT * FROM publisherhouse.order WHERE account_id = (?);";
 
@@ -61,6 +64,7 @@ public abstract class DBConstant {
     public static final String F_ACCOUNT_EMAIL = "email";
     public static final String F_ACCOUNT_FIRST_NAME = "first_name";
     public static final String F_ACCOUNT_LAST_NAME = "last_name";
+    public static final String F_ACCOUNT_SCORE = "score";
     public static final String F_ACCOUNT_ROLE_ID = "role_id";
     public static final String F_ACCOUNT_CREATE_DATE = "create_date";
     public static final String F_ACCOUNT_LAST_UPDATE = "last_update";
@@ -81,10 +85,10 @@ public abstract class DBConstant {
     public static final String F_PRODUCT_LAST_UPDATE = "last_update";
 
 //    //Fields of CATEGORY
-//    public static final String F_CATEGORY_ID = "id";
-//    public static final String F_CATEGORY_NAME = "name";
-//    public static final String F_CATEGORY_PARENT_ID = "parent_id";
-//    public static final String F_CATEGORY_DESCRIPTION = "description";
+    public static final String F_CATEGORY_ID = "id";
+    public static final String F_CATEGORY_NAME = "name";
+    public static final String F_CATEGORY_PARENT_ID = "parent_id";
+    public static final String F_CATEGORY_DESCRIPTION = "description";
 
     //Fields of ORDER
     public static final String F_ORDER_ID = "id";

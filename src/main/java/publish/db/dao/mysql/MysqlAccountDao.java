@@ -29,6 +29,17 @@ public class MysqlAccountDao implements AccountDao {
         }
     }
 
+    private Account creatingNewAccount(ResultSet rs) throws SQLException{
+        Account account = AccountServiceImpl.getAccount(rs.getString(DBConstant.F_ACCOUNT_LOGIN),
+                rs.getString(DBConstant.F_ACCOUNT_PASSWORD), rs.getString(DBConstant.F_ACCOUNT_EMAIL),
+                rs.getString(DBConstant.F_ACCOUNT_FIRST_NAME), rs.getString(DBConstant.F_ACCOUNT_LAST_NAME),
+                rs.getDouble(DBConstant.F_ACCOUNT_SCORE), rs.getInt(DBConstant.F_ACCOUNT_ROLE_ID));
+        account.setId(rs.getInt(DBConstant.F_ACCOUNT_ID));
+        account.setCreate_date(rs.getDate(DBConstant.F_ACCOUNT_CREATE_DATE));
+        account.setLast_update(rs.getDate(DBConstant.F_ACCOUNT_LAST_UPDATE));
+        return account;
+    }
+
     /**
      * Insert new account into db.
      * @param account account, which would be was inserted into db.
@@ -91,13 +102,7 @@ public class MysqlAccountDao implements AccountDao {
             try (ResultSet rs = stmt.executeQuery()) {
                 Account account = null;
                 while (rs.next()) {
-                    account = AccountServiceImpl.getAccount(rs.getString(DBConstant.F_ACCOUNT_LOGIN),
-                            rs.getString(DBConstant.F_ACCOUNT_PASSWORD), rs.getString(DBConstant.F_ACCOUNT_EMAIL),
-                            rs.getString(DBConstant.F_ACCOUNT_FIRST_NAME), rs.getString(DBConstant.F_ACCOUNT_LAST_NAME),
-                            rs.getInt(DBConstant.F_ACCOUNT_ROLE_ID));
-                    account.setId(rs.getInt(DBConstant.F_ACCOUNT_ID));
-                    account.setCreate_date(rs.getDate(DBConstant.F_ACCOUNT_CREATE_DATE));
-                    account.setLast_update(rs.getDate(DBConstant.F_ACCOUNT_LAST_UPDATE));
+                    account = creatingNewAccount(rs);
                 }
                 return account;
             }
@@ -129,6 +134,25 @@ public class MysqlAccountDao implements AccountDao {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DBException("This user not found", e);
+        }
+    }
+
+    /**
+     * Update account score.
+     * @param score state of user's score.
+     * @param login user's login, which we need to change.
+     * @throws DBException
+     */
+    public void updateScore(double score, String login) throws DBException {
+        try(Connection con = ConnectionPool.getInstance().getConnection();
+            PreparedStatement stmt = con.prepareStatement(DBConstant.UPDATE_ACCOUNT_SCORE)) {
+            int i = 0;
+            stmt.setDouble(++i, score);
+            stmt.setString(++i, login);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DBException("This user can't change score", e);
         }
     }
 

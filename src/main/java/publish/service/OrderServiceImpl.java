@@ -15,7 +15,6 @@ public class OrderServiceImpl implements OrderService{
         return Order.createOrder(total, account_id, product_id);
     }
 
-
     @Override
     public boolean insertOrder(Order order) throws DBException {
         return orderDao.insertOrder(order);

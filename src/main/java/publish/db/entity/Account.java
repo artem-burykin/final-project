@@ -14,6 +14,7 @@ public class Account implements Serializable {
     private String email;
     private String first_name;
     private String last_name;
+    private double score;
     private int role_id;
     private Date create_date;
     private Date last_update;
@@ -21,18 +22,19 @@ public class Account implements Serializable {
     private Account() {
     }
 
-    private Account(int id, String login, String password, String email, String first_name, String last_name, int role_id) {
+    private Account(int id, String login, String password, String email, String first_name, String last_name, double score, int role_id) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.email = email;
         this.first_name = first_name;
         this.last_name = last_name;
+        this.score = score;
         this.role_id = role_id;
     }
 
-    public static Account createAccount(String login, String password, String email, String first_name, String last_name, int role_id) {
-        return new Account(0, login, password, email, first_name, last_name, role_id);
+    public static Account createAccount(String login, String password, String email, String first_name, String last_name, double score, int role_id) {
+        return new Account(0, login, password, email, first_name, last_name, score, role_id);
     }
 
     public int getId() {
@@ -81,6 +83,14 @@ public class Account implements Serializable {
 
     public void setLast_name(String last_name) {
         this.last_name = last_name;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
     }
 
     public int getRole_id() {

@@ -8,8 +8,8 @@ import publish.db.entity.Account;
 public class AccountServiceImpl implements AccountService {
     private final AccountDao accountDao = DaoFactory.getInstance().getAccountDao();
 
-    public static Account getAccount(String login, String password, String email, String first_name, String last_name, int role_id){
-            return Account.createAccount(login, password, email, first_name, last_name, role_id);
+    public static Account getAccount(String login, String password, String email, String first_name, String last_name, double score, int role_id){
+            return Account.createAccount(login, password, email, first_name, last_name, score, role_id);
     }
 
     @Override
@@ -25,6 +25,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean findByLoginAndPassword(String login, String password) throws DBException {
         return accountDao.findByLoginAndPassword(login, password);
+    }
+
+    @Override
+    public void updateScore(double score, String login) throws DBException {
+        accountDao.updateScore(score, login);
     }
 
     @Override

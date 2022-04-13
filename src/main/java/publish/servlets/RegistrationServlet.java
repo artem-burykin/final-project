@@ -36,7 +36,7 @@ public class RegistrationServlet extends HttpServlet {
         if (req.getParameter("password").equals(req.getParameter("re_password"))) {
                 Account account = AccountServiceImpl.getAccount(req.getParameter("login"), req.getParameter("password"),
                         req.getParameter("email"), req.getParameter("firstName"),
-                        req.getParameter("lastName"), 2);
+                        req.getParameter("lastName"), 0.0, 2);
                 try {
                     if (accountService.findByLogin(account.getLogin()) == null) {
                         LOG.trace("Username is free.");

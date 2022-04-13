@@ -60,7 +60,16 @@ public class LoginServlet extends HttpServlet {
             session.setMaxInactiveInterval(-1);
             LOG.trace("Getting object of session.");
             String login = req.getParameter("login");
+            double score = 0;
+            try {
+                score = accountService.findByLogin(login).getScore();
+            } catch (DBException e) {
+                e.printStackTrace();
+                req.setAttribute("message", e.getMessage());
+                getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            }
             session.setAttribute("login", login);
+            session.setAttribute("score", score);
             LOG.trace("User loges in successfully!");
             resp.sendRedirect("/publish/");
         } else {

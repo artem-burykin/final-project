@@ -154,6 +154,31 @@ public class MysqlProductDao implements ProductDao {
     }
 
     /**
+     *  Find all subscribe product
+     *  @param login account's login, by which we found subscribe products.
+     *  @return product's list.
+     *  @throws DBException
+     */
+    public List<Product> findAllSubscribeProduct(String login) throws DBException{
+        try (Connection con = ConnectionPool.getInstance().getConnection();
+             PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ALL_SUBSCRIBE_PRODUCTS)){
+            con.setAutoCommit(false);
+            int i = 0;
+            stmt.setString(++i, login);
+            try (ResultSet rs = stmt.executeQuery()) {
+                List<Product> result = new ArrayList<>();
+                while (rs.next()) {
+                    result.add(creatingNewProduct(rs));
+                }
+                return result;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DBException("There aren't products in the database", e);
+        }
+    }
+
+    /**
      * Sort from low to high price.
      * @return product's list.
      * @throws DBException

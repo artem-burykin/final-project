@@ -21,6 +21,7 @@ public interface ProductDao {
     boolean insertProduct(Product product) throws DBException;
     List<Product> findAllProducts() throws DBException;
     List<Product> findAllNotSubscribeProduct(String login) throws DBException;
+    List<Product> findAllSubscribeProduct(String login) throws DBException;
     boolean deleteProduct(String name) throws DBException;
     List<Product> findProductsByCategory(String name) throws DBException;
     void updateProductPrice(double price, String name) throws DBException;
