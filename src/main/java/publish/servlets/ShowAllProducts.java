@@ -25,8 +25,7 @@ public class ShowAllProducts extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            HttpSession session = LoginServlet.session;
-            if (session == null) {
+            if (LoginServlet.session == null) {
                 List<Product> products = productService.findAllProducts();
                 List<Category> categories = categoryService.findAllCategories();
                 LOG.trace("List with all product and category was taken:");
@@ -35,7 +34,7 @@ public class ShowAllProducts extends HttpServlet {
                 req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
             else{
-                List<Product> products = productService.findAllNotSubscribeProduct((String) session.getAttribute("login"));
+                List<Product> products = productService.findAllNotSubscribeProduct((String) LoginServlet.session.getAttribute("login"));
                 List<Category> categories = categoryService.findAllCategories();
                 LOG.trace("List with all product and category was taken:");
                 req.setAttribute("products", products);

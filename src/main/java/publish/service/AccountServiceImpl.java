@@ -5,6 +5,8 @@ import publish.db.dao.DBException;
 import publish.db.dao.DaoFactory;
 import publish.db.entity.Account;
 
+import java.util.List;
+
 public class AccountServiceImpl implements AccountService {
     private final AccountDao accountDao = DaoFactory.getInstance().getAccountDao();
 
@@ -23,6 +25,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public List<Account> findAllAccounts() throws DBException {
+        return accountDao.findAllAccounts();
+    }
+
+    @Override
     public boolean findByLoginAndPassword(String login, String password) throws DBException {
         return accountDao.findByLoginAndPassword(login, password);
     }
@@ -30,6 +37,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void updateScore(double score, String login) throws DBException {
         accountDao.updateScore(score, login);
+    }
+
+    @Override
+    public boolean isAdmin(String login) throws DBException {
+        return accountDao.isAdmin(login);
     }
 
     @Override

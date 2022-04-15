@@ -1,10 +1,6 @@
 
-V
-&.idea/artifacts/Final_project__war.xml,d\7\d7b2860d936f9e447636b0a19e59b586e01d47c0
 ]
 -src/main/java/publish/db/dao/DBException.java,5\4\5412cac571a8fa6a5527c95dd79b83ebd286f923
-T
-$src/main/webapp/META-INF/context.xml,c\b\cbfb0d2e9b2b9fbf9d54374577c894a38643c6d0
 f
 6src/main/java/publish/db/dao/mysql/ConnectionPool.java,c\4\c46592838a794ebd21ea8e6f591eef4882d16c07
 `
@@ -19,8 +15,6 @@ g
 7src/main/java/publish/listeners/AppContextListener.java,e\c\eca536235033ef838ae1409704dccb391f02a2d2
 \
 ,src/main/java/publish/db/entity/Product.java,1\0\10e9f9602f88ba48ade617a232678c2f5b064ce2
-_
-/task/Періодичні видання_ua.txt,6\8\688acc516097bfe5192b7aaf28a2c7c95f9dbbba
 A
 sql/create-db.sql,e\3\e3b9d2a3fe48e69db949ce6bf1887fb4c6fb44de
 M
@@ -29,8 +23,6 @@ T
 $src/main/webapp/css/registration.css,c\a\caf3e9452afe69513c022db98ee5c192e463db02
 M
 src/main/webapp/css/login.css,c\9\c953adb63298078442a1704870875d6d03cf7c6f
-I
-src/main/webapp/error.jsp,c\b\cba3df22242d379bdb72d00919d2e8d49101d1bf
 Z
 *src/main/java/publish/db/entity/Order.java,5\b\5bce478fa0a4acfaae9db2ddd543e1d60b3129dd
 Z
@@ -39,78 +31,34 @@ _
 /src/main/java/publish/service/OrderService.java,a\9\a9e5c7e92be2386d796b657dc0b460d5f6978de6
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-P
- src/main/webapp/registration.jsp,d\d\dd51f7041d5a8d7bb17c79a85099a350e198ae09
 e
 5src/main/java/publish/filters/RegistrationFilter.java,1\c\1c5f110566ba8bf6ca74e59c72fc17af226dd605
-O
-src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
 I
 src/main/webapp/order.jsp,b\7\b7f56e5a7a2091b5211a9a6f94b7ac2cad3f1fa2
-I
-src/main/webapp/login.jsp,8\5\85ee523d01e5e19376db640e846c91bbcb0a1c22
 e
 5src/main/java/publish/db/dao/mysql/MysqlOrderDao.java,3\e\3e14610e4dbefe690f1bb2988ca6f9534def2473
 k
 ;src/main/java/publish/db/dao/mysql/MysqlPublicationDao.java,1\c\1c8d22e39b31c4452af0484102835a9e95a39155
 a
 1src/main/java/publish/servlets/LogoutServlet.java,6\f\6f17c2e7eb1687d77523bad4636b52987bc8097a
-S
-#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
-\
-,src/main/java/publish/db/entity/Account.java,f\2\f24bc931a9c720d793b50eda627d2726b2237b11
-\
-,src/main/java/publish/db/dao/AccountDao.java,2\6\2678d4ba22a97598f25485c42f8e89b39e8e4fa9
-a
-1src/main/java/publish/service/AccountService.java,c\9\c94b4bb89a0a33143b192d3b6917442b5957b96f
-e
-5src/main/java/publish/service/AccountServiceImpl.java,5\0\5047642b6238d40dbdf769ce126aaf082ff2501d
-e
-5src/main/java/publish/servlets/BuyProductServlet.java,8\3\8399f0aeb0916dbc68ea1adef4770cf3f6247c29
 ]
 -src/main/java/publish/db/entity/Category.java,a\1\a147c020a1a096336a7938488ceaf57d29ea0340
 ]
 -src/main/java/publish/db/dao/CategoryDao.java,d\8\d846447a574421d205df645fedcf9d19e8b10d1d
-b
-2src/main/java/publish/service/CategoryService.java,f\9\f99e8855ed69fa43a38a91dccc454b1667cac781
 e
 5src/main/java/publish/service/CategoryServiceImp.java,3\6\3679d26f13f0d252057b1c92cd349a5bf5ec00c2
 \
 ,src/main/java/publish/db/dao/DaoFactory.java,f\a\fa7c471734824d7c05d443200c09dad7261dedab
-b
-2src/main/java/publish/db/dao/mysql/DBConstant.java,9\a\9ae27ebd065dffcf809385d6a2e2721a7ab7714c
 h
 8src/main/java/publish/servlets/FilterProductByPrice.java,4\9\49d6bfa6fcae6c3901075e9eaff213e088706439
 e
 5src/main/java/publish/servlets/FindProductByName.java,5\6\56a08cc4db59bae621f2607f7e10bfe3b8312d91
-T
-$src/main/webapp/fragments/header.jsp,2\1\21e0a1cff9e1437dfca7d109def2d226fd01aded
-I
-src/main/webapp/index.jsp,8\e\8e6d3b70c9f5b02570779b0441540d45eceb0ded
-`
-0src/main/java/publish/servlets/LoginServlet.java,3\4\3407ae7e9178564e3b77cde7f2e2b51ee4cbfd4c
-g
-7src/main/java/publish/db/dao/mysql/MysqlAccountDao.java,b\7\b7d5c026312e90461713213325429fe6d4fc3655
-h
-8src/main/java/publish/db/dao/mysql/MysqlCategoryDao.java,c\e\cef1dcf5dd9cee2707924138252025a0a863823b
 g
 7src/main/java/publish/db/dao/mysql/MysqlDaoFactory.java,f\d\fdae99ea76c6289ff07a7cea45a04c1abf2c16c6
-g
-7src/main/java/publish/db/dao/mysql/MysqlProductDao.java,c\1\c1afb4bf96f5cc496a0612937f05e201b6417408
 c
 3src/main/java/publish/service/OrderServiceImpl.java,7\4\7436107c86b0a311019b1b981338a67b5d9132f3
-\
-,src/main/java/publish/db/dao/ProductDao.java,0\9\09608adf493d2ad24a834437b7c1e52ba40760a9
-a
-1src/main/java/publish/service/ProductService.java,a\3\a38cca14456d5820b6962edd0e4b72c473bac336
-e
-5src/main/java/publish/service/ProductServiceImpl.java,0\4\041647e551abea4ee119302dfec5052148c299a4
-K
-src/main/webapp/profile.jsp,3\9\3932b6a22a1db264677b40c5b9307e011739496b
 g
 7src/main/java/publish/servlets/RegistrationServlet.java,6\c\6c91ccab516c2c12d8d32a95326400e5312359a2
-c
-3src/main/java/publish/servlets/ShowAllProducts.java,8\9\89292e29921404a8c4875d9ac59f93206eabaa33
 p
 @src/main/java/publish/servlets/ShowProductsWithSubscription.java,c\f\cf25900116edd16fcbdba0112588003f481dd265
 g
@@ -129,5 +77,29 @@ N
 src/main/webapp/topupscore.jsp,f\5\f5495054f382709a2e40b7febd68b2ccdc7a2d0d
 e
 5src/main/java/publish/servlets/TopUpScoreServlet.java,e\2\e2872a53637d74ff6db9cad340b5fb0f056e766e
+T
+$src/main/webapp/META-INF/context.xml,c\b\cbfb0d2e9b2b9fbf9d54374577c894a38643c6d0
 s
 Csrc/main/java/publish/servlets/FilterProductsByCategoryServlet.java,3\8\38eeac238d500b01756b68c8e512a00d324bf888
+O
+src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
+b
+2src/main/java/publish/service/CategoryService.java,f\9\f99e8855ed69fa43a38a91dccc454b1667cac781
+I
+src/main/webapp/error.jsp,c\b\cba3df22242d379bdb72d00919d2e8d49101d1bf
+K
+src/main/webapp/profile.jsp,3\9\3932b6a22a1db264677b40c5b9307e011739496b
+P
+ src/main/webapp/registration.jsp,d\d\dd51f7041d5a8d7bb17c79a85099a350e198ae09
+e
+5src/main/java/publish/service/ProductServiceImpl.java,0\4\041647e551abea4ee119302dfec5052148c299a4
+I
+src/main/webapp/login.jsp,8\5\85ee523d01e5e19376db640e846c91bbcb0a1c22
+h
+8src/main/java/publish/db/dao/mysql/MysqlCategoryDao.java,c\e\cef1dcf5dd9cee2707924138252025a0a863823b
+\
+,src/main/java/publish/db/dao/ProductDao.java,0\9\09608adf493d2ad24a834437b7c1e52ba40760a9
+_
+/task/Періодичні видання_ua.txt,6\8\688acc516097bfe5192b7aaf28a2c7c95f9dbbba
+a
+1src/main/java/publish/service/ProductService.java,a\3\a38cca14456d5820b6962edd0e4b72c473bac336

@@ -19,6 +19,7 @@ public class BuyProductServlet extends HttpServlet {
     private AccountService accountService = new AccountServiceImpl();
     private ProductService productService = new ProductServiceImpl();
     private OrderService orderService = new OrderServiceImpl();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");

@@ -73,6 +73,7 @@
                             <div class="col-12">
                                 <input type="number" name="endPrice" min="1" max="5000">
                             </div>
+                            <br>
                             <div class="col-12 margin">
                                 <input class="btn btn-primary" type="submit" value="Enter">
                             </div>
@@ -95,6 +96,7 @@
                                     </div>
                                 </c:forEach>
                             </div>
+                            <br>
                             <div class="col-12 margin">
                                 <input class="btn btn-primary" type="submit" value="Enter">
                             </div>

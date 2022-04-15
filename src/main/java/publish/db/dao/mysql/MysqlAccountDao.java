@@ -3,9 +3,12 @@ package publish.db.dao.mysql;
 import publish.db.dao.AccountDao;
 import publish.db.dao.DBException;
 import publish.db.entity.Account;
+import publish.db.entity.Product;
 import publish.service.AccountServiceImpl;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Data access object for Account entity.
@@ -37,6 +40,7 @@ public class MysqlAccountDao implements AccountDao {
         account.setId(rs.getInt(DBConstant.F_ACCOUNT_ID));
         account.setCreate_date(rs.getDate(DBConstant.F_ACCOUNT_CREATE_DATE));
         account.setLast_update(rs.getDate(DBConstant.F_ACCOUNT_LAST_UPDATE));
+        account.setIsBlocked(rs.getInt(DBConstant.F_ACCOUNT_IS_BLOCKED));
         return account;
     }
 
@@ -87,6 +91,27 @@ public class MysqlAccountDao implements AccountDao {
         }
     }
 
+    /**
+     * Find all accounts.
+     * @return list with account.
+     * @throws DBException
+     */
+    public List<Account> findAllAccounts() throws DBException{
+        try(Connection con = ConnectionPool.getInstance().getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(DBConstant.FIND_ALL_ACCOUNT)){
+            con.setAutoCommit(false);
+            List<Account> result = new ArrayList<>();
+            while(rs.next()){
+                result.add(creatingNewAccount(rs));
+            }
+            return result;
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            throw new DBException("There aren't accounts in the database", e);
+        }
+    }
     /**
      * Find user by login.
      * @param login login, by which we search user.
@@ -194,5 +219,25 @@ public class MysqlAccountDao implements AccountDao {
             throw new DBException("This user not found", e);
         }
         return -1;
+    }
+
+    /**
+     * Checks account on admin role.
+     * @param login login, by which checking account on admin.
+     * @return boolean value(returns true, if method has found admin).
+     * @throws DBException
+     */
+    public boolean isAdmin (String login) throws DBException{
+        try (Connection con = ConnectionPool.getInstance().getConnection();
+             PreparedStatement stmt = con.prepareStatement(DBConstant.IS_ADMIN)){
+            stmt.setString(1, login);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                return rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            throw new DBException("Account with this login not found", e);
+        }
+        return false;
     }
 }

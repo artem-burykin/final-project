@@ -45,6 +45,18 @@ public class LoginServlet extends HttpServlet {
             req.setAttribute("message", e.getMessage());
             getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
+        try {
+            if(b & accountService.isAdmin(req.getParameter("login"))){
+               session = req.getSession(true);
+               session.setMaxInactiveInterval(-1);
+               session.setAttribute("login", req.getParameter("login"));
+               LOG.trace("Admin loges in successfully!");
+               resp.sendRedirect("/publish/showProductsAndCategories");
+               return;
+            }
+        } catch (DBException e) {
+            throw new RuntimeException(e);
+        }
         int block = 0;
         try {
             block = accountService.checkingUserBlock(req.getParameter("login"));

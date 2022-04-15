@@ -18,17 +18,27 @@
             <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
         </ul>
         <c:choose>
-            <c:when test="${sessionScope.login ne null}">
-                <div class="col-md-3 text-end">
-                    <a href="showProductWithSubscription" class="btn btn-outline-primary me-2">My profile</a>
-                    <a href="logoutServlet" class="btn btn-outline-primary me-2">Log out</a>
-                </div>
-            </c:when>
-            <c:otherwise>
+            <c:when test="${sessionScope.login eq null}">
                 <div class="col-md-3 text-end">
                     <a href="login.jsp" class="btn btn-outline-primary me-2">Sign in</a>
                     <a href="registration.jsp" class="btn btn-outline-primary me-2">Sign up</a>
                 </div>
+            </c:when>
+            <c:otherwise>
+                <c:choose>
+                    <c:when test="${sessionScope.login eq 'admin'}">
+                        <div class="col-md-3 text-end">
+                            <a href="showProductsAndCategories" class="btn btn-outline-primary me-2">Admin page</a>
+                            <a href="logoutServlet" class="btn btn-outline-primary me-2">Log out</a>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="col-md-3 text-end">
+                            <a href="showProductWithSubscription" class="btn btn-outline-primary me-2">My profile</a>
+                            <a href="logoutServlet" class="btn btn-outline-primary me-2">Log out</a>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </c:otherwise>
         </c:choose>
     </header>

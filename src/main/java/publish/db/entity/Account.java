@@ -16,6 +16,7 @@ public class Account implements Serializable {
     private String last_name;
     private double score;
     private int role_id;
+    private int isBlocked;
     private Date create_date;
     private Date last_update;
 
@@ -91,6 +92,14 @@ public class Account implements Serializable {
 
     public void setScore(double score) {
         this.score = score;
+    }
+
+    public int getIsBlocked() {
+        return isBlocked;
+    }
+
+    public void setIsBlocked(int isBlocked) {
+        this.isBlocked = isBlocked;
     }
 
     public int getRole_id() {

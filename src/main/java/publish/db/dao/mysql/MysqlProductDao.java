@@ -98,6 +98,7 @@ public class MysqlProductDao implements ProductDao {
         try (Connection con = ConnectionPool.getInstance().getConnection();
              PreparedStatement stmt = con.prepareStatement(DBConstant.DELETE_PRODUCT, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, name);
+            System.out.println(stmt);
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {
