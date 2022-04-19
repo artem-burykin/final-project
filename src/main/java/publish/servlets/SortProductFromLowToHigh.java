@@ -25,7 +25,7 @@ public class SortProductFromLowToHigh extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            List<Product> products = productService.sortFromLowToHigh();
+            List<Product> products = productService.sortFromLowToHigh((String) req.getSession().getAttribute("login"));
             List<Category> categories = categoryService.findAllCategories();
             LOG.trace("List with sorting product from low to high price was taken:");
             req.setAttribute("products", products);

@@ -89,6 +89,31 @@ public class MysqlProductDao implements ProductDao {
     }
 
     /**
+     * Getting product by full name.
+     * @param name name, by which we search product.
+     * @return product with those name.
+     * @throws DBException
+     */
+    public Product getProductByName(String name) throws DBException{
+        try(Connection con = ConnectionPool.getInstance().getConnection();
+            PreparedStatement stmt = con.prepareStatement((DBConstant.GET_PRODUCT_BY_NAME), Statement.RETURN_GENERATED_KEYS)){
+            con.setAutoCommit(false);
+            int i = 0;
+            stmt.setString(++i, name);
+            try (ResultSet rs = stmt.executeQuery()) {
+                Product product = null;
+                while (rs.next()) {
+                    product = creatingNewProduct(rs);
+                }
+                return product;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DBException("This product not found", e);
+        }
+    }
+
+    /**
      * Delete product by name.
      * @param name name, by which we find product.
      * @return boolean value(true, if exist).
@@ -184,11 +209,12 @@ public class MysqlProductDao implements ProductDao {
      * @return product's list.
      * @throws DBException
      */
-    public List<Product> sortFromLowToHigh() throws DBException{
+    public List<Product> sortFromLowToHigh(String login) throws DBException{
         try(Connection con = ConnectionPool.getInstance().getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(DBConstant.GET_PRODUCT_FROM_LOW_TO_HIGH)){
+            PreparedStatement stmt = con.prepareStatement(DBConstant.GET_PRODUCT_FROM_LOW_TO_HIGH, Statement.RETURN_GENERATED_KEYS)){
             con.setAutoCommit(false);
+            stmt.setString(1, login);
+            ResultSet rs = stmt.executeQuery();
             List<Product> result = new ArrayList<>();
             while(rs.next()){
                 result.add(creatingNewProduct(rs));
@@ -203,14 +229,16 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort from high to low price.
+     * @param login login, by which we check not subscription product.
      * @return product's list.
      * @throws DBException
      */
-    public List<Product> sortFromHighToLow() throws DBException{
+    public List<Product> sortFromHighToLow(String login) throws DBException{
         try(Connection con = ConnectionPool.getInstance().getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(DBConstant.GET_PRODUCT_FROM_HIGH_TO_LOW)){
+            PreparedStatement stmt = con.prepareStatement(DBConstant.GET_PRODUCT_FROM_HIGH_TO_LOW, Statement.RETURN_GENERATED_KEYS)){
             con.setAutoCommit(false);
+            stmt.setString(1, login);
+            ResultSet rs = stmt.executeQuery();
             List<Product> result = new ArrayList<>();
             while(rs.next()){
                 result.add(creatingNewProduct(rs));
@@ -228,11 +256,12 @@ public class MysqlProductDao implements ProductDao {
      * @return product's list.
      * @throws DBException
      */
-    public List<Product> sortFromAToZ() throws DBException{
+    public List<Product> sortFromAToZ(String login) throws DBException{
         try(Connection con = ConnectionPool.getInstance().getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(DBConstant.GET_PRODUCT_FROM_A_TO_Z)){
+            PreparedStatement stmt = con.prepareStatement(DBConstant.GET_PRODUCT_FROM_A_TO_Z, Statement.RETURN_GENERATED_KEYS)){
             con.setAutoCommit(false);
+            stmt.setString(1, login);
+            ResultSet rs = stmt.executeQuery();
             List<Product> result = new ArrayList<>();
             while(rs.next()){
                 result.add(creatingNewProduct(rs));
@@ -250,11 +279,12 @@ public class MysqlProductDao implements ProductDao {
      * @return product's list.
      * @throws DBException
      */
-    public List<Product> sortFromZToA() throws DBException{
+    public List<Product> sortFromZToA(String login) throws DBException{
         try(Connection con = ConnectionPool.getInstance().getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(DBConstant.GET_PRODUCT_FROM_Z_TO_A)){
+            PreparedStatement stmt = con.prepareStatement(DBConstant.GET_PRODUCT_FROM_Z_TO_A, Statement.RETURN_GENERATED_KEYS)){
             con.setAutoCommit(false);
+            stmt.setString(1, login);
+            ResultSet rs = stmt.executeQuery();
             List<Product> result = new ArrayList<>();
             while(rs.next()){
                 result.add(creatingNewProduct(rs));
@@ -272,11 +302,12 @@ public class MysqlProductDao implements ProductDao {
      * @return product's list.
      * @throws DBException
      */
-    public List<Product> sortFromNewToOld() throws DBException{
+    public List<Product> sortFromNewToOld(String login) throws DBException{
         try(Connection con = ConnectionPool.getInstance().getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(DBConstant.GET_PRODUCT_FROM_NEW_TO_OLD)){
+            PreparedStatement stmt = con.prepareStatement(DBConstant.GET_PRODUCT_FROM_NEW_TO_OLD, Statement.RETURN_GENERATED_KEYS)){
             con.setAutoCommit(false);
+            stmt.setString(1, login);
+            ResultSet rs = stmt.executeQuery();
             List<Product> result = new ArrayList<>();
             while(rs.next()){
                 result.add(creatingNewProduct(rs));
@@ -294,11 +325,12 @@ public class MysqlProductDao implements ProductDao {
      * @return product's list.
      * @throws DBException
      */
-    public List<Product> sortFromOldToNew() throws DBException{
+    public List<Product> sortFromOldToNew(String login) throws DBException{
         try(Connection con = ConnectionPool.getInstance().getConnection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(DBConstant.GET_PRODUCT_FROM_OLD_TO_NEW)){
+            PreparedStatement stmt = con.prepareStatement(DBConstant.GET_PRODUCT_FROM_OLD_TO_NEW, Statement.RETURN_GENERATED_KEYS)){
             con.setAutoCommit(false);
+            stmt.setString(1, login);
+            ResultSet rs = stmt.executeQuery();
             List<Product> result = new ArrayList<>();
             while(rs.next()){
                 result.add(creatingNewProduct(rs));
@@ -317,12 +349,13 @@ public class MysqlProductDao implements ProductDao {
      * @return product with those name.
      * @throws DBException
      */
-    public Product findProductByName(String name) throws DBException{
+    public Product findProductByName(String login, String name) throws DBException{
         try (Connection con = ConnectionPool.getInstance().getConnection();
-             PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_PRODUCT_BY_NAME)) {
+             PreparedStatement stmt = con.prepareStatement((DBConstant.FIND_PRODUCT_BY_NAME), Statement.RETURN_GENERATED_KEYS)) {
             con.setAutoCommit(false);
             name = "%" + name + "%";
             int i = 0;
+            stmt.setString(++i, login);
             stmt.setString(++i, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 Product product = null;
@@ -344,11 +377,12 @@ public class MysqlProductDao implements ProductDao {
      * @return product's list.
      * @throws DBException
      */
-    public List<Product> findProductByPrice(double startPrice, double endPrice) throws DBException{
+    public List<Product> findProductByPrice(String login, double startPrice, double endPrice) throws DBException{
         try (Connection con = ConnectionPool.getInstance().getConnection();
              PreparedStatement stmt = con.prepareStatement(DBConstant.GET_PRODUCT_BY_PRICE)) {
             con.setAutoCommit(false);
             int i = 0;
+            stmt.setString(++i, login);
             stmt.setDouble(++i, startPrice);
             stmt.setDouble(++i, endPrice);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -370,11 +404,12 @@ public class MysqlProductDao implements ProductDao {
      * @return product's list.
      * @throws DBException
      */
-    public List<Product> findProductsByCategory(String name) throws DBException{
+    public List<Product> findProductsByCategory(String login, String name) throws DBException{
         try (Connection con = ConnectionPool.getInstance().getConnection();
              PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_PRODUCT_BY_CATEGORY)) {
             con.setAutoCommit(false);
             int i = 0;
+            stmt.setString(++i, login);
             stmt.setString(++i, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 List<Product> result = new ArrayList<>();

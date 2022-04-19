@@ -12,29 +12,36 @@
     <div class="container">
         <div class="row">
             <div class="col-4">
-                <c:forEach var="product" items="${products}">
-                    <div class="card" style="width: 18rem;">
-                        <img src="img/${product.logo}" class="card-img-top" alt="logo">
-                        <div class="card-body">
-                            <h5 class="card-title">${product.name}</h5>
-                            <p class="card-text">${product.description}</p>
-                            <c:choose>
-                                <c:when test="${sessionScope.login ne null}">
-                                    <form action="buyProduct" method="post">
-                                        <input type="hidden" name="product" value="${product.name}">
-                                        <input type="submit" class="btn btn-primary" value="Buy for ${product.price} ₴">
-                                    </form>
-                                </c:when>
-                                <c:otherwise>
-                                    <form action="login.jsp">
-                                        <input type="submit" class="btn btn-primary" id="inf" href="login.jsp" value="Buy for ${product.price} ₴">
-                                        <label for="inf">You must be <a href="login.jsp">logged in</a> to buy this product.</label>
-                                    </form>
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </div>
-                </c:forEach>
+                <c:choose>
+                    <c:when test="${!products.isEmpty() && products.get(0) != null}">
+                        <c:forEach var="product" items="${products}">
+                            <div class="card" style="width: 18rem;">
+                                <img src="img/${product.logo}" class="card-img-top" alt="logo">
+                                <div class="card-body">
+                                    <h5 class="card-title">${product.name}</h5>
+                                    <p class="card-text">${product.description}</p>
+                                    <c:choose>
+                                        <c:when test="${sessionScope.login ne null}">
+                                            <form action="buyProduct" method="post">
+                                                <input type="hidden" name="product" value="${product.name}">
+                                                <input type="submit" class="btn btn-primary" value="Buy for ${product.price} ₴">
+                                            </form>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <form action="login.jsp">
+                                                <input type="submit" class="btn btn-primary" id="inf" href="login.jsp" value="Buy for ${product.price} ₴">
+                                                <label for="inf">You must be <a href="login.jsp">logged in</a> to buy this product.</label>
+                                            </form>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <h4>Sorry, but no product was found!</h4>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="col-2">
                 <div class="dropdown">

@@ -35,7 +35,7 @@ public class AddNewProductServlet extends HttpServlet {
         product.setLogo(req.getParameter("logo"));
         product.setDescription(req.getParameter("description"));
         try {
-            if (productService.findProductByName(req.getParameter("name")).getName().equals(req.getParameter("name"))){
+            if (productService.getProductByName(req.getParameter("name")) != null){
                 LOG.trace("There is product with the same name in db!");
                 addingNewProduct = "There is product with the same name in db!";
             }

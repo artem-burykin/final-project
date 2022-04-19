@@ -25,8 +25,8 @@ public class FilterProductByPrice extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            List<Product> products = productService.findProductByPrice(Double.parseDouble(req.getParameter("startPrice")),
-                    Double.parseDouble(req.getParameter("endPrice")));
+            List<Product> products = productService.findProductByPrice((String) req.getSession().getAttribute("login"),
+                    Double.parseDouble(req.getParameter("startPrice")), Double.parseDouble(req.getParameter("endPrice")));
             List<Category> categories = categoryService.findAllCategories();
             LOG.trace("List with all products between prices was taken:");
             req.setAttribute("products", products);

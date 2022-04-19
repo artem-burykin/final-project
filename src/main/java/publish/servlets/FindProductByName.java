@@ -27,9 +27,9 @@ public class FindProductByName extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             List<Product> products = new ArrayList<>();
-            products.add(productService.findProductByName(req.getParameter("name")));
+            products.add(productService.findProductByName((String) req.getSession().getAttribute("login"), req.getParameter("name")));
             List<Category> categories = categoryService.findAllCategories();
-            LOG.trace("List with all product was taken:");
+            LOG.trace("List with product was taken:");
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
             req.getRequestDispatcher("index.jsp").forward(req, resp);

@@ -25,7 +25,7 @@ public class SortProductFromNewToOld extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            List<Product> products = productService.sortFromNewToOld();
+            List<Product> products = productService.sortFromNewToOld((String) req.getSession().getAttribute("login"));
             List<Category> categories = categoryService.findAllCategories();
             LOG.trace("List with sorting product from new to old was taken:");
             req.setAttribute("products", products);

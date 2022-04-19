@@ -25,7 +25,7 @@ public class FilterProductsByCategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            List<Product> products = productService.findProductsByCategory(req.getParameter("categoryName"));
+            List<Product> products = productService.findProductsByCategory((String) req.getSession().getAttribute("login"), req.getParameter("categoryName"));
             List<Category> categories = categoryService.findAllCategories();
             LOG.trace("List with all products those category was taken:");
             req.setAttribute("products", products);

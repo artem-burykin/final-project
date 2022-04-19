@@ -30,10 +30,10 @@ public class TopUpScoreServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         double newScore = 0;
         try {
-            newScore = accountService.findByLogin((String) LoginServlet.session.getAttribute("login")).getScore() + Double.parseDouble(req.getParameter("score"));
-            accountService.updateScore(newScore, (String) LoginServlet.session.getAttribute("login"));
-            LoginServlet.session.removeAttribute("score");
-            LoginServlet.session.setAttribute("score", newScore);
+            newScore = accountService.findByLogin((String) req.getSession().getAttribute("login")).getScore() + Double.parseDouble(req.getParameter("score"));
+            accountService.updateScore(newScore, (String) req.getSession().getAttribute("login"));
+            req.getSession().removeAttribute("score");
+            req.getSession().setAttribute("score", newScore);
             LOG.trace("Topping up was successfully.");
             out.println("<center>");
             out.println("<div style=\"position: absolute; " +

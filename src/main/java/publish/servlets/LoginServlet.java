@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 @WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
     private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(LoginServlet.class);
-    static HttpSession session = null;
+    HttpSession session = null;
     AccountService accountService = new AccountServiceImpl();
 
     /**

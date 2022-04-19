@@ -25,7 +25,7 @@ public class SortProductFromAToZ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            List<Product> products = productService.sortFromAToZ();
+            List<Product> products = productService.sortFromAToZ((String) req.getSession().getAttribute("login"));
             List<Category> categories = categoryService.findAllCategories();
             LOG.trace("List with sorting product from a to z was taken:");
             req.setAttribute("products", products);

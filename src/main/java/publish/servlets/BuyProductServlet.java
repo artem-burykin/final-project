@@ -27,15 +27,15 @@ public class BuyProductServlet extends HttpServlet {
         LOG.trace("Starting buy product:");
         PrintWriter out = resp.getWriter();
         try {
-            Product product = productService.findProductByName(req.getParameter("product"));
-            double startAccountScore = accountService.findByLogin((String) LoginServlet.session.getAttribute("login")).getScore();
+            Product product = productService.getProductByName(req.getParameter("product"));
+            double startAccountScore = accountService.findByLogin((String) req.getSession().getAttribute("login")).getScore();
             if (startAccountScore > product.getPrice()){
                 Order order = OrderServiceImpl.getOrder(product.getPrice(),
-                        accountService.findByLogin((String) LoginServlet.session.getAttribute("login")).getId(), product.getId());
+                        accountService.findByLogin((String) req.getSession().getAttribute("login")).getId(), product.getId());
                 double scoreAfterBuying = startAccountScore - product.getPrice();
-                accountService.updateScore(scoreAfterBuying, (String) LoginServlet.session.getAttribute("login"));
-                LoginServlet.session.removeAttribute("score");
-                LoginServlet.session.setAttribute("score", scoreAfterBuying);
+                accountService.updateScore(scoreAfterBuying, (String) req.getSession().getAttribute("login"));
+                req.getSession().removeAttribute("score");
+                req.getSession().setAttribute("score", scoreAfterBuying);
                 order.setDescription("");
                 orderService.insertOrder(order);
                 System.out.println("hello");

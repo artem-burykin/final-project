@@ -26,7 +26,7 @@ public class ShowProductsWithSubscription extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Product> products = null;
         try {
-            products = productService.findAllSubscribeProduct((String) LoginServlet.session.getAttribute("login"));
+            products = productService.findAllSubscribeProduct((String) req.getSession().getAttribute("login"));
             LOG.trace("List with all product was taken:");
             req.setAttribute("products", products);
             req.getRequestDispatcher("profile.jsp").forward(req, resp);

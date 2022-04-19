@@ -10,50 +10,60 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     private final ProductDao productDao = DaoFactory.getInstance().getProductDao();
 
+
+
     public static Product getProduct(String name, double price, int category_id){
         return Product.createProduct(name, price, category_id);
     }
 
 
     @Override
-    public List<Product> sortFromLowToHigh() throws DBException {
-        return productDao.sortFromLowToHigh();
+    public Product getProductByName(String name) throws DBException {
+        return productDao.getProductByName(name);
     }
 
     @Override
-    public List<Product> sortFromHighToLow() throws DBException {
-        return productDao.sortFromHighToLow();
+    public List<Product> sortFromLowToHigh(String login) throws DBException {
+        return productDao.sortFromLowToHigh(login);
     }
 
     @Override
-    public List<Product> sortFromAToZ() throws DBException {
-        return productDao.sortFromAToZ();
+    public List<Product> sortFromHighToLow(String login) throws DBException {
+        return productDao.sortFromHighToLow(login);
     }
 
     @Override
-    public List<Product> sortFromZToA() throws DBException {
-        return productDao.sortFromZToA();
+    public List<Product> sortFromAToZ(String login) throws DBException {
+        return productDao.sortFromAToZ(login);
     }
 
     @Override
-    public Product findProductByName(String name) throws DBException {
-        return productDao.findProductByName(name);
+    public List<Product> sortFromZToA(String login) throws DBException {
+        return productDao.sortFromZToA(login);
     }
 
     @Override
-    public List<Product> findProductByPrice(double startPrice, double endPrice) throws DBException {
-        return productDao.findProductByPrice(startPrice, endPrice);
+    public Product findProductByName(String login, String name) throws DBException {
+        return productDao.findProductByName(login, name);
     }
 
     @Override
-    public List<Product> sortFromOldToNew() throws DBException {
-        return productDao.sortFromOldToNew();
+    public List<Product> findProductByPrice(String login, double startPrice, double endPrice) throws DBException {
+        return productDao.findProductByPrice(login, startPrice, endPrice);
     }
 
+
     @Override
-    public List<Product> sortFromNewToOld() throws DBException {
-        return productDao.sortFromNewToOld();
+    public List<Product> sortFromOldToNew(String login) throws DBException {
+        return productDao.sortFromOldToNew(login);
     }
+
+
+    @Override
+    public List<Product> sortFromNewToOld(String login) throws DBException {
+        return productDao.sortFromNewToOld(login);
+    }
+
 
     @Override
     public boolean insertProduct(Product product) throws DBException {
@@ -81,9 +91,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findProductsByCategory(String name) throws DBException {
-        return productDao.findProductsByCategory(name);
+    public List<Product> findProductsByCategory(String login, String name) throws DBException {
+        return productDao.findProductsByCategory(login, name);
     }
+
 
     @Override
     public void updateProductPrice(double price, String name) throws DBException {
