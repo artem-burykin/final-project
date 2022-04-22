@@ -1,18 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<!DOCTYPE html>
 <html>
 <head>
     <title>Administration</title>
+    <meta charset="UTF-8">
+    <link rel="icon" href="img/icon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>
     <jsp:include page="fragments/header.jsp"></jsp:include>
     <h3>Hello, ${sessionScope.login}</h3>
+    <p class="h4" align="center" style="color: ${sessionScope.color}">Status previous action on admin page: ${sessionScope.status}</p>
     <div class="container">
         <div class="row">
             <h2>Add new product</h2>
-            <form method="post" action="addNewProduct">
+            <form method="post" action="administration/addNewProduct">
                 <div class="col-4">
                     <input type="text" class="form-control" name="name" placeholder="Name of product" required>
                 </div>
@@ -74,7 +78,7 @@
                             <hr>
                             <p class="h5" align="center">OR</p>
                             <hr>
-                            <form action="changeProductLogo" method="post">
+                            <form action="administration/changeProductLogo" method="post">
                                 <input type="hidden" name="name" value="${product.name}">
                                 <input type="text" name="logo" placeholder="New logo">
                                 <input type="submit" class="btn btn-primary mt-1" value="Update">
@@ -85,7 +89,7 @@
                             <hr>
                             <p class="h5" align="center">OR</p>
                             <hr>
-                            <form action="changeProductDescription" method="post">
+                            <form action="administration/changeProductDescription" method="post">
                                 <input type="hidden" name="name" value="${product.name}">
                                 <input type="text" name="description" placeholder="New description">
                                 <br>
@@ -97,14 +101,14 @@
                             <hr>
                             <p class="h5" align="center">OR</p>
                             <hr>
-                            <form action="changeProductPrice" method="post">
+                            <form action="administration/changeProductPrice" method="post">
                                 <input type="hidden" name="name" value="${product.name}">
                                 <input type="number" min="0" name="price" placeholder="New price">
                                 <input type="submit" class="btn btn-primary mt-1" value="Update">
                             </form>
                         </div>
                         <div class="col-1">
-                            <form action="removeProduct" method="post">
+                            <form action="administration/removeProduct" method="post">
                                 <input type="hidden" name="name" value="${product.name}">
                                 <input type="submit" class="btn btn-primary" value="Remove">
                             </form>
@@ -167,13 +171,13 @@
                             <p>${account.isBlocked}</p>
                         </div>
                         <div class="col-1">
-                            <form action="blockAccount" method="post">
+                            <form action="administration/blockAccount" method="post">
                                 <input type="hidden" name="login" value="${account.login}">
                                 <input type="submit" class="btn btn-primary" value="Block">
                             </form>
                         </div>
                         <div class="col-1">
-                            <form action="unblockAccount" method="post">
+                            <form action="administration/unblockAccount" method="post">
                                 <input type="hidden" name="login" value="${account.login}">
                                 <input type="submit" class="btn btn-primary" value="Unblock">
                             </form>

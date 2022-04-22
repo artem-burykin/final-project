@@ -1,4 +1,4 @@
-package publish.servlets;
+package publish.servlets.user;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +13,7 @@ import java.io.IOException;
  * Servlet for user's logout.
  * @author Burykin
  */
-@WebServlet("/logoutServlet")
+@WebServlet("/user/logout")
 public class LogoutServlet extends HttpServlet {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(LogoutServlet.class);
 
@@ -23,8 +23,8 @@ public class LogoutServlet extends HttpServlet {
         HttpSession session = req.getSession();
         if(session != null) {
             session.setAttribute("login", null);
+            session.setAttribute("role", null);
             LOG.info("User loges out successfully!");
-            resp.sendRedirect("/publish/");
         }
     }
 }

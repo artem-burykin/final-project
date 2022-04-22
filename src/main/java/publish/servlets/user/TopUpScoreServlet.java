@@ -1,4 +1,4 @@
-package publish.servlets;
+package publish.servlets.user;
 
 import publish.db.dao.DBException;
 import publish.service.AccountService;
@@ -16,7 +16,7 @@ import java.io.PrintWriter;
  * Servlet for topping up user's score.
  * @author Burykin
  */
-@WebServlet("/topUpScore")
+@WebServlet("/user/topUpScore")
 public class TopUpScoreServlet extends HttpServlet {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(TopUpScoreServlet.class);
     private final AccountService accountService = new AccountServiceImpl();

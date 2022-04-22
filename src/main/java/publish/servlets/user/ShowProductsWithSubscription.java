@@ -1,4 +1,4 @@
-package publish.servlets;
+package publish.servlets.user;
 
 import publish.db.dao.DBException;
 import publish.db.entity.Product;
@@ -17,7 +17,7 @@ import java.util.List;
  * Servlet for show all product with subscription, work only into user's profile.
  * @author Burykin
  */
-@WebServlet("/showProductWithSubscription")
+@WebServlet("/user/showProductWithSubscription")
 public class ShowProductsWithSubscription extends HttpServlet {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ShowProductsWithSubscription.class);
     private final ProductService productService = new ProductServiceImpl();
@@ -29,8 +29,7 @@ public class ShowProductsWithSubscription extends HttpServlet {
             LOG.info("Start searching all products with subscription.");
             products = productService.findAllSubscribeProduct((String) req.getSession().getAttribute("login"));
             LOG.info("List with all product was taken.");
-            req.setAttribute("products", products);
-            req.getRequestDispatcher("profile.jsp").forward(req, resp);
+            req.getSession().setAttribute("products", products);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());

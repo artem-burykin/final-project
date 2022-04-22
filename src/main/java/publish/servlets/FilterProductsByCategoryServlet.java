@@ -35,6 +35,8 @@ public class FilterProductsByCategoryServlet extends HttpServlet {
             LOG.info("List with all products those category was taken.");
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
+            req.getSession().setAttribute("status", "Filtration by category was successful!");
+            req.getSession().setAttribute("color", "#0fdc70");
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);

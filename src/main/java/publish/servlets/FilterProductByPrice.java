@@ -30,12 +30,33 @@ public class FilterProductByPrice extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             LOG.info("Starting filtration between price.");
-            List<Product> products = productService.findProductByPrice((String) req.getSession().getAttribute("login"),
-                    Double.parseDouble(req.getParameter("startPrice")), Double.parseDouble(req.getParameter("endPrice")));
+            List<Product> products = null;
+            if (req.getParameter("startPrice").equals("") && req.getParameter("endPrice").equals("")){
+                products = productService.findProductByPrice((String) req.getSession().getAttribute("login"),
+                        0, Double.MAX_VALUE);
+            }
+            else {
+                if (req.getParameter("startPrice").equals("")){
+                    products = productService.findProductByPrice((String) req.getSession().getAttribute("login"),
+                            0, Double.parseDouble(req.getParameter("endPrice")));
+                }
+                else {
+                    if (req.getParameter("endPrice").equals("")) {
+                        products = productService.findProductByPrice((String) req.getSession().getAttribute("login"),
+                                Double.parseDouble(req.getParameter("startPrice")), Double.MAX_VALUE);
+                    }
+                    else {
+                        products = productService.findProductByPrice((String) req.getSession().getAttribute("login"),
+                                Double.parseDouble(req.getParameter("startPrice")), Double.parseDouble(req.getParameter("endPrice")));
+                    }
+                }
+            }
             List<Category> categories = categoryService.findAllCategories();
             LOG.info("List with all products between prices was taken.");
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
+            req.getSession().setAttribute("status", "Filtration by price was successful!");
+            req.getSession().setAttribute("color", "#0fdc70");
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);

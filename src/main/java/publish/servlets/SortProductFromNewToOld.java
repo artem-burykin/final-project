@@ -35,6 +35,8 @@ public class SortProductFromNewToOld extends HttpServlet {
             LOG.info("List with sorting product from new to old was taken:");
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
+            req.getSession().setAttribute("status", "Sorting from New to Old was successful!");
+            req.getSession().setAttribute("color", "#0fdc70");
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);

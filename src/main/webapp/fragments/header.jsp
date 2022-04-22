@@ -15,7 +15,7 @@
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/publish/" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="" class="nav-link px-2 link-dark">FAQs</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">FAQs</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">About</a></li>
         </ul>
         <c:choose>
@@ -29,14 +29,14 @@
                 <c:choose>
                     <c:when test="${sessionScope.login eq 'admin'}">
                         <div class="col-md-3 text-end">
-                            <a href="showProductsAndCategories" class="btn btn-outline-primary me-2">Admin page</a>
-                            <a href="logoutServlet" class="btn btn-outline-primary me-2">Log out</a>
+                            <a href="administration/showProductsAndCategories" class="btn btn-outline-primary me-2">Admin page</a>
+                            <a href="user/logout" class="btn btn-outline-primary me-2">Log out</a>
                         </div>
                     </c:when>
                     <c:otherwise>
                         <div class="col-md-3 text-end">
-                            <a href="showProductWithSubscription" class="btn btn-outline-primary me-2">My profile</a>
-                            <a href="logoutServlet" class="btn btn-outline-primary me-2">Log out</a>
+                            <a href="user/showProductWithSubscription" class="btn btn-outline-primary me-2">My profile</a>
+                            <a href="user/logout" class="btn btn-outline-primary me-2">Log out</a>
                         </div>
                     </c:otherwise>
                 </c:choose>

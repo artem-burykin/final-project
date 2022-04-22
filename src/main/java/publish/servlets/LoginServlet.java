@@ -47,8 +47,9 @@ public class LoginServlet extends HttpServlet {
                session = req.getSession(true);
                session.setMaxInactiveInterval(-1);
                session.setAttribute("login", req.getParameter("login"));
+               session.setAttribute("role", "admin");
                LOG.info("Admin loges in successfully!");
-               resp.sendRedirect("/publish/showProductsAndCategories");
+               resp.sendRedirect(req.getContextPath() + "/administration/showProductsAndCategories");
                return;
             }
         } catch (DBException e) {
@@ -83,9 +84,10 @@ public class LoginServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
             }
             session.setAttribute("login", login);
+            session.setAttribute("role", "user");
             session.setAttribute("score", score);
             LOG.info("User loges in successfully!");
-            resp.sendRedirect("/publish/");
+            resp.sendRedirect(req.getContextPath());
         } else {
             Account account = null;
             try {

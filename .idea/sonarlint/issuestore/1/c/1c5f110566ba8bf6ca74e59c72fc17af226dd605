@@ -1,5 +1,0 @@
-
-|
-java:S1149"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(ö¬Š‡8Şï³¨ÿ/
-i
-java:S5998"LRefactor this repetition that can lead to a stack overflow for large inputs.(ú¦8ëï³¨ÿ/

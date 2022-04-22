@@ -37,6 +37,8 @@ public class FindProductByName extends HttpServlet {
             LOG.info("List with product was taken:");
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
+            req.getSession().setAttribute("status", "Searching was successful!");
+            req.getSession().setAttribute("color", "#0fdc70");
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);

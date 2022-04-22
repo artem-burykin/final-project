@@ -35,6 +35,8 @@ public class SortProductFromLowToHigh extends HttpServlet {
             LOG.info("List with sorting product from :ow to High price was taken:");
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
+            req.getSession().setAttribute("status", "Sorting from Low to High was successful!");
+            req.getSession().setAttribute("color", "#0fdc70");
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);

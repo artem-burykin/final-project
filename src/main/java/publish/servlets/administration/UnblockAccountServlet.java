@@ -16,7 +16,7 @@ import java.io.PrintWriter;
  * Admin servlet for unblocking user.
  * @author Burykin
  */
-@WebServlet("/unblockAccount")
+@WebServlet("/administration/unblockAccount")
 public class UnblockAccountServlet extends HttpServlet {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(UnblockAccountServlet.class);
     private final AccountService accountService = new AccountServiceImpl();
@@ -24,8 +24,8 @@ public class UnblockAccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = resp.getWriter();
         String status = "";
+        String color = "";
         LOG.info("Checking state of blocking of user.");
         try {
             if(accountService.checkingUserBlock(req.getParameter("login")) == 1) {
@@ -33,10 +33,13 @@ public class UnblockAccountServlet extends HttpServlet {
                 accountService.changingUserBlock(0, req.getParameter("login"));
                 LOG.info("User is unblocked successfully!");
                 status = "User is unblocked successfully!";
+                color = "#0fdc70";
+                req.getSession().setAttribute("accounts", accountService.findAllAccounts());
             }
             else {
                 LOG.warn("Unblocking is impossible because user has already unblocked.");
                 status = "Unblocking is impossible because user has already unblocked!";
+                color = "#fb0349";
             }
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
@@ -44,22 +47,7 @@ public class UnblockAccountServlet extends HttpServlet {
             req.setAttribute("code", e.getErrorCode());
             getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
-
-        out.println("<center>");
-        out.println("<div style=\"position: absolute; " +
-                "top: 50%; " +
-                "left: 50%; " +
-                "transform: translate(-50%, -50%);\">");
-        out.println("<h1>" + status + "</h1>");
-        out.println("<div style=\"margin-top: 40px;\"><a href=\"/publish/showProductsAndCategories\" style=\"" +
-                "text-align: center; " +
-                "font-size: 18pt; " +
-                "color: #F8F2CA; " +
-                "border-radius: 4px; " +
-                "background-color: #925C32; " +
-                "padding: 20px 14px; " +
-                "text-decoration: none;\">On the admin page</a></div>");
-        out.println("</div>");
-        out.println("</center>");
+        req.getSession().setAttribute("status", status);
+        req.getSession().setAttribute("color", color);
     }
 }

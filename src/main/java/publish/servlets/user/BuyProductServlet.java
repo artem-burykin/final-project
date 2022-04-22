@@ -1,4 +1,4 @@
-package publish.servlets;
+package publish.servlets.user;
 
 import publish.db.dao.DBException;
 import publish.db.entity.Order;
@@ -17,7 +17,7 @@ import java.io.PrintWriter;
  * Servlet for buying product.
  * @author Burykin
  */
-@WebServlet("/buyProduct")
+@WebServlet("/user/buyProduct")
 public class BuyProductServlet extends HttpServlet {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(BuyProductServlet.class);
     private final AccountService accountService = new AccountServiceImpl();
@@ -30,7 +30,8 @@ public class BuyProductServlet extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8");
         LOG.info("Starting buy product.");
         PrintWriter out = resp.getWriter();
-        String status = "Your score less then product price. Please top up the score!";
+        String status = "";
+        String color = "";
         try {
             Product product = productService.getProductByName(req.getParameter("product"));
             double startAccountScore = accountService.findByLogin((String) req.getSession().getAttribute("login")).getScore();
@@ -46,9 +47,12 @@ public class BuyProductServlet extends HttpServlet {
                 orderService.insertOrder(order);
                 LOG.info("Trade was successfully.");
                 status = "Trade was successfully! You can check your subscription in your profile. Thank you!";
+                color = "#0fdc70";
             }
             else{
                 LOG.warn("User score less then product price.");
+                status = "Your score less then product price. Please top up the score!";
+                color = "#fb0349";
             }
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
@@ -56,22 +60,7 @@ public class BuyProductServlet extends HttpServlet {
             req.setAttribute("code", e.getErrorCode());
             getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
-
-        out.println("<center>");
-        out.println("<div style=\"position: absolute; " +
-                "top: 50%; " +
-                "left: 50%; " +
-                "transform: translate(-50%, -50%);\">");
-        out.println("<h1>" + status + "</h1>");
-        out.println("<div style=\"margin-top: 40px;\"><a href=\"/publish/\" style=\"" +
-                "text-align: center; " +
-                "font-size: 18pt; " +
-                "color: #F8F2CA; " +
-                "border-radius: 4px; " +
-                "background-color: #925C32; " +
-                "padding: 20px 14px; " +
-                "text-decoration: none;\">On the main page</a></div>");
-        out.println("</div>");
-        out.println("</center>");
+        req.getSession().setAttribute("status", status);
+        req.getSession().setAttribute("color", color);
     }
 }

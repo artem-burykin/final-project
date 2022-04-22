@@ -9,15 +9,6 @@
         <param-value>/META-INF/context.xml</param-value>
     </context-param>
 
-    <filter>
-        <filter-name>RegistrationFilter</filter-name>
-        <filter-class>publish.filters.RegistrationFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>RegistrationFilter</filter-name>
-        <url-pattern>/registration</url-pattern>
-    </filter-mapping>
-
     <welcome-file-list>
         <welcome-file>showAllProducts</welcome-file>
     </welcome-file-list>

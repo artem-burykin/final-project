@@ -5,11 +5,14 @@
 <html>
 <head>
     <title>Home</title>
+    <meta charset="UTF-8">
+    <link rel="icon" href="img/icon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
     <jsp:include page="fragments/header.jsp"></jsp:include>
+    <p class="h4" style="color: ${sessionScope.color}" align="center">User previous action: ${sessionScope.status}</p>
     <div class="container">
         <div class="row">
             <div class="col-4">
@@ -23,7 +26,7 @@
                                     <p class="card-text">${product.description}</p>
                                     <c:choose>
                                         <c:when test="${sessionScope.login ne null}">
-                                            <form action="buyProduct" method="post">
+                                            <form action="user/buyProduct" method="post">
                                                 <input type="hidden" name="product" value="${product.name}">
                                                 <input type="submit" class="btn btn-primary" value="Buy for ${product.price} ₴">
                                             </form>
@@ -46,7 +49,7 @@
             </div>
             <div class="col-2">
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Sorting
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -117,10 +120,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-8">
-                                <input type="text" name="name">
+                                <input type="text" name="name" required>
                             </div>
                             <div class="col-4">
-                                <input type="submit" value="Find">
+                                <input type="submit" class="btn btn-primary" value="Find">
                             </div>
                         </div>
                     </div>

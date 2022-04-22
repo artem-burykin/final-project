@@ -18,7 +18,7 @@ import java.util.List;
  * Admin servlet for showing all product, categories and accounts.
  * @author Burykin
  */
-@WebServlet("/showProductsAndCategories")
+@WebServlet("/administration/showProductsAndCategories")
 public class ShowProductsAndCategoriesServlet extends HttpServlet {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ShowProductsAndCategoriesServlet.class);
     private final ProductService productService = new ProductServiceImpl();
@@ -32,11 +32,12 @@ public class ShowProductsAndCategoriesServlet extends HttpServlet {
             List<Product> productList = productService.findAllProducts();
             List<Category> categoryList = categoryService.findAllCategories();
             List<Account> accountList = accountService.findAllAccounts();
-            LOG.info("List with all products, accounts and categories was taken:");
-            req.setAttribute("products", productList);
-            req.setAttribute("categories", categoryList);
-            req.setAttribute("accounts", accountList);
-            req.getRequestDispatcher("admin.jsp").forward(req, resp);
+            LOG.info("List with all products, accounts and categories was taken.");
+            req.getSession().setAttribute("products", productList);
+            req.getSession().setAttribute("categories", categoryList);
+            req.getSession().setAttribute("accounts", accountList);
+            req.getSession().setAttribute("status", "No action.");
+            req.getSession().setAttribute("color", "#212529");
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());

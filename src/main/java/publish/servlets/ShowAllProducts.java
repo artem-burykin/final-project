@@ -31,12 +31,14 @@ public class ShowAllProducts extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             LOG.info("Start searching all product.");
-            if (req.getSession() == null) {
+            if (req.getSession().getAttribute("login") == null) {
                 List<Product> products = productService.findAllProducts();
                 List<Category> categories = categoryService.findAllCategories();
                 LOG.info("List with all product and category was taken.");
                 req.setAttribute("products", products);
                 req.setAttribute("categories", categories);
+                req.getSession().setAttribute("status", "No action");
+                req.getSession().setAttribute("color", "#212529");
                 req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
             else{
@@ -45,6 +47,13 @@ public class ShowAllProducts extends HttpServlet {
                 LOG.info("List with all product and category was taken.");
                 req.setAttribute("products", products);
                 req.setAttribute("categories", categories);
+                if (!req.getSession().getAttribute("status").equals("Your score less then product price. Please top up the score!")
+                        && !req.getSession().getAttribute("status")
+                        .equals("Trade was successfully! You can check your subscription in your profile. Thank you!")){
+                    System.out.println("hello");
+                    req.getSession().setAttribute("status", "No action");
+                    req.getSession().setAttribute("color", "#212529");
+                }
                 req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
         } catch (DBException e) {

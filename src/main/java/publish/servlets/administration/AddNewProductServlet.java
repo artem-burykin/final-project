@@ -17,7 +17,7 @@ import java.io.PrintWriter;
  * Admin servlet for adding new product into db.
  * @author Burykin
  */
-@WebServlet("/addNewProduct")
+@WebServlet("/administration/addNewProduct")
 public class AddNewProductServlet extends HttpServlet {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(AddNewProductServlet.class);
     private final ProductService productService = new ProductServiceImpl();
@@ -26,22 +26,25 @@ public class AddNewProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = resp.getWriter();
         String status = "";
+        String color = "";
         LOG.info("Forming object of product for adding.");
         Product product = ProductServiceImpl.getProduct(req.getParameter("name"), Double.parseDouble(req.getParameter("price")), Integer.parseInt(req.getParameter("category_id")));
         product.setLogo(req.getParameter("logo"));
         product.setDescription(req.getParameter("description"));
         try {
-            if (productService.getProductByName(req.getParameter("name")) != null){
-                LOG.warn("There is product with the same name in db!");
-                status = "There is product with the same name in db!";
-            }
-            else {
+            if (productService.getProductByName(req.getParameter("name")) == null){
                 LOG.info("Doing insertion of product into db.");
                 productService.insertProduct(product);
                 LOG.info("Product is inserted successfully!");
+                req.getSession().setAttribute("products", productService.findAllProducts());
                 status= "Product is inserted successfully!";
+                color = "#0fdc70";
+            }
+            else {
+                LOG.warn("There is product with the same name in db!");
+                status = "There is product with the same name in db!";
+                color = "#fb0349";
             }
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
@@ -49,22 +52,7 @@ public class AddNewProductServlet extends HttpServlet {
             req.setAttribute("code", e.getErrorCode());
             getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
-
-        out.println("<center>");
-        out.println("<div style=\"position: absolute; " +
-                "top: 50%; " +
-                "left: 50%; " +
-                "transform: translate(-50%, -50%);\">");
-        out.println("<h1>" + status + "</h1>");
-        out.println("<div style=\"margin-top: 40px;\"><a href=\"/publish/showProductsAndCategories\" style=\"" +
-                "text-align: center; " +
-                "font-size: 18pt; " +
-                "color: #F8F2CA; " +
-                "border-radius: 4px; " +
-                "background-color: #925C32; " +
-                "padding: 20px 14px; " +
-                "text-decoration: none;\">On the admin page!</a></div>");
-        out.println("</div>");
-        out.println("</center>");
+        req.getSession().setAttribute("status", status);
+        req.getSession().setAttribute("color", color);
     }
 }

@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<!DOCTYPE html>
 <html>
 <head>
     <title>Profile</title>
+    <meta charset="UTF-8">
+    <link rel="icon" href="img/icon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>

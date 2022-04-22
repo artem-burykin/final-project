@@ -1,6 +1,7 @@
 package publish.filters;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.regex.Matcher;
@@ -10,6 +11,7 @@ import java.util.regex.Pattern;
  * Filter for validating input's data from registration form.
  * @author Burykin
  */
+@WebFilter("/registration")
 public class RegistrationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
@@ -74,5 +76,4 @@ public class RegistrationFilter implements Filter {
             out.println("</center>");
         }
     }
-
 }

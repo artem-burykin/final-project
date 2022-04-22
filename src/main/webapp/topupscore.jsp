@@ -1,21 +1,18 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: arta2
-  Date: 11.04.2022
-  Time: 13:41
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" %>
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>Top up</title>
+    <meta charset="UTF-8">
+    <link rel="icon" href="img/icon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
         <div class="row">
             <div class="span12">
-                <form class="form-horizontal span6" action="topUpScore" method="post">
+                <form class="form-horizontal span6" action="user/topUpScore" method="post">
                     <fieldset>
                         <legend>Payment</legend>
 
