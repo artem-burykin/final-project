@@ -3,7 +3,7 @@ package publish.db.dao;
 import java.sql.SQLException;
 
 /**
- * Database exception
+ * Database exception.
  * @author Burykin
  */
 public class DBException extends SQLException {

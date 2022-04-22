@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Account entity
+ * Account entity.
  * @author Burykin
  */
 public class Account implements Serializable {

@@ -17,18 +17,24 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet for show all product for non logged user and show all product without subscription for logged user.
+ * @author Burykin
+ */
 @WebServlet("/showAllProducts")
 public class ShowAllProducts extends HttpServlet {
-    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ShowAllProducts.class);
-    private ProductService productService = new ProductServiceImpl();
-    private CategoryService categoryService = new CategoryServiceImp();
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ShowAllProducts.class);
+    private final ProductService productService = new ProductServiceImpl();
+    private final CategoryService categoryService = new CategoryServiceImp();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            LOG.info("Start searching all product.");
             if (req.getSession() == null) {
                 List<Product> products = productService.findAllProducts();
                 List<Category> categories = categoryService.findAllCategories();
-                LOG.trace("List with all product and category was taken:");
+                LOG.info("List with all product and category was taken.");
                 req.setAttribute("products", products);
                 req.setAttribute("categories", categories);
                 req.getRequestDispatcher("index.jsp").forward(req, resp);
@@ -36,16 +42,16 @@ public class ShowAllProducts extends HttpServlet {
             else{
                 List<Product> products = productService.findAllNotSubscribeProduct((String) req.getSession().getAttribute("login"));
                 List<Category> categories = categoryService.findAllCategories();
-                LOG.trace("List with all product and category was taken:");
+                LOG.info("List with all product and category was taken.");
                 req.setAttribute("products", products);
                 req.setAttribute("categories", categories);
                 req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
         } catch (DBException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
+            req.setAttribute("message", e.getMessage());
+            req.setAttribute("code", e.getErrorCode());
+            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
-    }
-
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     }
 }

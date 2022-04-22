@@ -16,28 +16,31 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet for sorting products form New to Old.
+ * @author Burykin
+ */
 @WebServlet("/sortProductFromNewToOld")
 public class SortProductFromNewToOld extends HttpServlet {
-    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(SortProductFromNewToOld.class);
-    private ProductService productService = new ProductServiceImpl();
-    private CategoryService categoryService = new CategoryServiceImp();
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SortProductFromNewToOld.class);
+    private final ProductService productService = new ProductServiceImpl();
+    private final CategoryService categoryService = new CategoryServiceImp();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            LOG.info("Start sorting from New to Old.");
             List<Product> products = productService.sortFromNewToOld((String) req.getSession().getAttribute("login"));
             List<Category> categories = categoryService.findAllCategories();
-            LOG.trace("List with sorting product from new to old was taken:");
+            LOG.info("List with sorting product from new to old was taken:");
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (DBException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
+            req.setAttribute("message", e.getMessage());
+            req.setAttribute("code", e.getErrorCode());
+            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
     }
 }

@@ -7,13 +7,16 @@ import publish.db.entity.Category;
 
 import java.util.List;
 
+/**
+ * Implementation service for manage category.
+ * @author Burykin
+ */
 public class CategoryServiceImp implements CategoryService {
     private final CategoryDao categoryDao = DaoFactory.getInstance().getCategoryDao();
 
     public static Category getCategory (String name){
         return Category.createCategory(name);
     }
-
 
     @Override
     public List<Category> findAllCategories() throws DBException {

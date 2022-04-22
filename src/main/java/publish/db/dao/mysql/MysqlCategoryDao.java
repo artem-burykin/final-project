@@ -3,7 +3,6 @@ package publish.db.dao.mysql;
 import publish.db.dao.CategoryDao;
 import publish.db.dao.DBException;
 import publish.db.entity.Category;
-import publish.db.entity.Product;
 import publish.service.CategoryServiceImp;
 
 import java.sql.Connection;
@@ -34,6 +33,12 @@ public class MysqlCategoryDao implements CategoryDao {
         }
     }
 
+    /**
+     * Private auxiliary method for creating new category.
+     * @param rs result set, from which we take data.
+     * @return new category.
+     * @throws SQLException
+     */
     private Category creatingNewCategory(ResultSet rs) throws SQLException{
         Category category = CategoryServiceImp.getCategory(rs.getString(DBConstant.F_CATEGORY_NAME));
         category.setDescription(rs.getString(DBConstant.F_CATEGORY_DESCRIPTION));

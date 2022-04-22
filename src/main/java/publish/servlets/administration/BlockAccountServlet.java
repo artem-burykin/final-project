@@ -3,7 +3,6 @@ package publish.servlets.administration;
 import publish.db.dao.DBException;
 import publish.service.AccountService;
 import publish.service.AccountServiceImpl;
-import publish.servlets.BuyProductServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,30 +12,37 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Admin servlet for blocking user.
+ * @author Burykin
+ */
 @WebServlet("/blockAccount")
 public class BlockAccountServlet extends HttpServlet {
-    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(BlockAccountServlet.class);
-    private AccountService accountService = new AccountServiceImpl();
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(BlockAccountServlet.class);
+    private final AccountService accountService = new AccountServiceImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        String blockingUser = "";
-        LOG.trace("Checking state of blocking of user.");
+        String status = "";
+        LOG.info("Checking state of blocking of user.");
         try {
             if(accountService.checkingUserBlock(req.getParameter("login")) == 0) {
-                LOG.trace("User was unblocked.");
+                LOG.info("User was unblocked.");
                 accountService.changingUserBlock(1, req.getParameter("login"));
-                LOG.trace("User is blocked successfully!");
-                blockingUser = "User is blocked successfully!";
+                LOG.info("User is blocked successfully!");
+                status = "User is blocked successfully!";
             }
             else {
-                LOG.trace("Blocking is impossible because user has already blocked.");
-                blockingUser = "Blocking is impossible because user has already blocked!";
+                LOG.warn("Blocking is impossible because user has already blocked.");
+                status = "Blocking is impossible because user has already blocked!";
             }
         } catch (DBException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
+            req.setAttribute("message", e.getMessage());
+            req.setAttribute("code", e.getErrorCode());
+            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
 
         out.println("<center>");
@@ -44,7 +50,7 @@ public class BlockAccountServlet extends HttpServlet {
                 "top: 50%; " +
                 "left: 50%; " +
                 "transform: translate(-50%, -50%);\">");
-        out.println("<h1>" + blockingUser + "</h1>");
+        out.println("<h1>" + status + "</h1>");
         out.println("<div style=\"margin-top: 40px;\"><a href=\"/publish/showProductsAndCategories\" style=\"" +
                 "text-align: center; " +
                 "font-size: 18pt; " +
@@ -55,10 +61,5 @@ public class BlockAccountServlet extends HttpServlet {
                 "text-decoration: none;\">On the admin page</a></div>");
         out.println("</div>");
         out.println("</center>");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
     }
 }

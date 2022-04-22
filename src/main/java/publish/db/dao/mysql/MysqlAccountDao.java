@@ -3,7 +3,6 @@ package publish.db.dao.mysql;
 import publish.db.dao.AccountDao;
 import publish.db.dao.DBException;
 import publish.db.entity.Account;
-import publish.db.entity.Product;
 import publish.service.AccountServiceImpl;
 
 import java.sql.*;
@@ -32,6 +31,12 @@ public class MysqlAccountDao implements AccountDao {
         }
     }
 
+    /**
+     * Private auxiliary method for creating new account.
+     * @param rs result set, from which we take data.
+     * @return new account.
+     * @throws SQLException
+     */
     private Account creatingNewAccount(ResultSet rs) throws SQLException{
         Account account = AccountServiceImpl.getAccount(rs.getString(DBConstant.F_ACCOUNT_LOGIN),
                 rs.getString(DBConstant.F_ACCOUNT_PASSWORD), rs.getString(DBConstant.F_ACCOUNT_EMAIL),

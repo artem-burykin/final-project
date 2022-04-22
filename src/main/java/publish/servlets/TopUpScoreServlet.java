@@ -12,29 +12,31 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Servlet for topping up user's score.
+ * @author Burykin
+ */
 @WebServlet("/topUpScore")
 public class TopUpScoreServlet extends HttpServlet {
-    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(BuyProductServlet.class);
-    private AccountService accountService = new AccountServiceImpl();
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(TopUpScoreServlet.class);
+    private final AccountService accountService = new AccountServiceImpl();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
-        LOG.trace("Starting buy product:");
+        LOG.info("Start top up user's score.");
         PrintWriter out = resp.getWriter();
         double newScore = 0;
         try {
+            LOG.info("Receiving a new user's score.");
             newScore = accountService.findByLogin((String) req.getSession().getAttribute("login")).getScore() + Double.parseDouble(req.getParameter("score"));
             accountService.updateScore(newScore, (String) req.getSession().getAttribute("login"));
+            LOG.info("User's score was updated into db.");
             req.getSession().removeAttribute("score");
             req.getSession().setAttribute("score", newScore);
-            LOG.trace("Topping up was successfully.");
+            LOG.info("Topping up was successfully.");
+
             out.println("<center>");
             out.println("<div style=\"position: absolute; " +
                     "top: 50%; " +
@@ -52,7 +54,10 @@ public class TopUpScoreServlet extends HttpServlet {
             out.println("</div>");
             out.println("</center>");
         } catch (DBException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
+            req.setAttribute("message", e.getMessage());
+            req.setAttribute("code", e.getErrorCode());
+            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 }

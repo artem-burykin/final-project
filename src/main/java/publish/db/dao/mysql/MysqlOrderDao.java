@@ -26,6 +26,12 @@ public class MysqlOrderDao implements OrderDao {
         }
     }
 
+    /**
+     * Private auxiliary method for creating new order.
+     * @param rs result set, from which we take data.
+     * @return new order.
+     * @throws SQLException
+     */
     private Order creatingNewOrder(ResultSet rs) throws SQLException {
         Order order = OrderServiceImpl.getOrder(rs.getDouble(DBConstant.F_ORDER_TOTAL), rs.getInt(DBConstant.F_ORDER_ACCOUNT_ID),
                 rs.getInt(DBConstant.F_ORDER_PRODUCT_ID));

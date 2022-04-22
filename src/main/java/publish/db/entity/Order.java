@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 /**
- * Order entity
+ * Order entity.
  * @author Burykin
  */
 public class Order implements Serializable {

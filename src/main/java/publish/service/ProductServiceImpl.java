@@ -7,6 +7,10 @@ import publish.db.entity.Product;
 
 import java.util.List;
 
+/**
+ * Implementation service for manage product.
+ * @author Burykin
+ */
 public class ProductServiceImpl implements ProductService {
     private final ProductDao productDao = DaoFactory.getInstance().getProductDao();
 

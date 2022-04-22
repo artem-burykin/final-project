@@ -5,6 +5,10 @@ import publish.db.entity.Product;
 
 import java.util.List;
 
+/**
+ * Service for manage product.
+ * @author Burykin
+ */
 public interface ProductService {
     Product getProductByName(String name) throws DBException;
     List<Product> sortFromLowToHigh(String login) throws DBException;

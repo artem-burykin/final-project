@@ -12,22 +12,29 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Admin servlet for changing product description.
+ * @author Buykin
+ */
 @WebServlet("/changeProductDescription")
 public class ChangeProductDescriptionServlet extends HttpServlet {
-    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ChangeProductDescriptionServlet.class);
-    private ProductService productService = new ProductServiceImpl();
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ChangeProductDescriptionServlet.class);
+    private final ProductService productService = new ProductServiceImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        LOG.trace("Changing product's description.");
+        LOG.info("Changing product description.");
         try {
             productService.updateProductDescription(req.getParameter("description"), req.getParameter("name"));
-            LOG.trace("Description is changed successfully!");
+            LOG.info("Description is changed successfully!");
         } catch (DBException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
+            req.setAttribute("message", e.getMessage());
+            req.setAttribute("code", e.getErrorCode());
+            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
 
         out.println("<center>");
@@ -46,10 +53,5 @@ public class ChangeProductDescriptionServlet extends HttpServlet {
                 "text-decoration: none;\">On the admin page</a></div>");
         out.println("</div>");
         out.println("</center>");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
     }
 }

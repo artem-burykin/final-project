@@ -5,6 +5,10 @@ import publish.db.entity.Account;
 
 import java.util.List;
 
+/**
+ * Service for manage account.
+ * @author Burykin
+ */
 public interface AccountService {
     Account findByLogin(String login) throws DBException;
     boolean insertAccount (Account account) throws DBException;

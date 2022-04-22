@@ -31,6 +31,12 @@ public class MysqlProductDao implements ProductDao {
         }
     }
 
+    /**
+     * Private auxiliary method for creating new product.
+     * @param rs result set, from which we take data.
+     * @return new product.
+     * @throws SQLException
+     */
     private Product creatingNewProduct (ResultSet rs) throws SQLException {
         Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
                 rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
@@ -206,6 +212,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort from low to high price.
+     * @param login account's login, by which we found subscribe products.
      * @return product's list.
      * @throws DBException
      */
@@ -253,6 +260,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort product's name from A to Z.
+     * @param login account's login, by which we found subscribe products.
      * @return product's list.
      * @throws DBException
      */
@@ -276,6 +284,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort product's name from Z to A.
+     * @param login account's login, by which we found subscribe products.
      * @return product's list.
      * @throws DBException
      */
@@ -299,6 +308,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort product from new to old.
+     * @param login account's login, by which we found subscribe products.
      * @return product's list.
      * @throws DBException
      */
@@ -322,6 +332,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort product from old to new.
+     * @param login account's login, by which we found subscribe products.
      * @return product's list.
      * @throws DBException
      */
@@ -345,6 +356,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Find product by name.
+     * @param login account's login, by which we found subscribe products.
      * @param name name, by which we search product.
      * @return product with those name.
      * @throws DBException
@@ -372,6 +384,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Filter product from startPrice to endPrice.
+     * @param login account's login, by which we found subscribe products.
      * @param startPrice startPrice, price from which started find product.
      * @param endPrice endPrice, price to which continued find product.
      * @return product's list.
@@ -400,6 +413,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Filter product by category.
+     * @param login account's login, by which we found subscribe products.
      * @param name category's name, by which product user found.
      * @return product's list.
      * @throws DBException
@@ -455,6 +469,7 @@ public class MysqlProductDao implements ProductDao {
             int i = 0;
             stmt.setString(++i, logo);
             stmt.setString(++i, name);
+            System.out.println("Запрос: " + stmt);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

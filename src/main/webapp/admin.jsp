@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-8"></div>
                 <br>
-                <div class="col-1">
+                <div class="col-2">
                     <input type="number" class="form-control" name="price" min="0" placeholder="Price of product" required>
                 </div>
                 <br>
@@ -53,12 +53,12 @@
                         <h5>Name</h5>
                     </div>
                     <div class="col-2">
-                        Logo
+                        <h5>Logo</h5>
                     </div>
-                    <div class="col-5">
+                    <div class="col-4">
                         <h5>Description</h5>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2">
                         <h5>Price</h5>
                     </div>
                     <div class="col-1"></div>
@@ -71,84 +71,37 @@
                         </div>
                         <div class="col-2">
                             <p>${product.logo}</p>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateLogoModal">
-                                Update
-                            </button>
-
-                            <div class="modal fade" id="updateLogoModal" tabindex="-1" aria-labelledby="updateLogoModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="updateLogoModalLabel">Updating logo</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="close"></button>
-                                        </div>
-                                        <form action="changeProductLogo" method="post">
-                                            <div class="modal-body">
-                                                <input type="hidden" name="name" value="${product.name}">
-                                                <input type="text" name="logo" placeholder="New product's logo" required>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <input type="submit" class="btn btn-primary" value="Update">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <hr>
+                            <p class="h5" align="center">OR</p>
+                            <hr>
+                            <form action="changeProductLogo" method="post">
+                                <input type="hidden" name="name" value="${product.name}">
+                                <input type="text" name="logo" placeholder="New logo">
+                                <input type="submit" class="btn btn-primary mt-1" value="Update">
+                            </form>
                         </div>
-                        <div class="col-5">
+                        <div class="col-4">
                             <p>${product.description}</p>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateDescriptionModal">
-                                Update
-                            </button>
-
-                            <div class="modal fade" id="updateDescriptionModal" tabindex="-1" aria-labelledby="updateDescriptionModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="updateDescriptionModalLabel">Updating description</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="close"></button>
-                                        </div>
-                                        <form action="changeProductDescription" method="post">
-                                            <div class="modal-body">
-                                                <input type="hidden" name="name" value="${product.name}">
-                                                <input type="text" name="description" placeholder="New product's description" required>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <input type="submit" class="btn btn-primary" value="Update">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <hr>
+                            <p class="h5" align="center">OR</p>
+                            <hr>
+                            <form action="changeProductDescription" method="post">
+                                <input type="hidden" name="name" value="${product.name}">
+                                <input type="text" name="description" placeholder="New description">
+                                <br>
+                                <input type="submit" class="btn btn-primary mt-1" value="Update">
+                            </form>
                         </div>
-                        <div class="col-1">
+                        <div class="col-2">
                             <p>${product.price}</p>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatePriceModal">
-                                Update
-                            </button>
-
-                            <div class="modal fade" id="updatePriceModal" tabindex="-1" aria-labelledby="updatePriceModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="updatePriceModalLabel">Updating price</h5>
-                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="close"></button>
-                                        </div>
-                                        <form action="changeProductPrice" method="post">
-                                            <div class="modal-body">
-                                                <input type="hidden" name="name" value="${product.name}">
-                                                <input type="number" name="price" min="0" required>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <input type="submit" class="btn btn-primary" value="Update">
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <hr>
+                            <p class="h5" align="center">OR</p>
+                            <hr>
+                            <form action="changeProductPrice" method="post">
+                                <input type="hidden" name="name" value="${product.name}">
+                                <input type="number" min="0" name="price" placeholder="New price">
+                                <input type="submit" class="btn btn-primary mt-1" value="Update">
+                            </form>
                         </div>
                         <div class="col-1">
                             <form action="removeProduct" method="post">
@@ -228,9 +181,6 @@
                     </c:forEach>
                 </div>
             </div>
-            <form action="">
-
-            </form>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -15,25 +15,16 @@ import java.io.IOException;
  */
 @WebServlet("/logoutServlet")
 public class LogoutServlet extends HttpServlet {
-    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(LogoutServlet.class);
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(LogoutServlet.class);
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest, HttpServletResponse)
-     */
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOG.trace("Starting log out:");
+        LOG.info("Start log out.");
         HttpSession session = req.getSession();
         if(session != null) {
             session.setAttribute("login", null);
-            LOG.trace("User loges out successfully!");
+            LOG.info("User loges out successfully!");
             resp.sendRedirect("/publish/");
         }
-    }
-
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest, HttpServletResponse)
-     */
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doGet(req, resp);
     }
 }

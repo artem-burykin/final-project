@@ -18,12 +18,6 @@ public abstract class DBConstant {
     public static final String IS_ADMIN = "SELECT EXISTS (SELECT account.id FROM account join role on account.role_id = role.id WHERE role.name = 'Administrator' AND account.login = (?));";
 
 
-//    //Queries of ROLE
-//    public static final String GET_ROLE_BY_ID = "SELECT * FROM role WHERE id = (?);";
-//    public static final String GET_ROLE_BY_NAME = "SELECT * FROM role WHERE name = (?);";
-//    public static final String INSERT_ROLE = "INSERT INTO role (name, description) VALUES ((?), (?));";
-//    public static final String DELETE_ROLE = "DELETE FROM role WHERE name = (?);";
-
     //Queries of PRODUCT
     public static final String FIND_ALL_PRODUCTS = "SELECT * FROM product;";
     public static final String GET_PRODUCT_BY_NAME = "SELECT * FROM product WHERE name like (?);";
@@ -45,8 +39,7 @@ public abstract class DBConstant {
     public static final String UPDATE_PRODUCT_DESCRIPTION = "UPDATE product SET description = (?) WHERE name = (?);";
 
 
-//    Queries of CATEGORY
-//    public static final String GET_CATEGORY_BY_NAME = "SELECT * FROM category WHERE name = (?);";
+//  Queries of CATEGORY
     public static final String FIND_ALL_CATEGORIES = "SELECT * FROM category;";
 
     //Queries of ORDER
@@ -72,11 +65,6 @@ public abstract class DBConstant {
     public static final String F_ACCOUNT_IS_BLOCKED = "isBlocked";
     public static final String F_ACCOUNT_CREATE_DATE = "create_date";
     public static final String F_ACCOUNT_LAST_UPDATE = "last_update";
-
-//    //Fields of ROLE
-//    public static final String F_ROLE_ID = "id";
-//    public static final String F_ROLE_NAME = "name";
-//    public static final String F_ROLE_DESCRIPTION = "description";
 
     //Fields of PRODUCT
     public static final String F_PRODUCT_ID = "id";

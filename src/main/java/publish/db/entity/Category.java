@@ -2,6 +2,10 @@ package publish.db.entity;
 
 import java.io.Serializable;
 
+/**
+ * Category entity.
+ * @author Burykin
+ */
 public class Category implements Serializable {
     private int id;
     private String name;

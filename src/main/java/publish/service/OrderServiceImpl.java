@@ -8,6 +8,10 @@ import publish.db.entity.Order;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Implementation service for manage order.
+ * @author Burykin
+ */
 public class OrderServiceImpl implements OrderService{
     private final OrderDao orderDao = DaoFactory.getInstance().getOrderDao();
 

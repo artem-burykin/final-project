@@ -16,28 +16,31 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Servlet for sorting products from High to Low.
+ * @author Burykin
+ */
 @WebServlet("/sortProductFromHighToLow")
 public class SortProductFromHighToLow extends HttpServlet {
-    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(SortProductFromHighToLow.class);
-    private ProductService productService = new ProductServiceImpl();
-    private CategoryService categoryService = new CategoryServiceImp();
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SortProductFromHighToLow.class);
+    private final ProductService productService = new ProductServiceImpl();
+    private final CategoryService categoryService = new CategoryServiceImp();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            LOG.info("Start sorting from High to Low price.");
             List<Product> products = productService.sortFromHighToLow((String) req.getSession().getAttribute("login"));
             List<Category> categories = categoryService.findAllCategories();
-            LOG.trace("List with sorting product from high to low price was taken:");
+            LOG.info("List with sorting product from high to low price was taken.");
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (DBException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
+            req.setAttribute("message", e.getMessage());
+            req.setAttribute("code", e.getErrorCode());
+            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
     }
 }

@@ -3,6 +3,10 @@ package publish.db.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Product entity.
+ * @author Burykin
+ */
 public class Product implements Serializable {
     private int id;
     private String name;

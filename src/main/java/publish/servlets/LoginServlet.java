@@ -14,35 +14,32 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Servlet for log in account in website.
+ * @author Burykin
+ */
 @WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
-    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(LoginServlet.class);
-    HttpSession session = null;
-    AccountService accountService = new AccountServiceImpl();
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(LoginServlet.class);
+    final AccountService accountService = new AccountServiceImpl();
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest, HttpServletResponse)
-     */
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
-
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest, HttpServletResponse)
-     */
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("doPost");
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
-        LOG.trace("Starting log in:");
         PrintWriter out = resp.getWriter();
-        LOG.trace("Starting login:");
+        LOG.info("Start log in.");
+        String status = "";
+        String goTo = "";
+        String goToLetter = "";
+        HttpSession session = null;
         boolean b = false;
         try {
             b = accountService.findByLoginAndPassword(req.getParameter("login"), req.getParameter("password"));
         } catch (DBException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
+            req.setAttribute("code", e.getErrorCode());
             getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
         try {
@@ -50,104 +47,91 @@ public class LoginServlet extends HttpServlet {
                session = req.getSession(true);
                session.setMaxInactiveInterval(-1);
                session.setAttribute("login", req.getParameter("login"));
-               LOG.trace("Admin loges in successfully!");
+               LOG.info("Admin loges in successfully!");
                resp.sendRedirect("/publish/showProductsAndCategories");
                return;
             }
         } catch (DBException e) {
-            throw new RuntimeException(e);
+            LOG.error(e.getMessage(), e);
+            req.setAttribute("message", e.getMessage());
+            req.setAttribute("code", e.getErrorCode());
+            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
         int block = 0;
         try {
             block = accountService.checkingUserBlock(req.getParameter("login"));
         } catch (DBException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
             getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
         if(b & block == 0) {
-            LOG.trace("User isn't blocked and registered.");
+            LOG.info("User isn't blocked and registered.");
             session = req.getSession(true);
             session.setMaxInactiveInterval(-1);
-            LOG.trace("Getting object of session.");
+            LOG.info("Got object of session.");
             String login = req.getParameter("login");
             double score = 0;
             try {
                 score = accountService.findByLogin(login).getScore();
+                LOG.info("Got user score.");
             } catch (DBException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage(), e);
                 req.setAttribute("message", e.getMessage());
+                req.setAttribute("code", e.getErrorCode());
                 getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
             }
             session.setAttribute("login", login);
             session.setAttribute("score", score);
-            LOG.trace("User loges in successfully!");
+            LOG.info("User loges in successfully!");
             resp.sendRedirect("/publish/");
         } else {
             Account account = null;
             try {
                 account = accountService.findByLogin(req.getParameter("login"));
             } catch (DBException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage(), e);
+                req.setAttribute("message", e.getMessage());
+                req.setAttribute("code", e.getErrorCode());
+                getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
             }
             if (account == null) {
-                LOG.trace("User isn't registered.");
-                out.println("<center>");
-                out.println("<div style=\"position: absolute; " +
-                        "top: 50%; " +
-                        "left: 50%; " +
-                        "transform: translate(-50%, -50%);\">");
-                out.println("<h1>User with those login not found!</h1>");
-                out.println("<div style=\"margin-top: 40px;\"><a href=\"registration.jsp\" style=\"" +
-                        "text-align: center; " +
-                        "font-size: 18pt; " +
-                        "color: #F8F2CA; " +
-                        "border-radius: 4px; " +
-                        "background-color: #925C32; " +
-                        "padding: 20px 14px; " +
-                        "text-decoration: none;\">On the page registration</a></div>");
-                out.println("</div>");
-                out.println("</center>");
+                LOG.warn("User isn't registered.");
+                status = "User with those login not found! You can register with this login.";
+                goTo = "\"/publish/registration.jsp\"";
+                goToLetter = "On the page registration!";
             } else {
                 if (block == 1) {
-                    LOG.trace("User is blocked.");
-                    out.println("<center>");
-                    out.println("<div style=\"position: absolute; " +
-                            "top: 50%; " +
-                            "left: 50%; " +
-                            "transform: translate(-50%, -50%);\">");
-                    out.println("<h1>User is blocked!</h1>");
-                    out.println("<div style=\"margin-top: 40px;\"><a href=\"registration.jsp\" style=\"" +
-                            "text-align: center; " +
-                            "font-size: 18pt; " +
-                            "color: #F8F2CA; " +
-                            "border-radius: 4px; " +
-                            "background-color: #925C32; " +
-                            "padding: 20px 14px; " +
-                            "text-decoration: none;\">On the page registration</a></div>");
-                    out.println("</div>");
-                    out.println("</center>");
-                    return;
+                    LOG.warn("User is blocked.");
+                    status = "User is blocked! Please, register again.";
+                    goTo = "\"/publish/registration.jsp\"";
+                    goToLetter = "On the page registration!";
                 }
-                LOG.trace("Password was incorrect.");
-                out.println("<center>");
-                out.println("<div style=\"position: absolute; " +
-                        "top: 50%; " +
-                        "left: 50%; " +
-                        "transform: translate(-50%, -50%);\">");
-                out.println("<h1>Password was incorrect!</h1>");
-                out.println("<div style=\"margin-top: 40px;\"><a href=\"login.jsp\" style=\"" +
-                        "text-align: center; " +
-                        "font-size: 18pt; " +
-                        "color: #F8F2CA; " +
-                        "border-radius: 4px; " +
-                        "background-color: #925C32; " +
-                        "padding: 20px 14px; " +
-                        "text-decoration: none;\">On the page sing in</a></div>");
-                out.println("</div>");
-                out.println("</center>");
+                else {
+                    LOG.warn("Password was incorrect.");
+                    status = "Password was incorrect";
+                    goTo = "\"/publish/login.jsp\"";
+                    goToLetter = "On the login page!";
+                }
             }
+            
+            out.println("<center>");
+            out.println("<div style=\"position: absolute; " +
+                    "top: 50%; " +
+                    "left: 50%; " +
+                    "transform: translate(-50%, -50%);\">");
+            out.println("<h1>" + status + "</h1>");
+            out.println("<div style=\"margin-top: 40px;\"><a href=" + goTo + " style=\"" +
+                    "text-align: center; " +
+                    "font-size: 18pt; " +
+                    "color: #F8F2CA; " +
+                    "border-radius: 4px; " +
+                    "background-color: #925C32; " +
+                    "padding: 20px 14px; " +
+                    "text-decoration: none;\"> " + goToLetter +  " </a></div>");
+            out.println("</div>");
+            out.println("</center>");
         }
     }
 }

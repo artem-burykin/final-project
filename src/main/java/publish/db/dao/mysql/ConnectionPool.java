@@ -13,6 +13,7 @@ import java.sql.SQLException;
  * @author Burykin
  */
 public class ConnectionPool {
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ConnectionPool.class);
     private static ConnectionPool instance = null;
     private static Object synh = new Object();
 
@@ -24,13 +25,11 @@ public class ConnectionPool {
      * @return instance ConnectionPool.
      */
     public static ConnectionPool getInstance(){
-        System.out.println("ConnectionPool@getInstance() start");
         if (instance==null)
             synchronized (synh) {
                 instance = new ConnectionPool();
-                System.out.println("ConnetctionPool@getInstance() instance created: " + instance);
+                LOG.info("Instance of ConnectionPool was received.");
             }
-        System.out.println("ConnectionPool@getInstance() exit");
         return instance;
     }
 
@@ -40,15 +39,14 @@ public class ConnectionPool {
      * @throws DBException
      */
     public Connection getConnection() throws DBException {
-        System.out.println("ConnectionPool@getConnection() start");
         Connection con = null;
         try {
             DataSource ds = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/mysql");
             con = ds.getConnection();
-            System.out.println("Connection: " + con);
+            LOG.info("Connection has been gotten. Con: " + con);
         } catch (NamingException | SQLException e) {
             e.printStackTrace();
-            System.out.println("ConnectionPool@getConnection() exception");
+            LOG.error("Can't get a connection");
             throw new DBException("Can't get a connection", e);
         }
         return con;

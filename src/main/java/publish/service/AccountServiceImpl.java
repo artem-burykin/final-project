@@ -7,6 +7,10 @@ import publish.db.entity.Account;
 
 import java.util.List;
 
+/**
+ * Implementation service for manage account.
+ * @author Burykin
+ */
 public class AccountServiceImpl implements AccountService {
     private final AccountDao accountDao = DaoFactory.getInstance().getAccountDao();
 

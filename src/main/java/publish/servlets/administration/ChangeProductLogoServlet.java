@@ -12,22 +12,29 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Admin servlet for changing product logo.
+ * @author Burykin
+ */
 @WebServlet("/changeProductLogo")
 public class ChangeProductLogoServlet extends HttpServlet {
-    private static final org.apache.logging.log4j.Logger LOG = org.apache.logging.log4j.LogManager.getLogger(ChangeProductLogoServlet.class);
-    private ProductService productService = new ProductServiceImpl();
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ChangeProductLogoServlet.class);
+    private final ProductService productService = new ProductServiceImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        LOG.trace("Changing product's logo.");
+        LOG.info("Changing product logo.");
         try {
             productService.updateProductLogo(req.getParameter("logo"), req.getParameter("name"));
-            LOG.trace("Logo is changed successfully!");
+            LOG.info("Logo is changed successfully!");
         } catch (DBException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
+            req.setAttribute("message", e.getMessage());
+            req.setAttribute("code", e.getErrorCode());
+            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
 
         out.println("<center>");
@@ -46,10 +53,5 @@ public class ChangeProductLogoServlet extends HttpServlet {
                 "text-decoration: none;\">On the admin page</a></div>");
         out.println("</div>");
         out.println("</center>");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
     }
 }

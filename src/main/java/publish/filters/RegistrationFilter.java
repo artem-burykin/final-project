@@ -14,7 +14,6 @@ public class RegistrationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        System.out.println("hello from filter");
         servletRequest.setCharacterEncoding("UTF-8");
         String name = servletRequest.getParameter("firstName");
         String surname = servletRequest.getParameter("lastName");

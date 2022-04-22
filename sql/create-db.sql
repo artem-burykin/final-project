@@ -22,6 +22,7 @@ CREATE TABLE account (
     email VARCHAR(32) NOT NULL,
     first_name VARCHAR(32) NOT NULL,
     last_name VARCHAR(32) NOT NULL,
+    score DOUBLE NOT NULL DEFAULT 0,
     role_id INT,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -47,7 +48,7 @@ CREATE TABLE product (
     description VARCHAR(2048),
     price DOUBLE NOT NULL CONSTRAINT ck_product_price CHECK (price >= 0),
     category_id INT,
-    logo VARCHAR(64) UNIQUE,
+    logo VARCHAR(64),
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_product_category_id FOREIGN KEY (category_id)
@@ -110,4 +111,4 @@ INSERT INTO publication(id, product_id, name, content, create_date) VALUES (DEFA
 INSERT INTO publication(id, product_id, name, content, create_date) VALUES (DEFAULT, (SELECT id FROM product WHERE name = 'Best Family Movies'),'Frozen', 'Wintry Disney musical is fabulous celebration of sisterhood.', DEFAULT);
 INSERT INTO publication(id, product_id, name, content, create_date) VALUES (DEFAULT, (SELECT id FROM product WHERE name = 'Best Family Movies'),'Finding Nemo', 'Sweet father-son tale has some very scary moments.', DEFAULT);
 
-INSERT INTO `publisherhouse`.`account` (`login`, `password`, `email`, `first_name`, `last_name`, `role_id`, `isBlocked`) VALUES ('arta', 'arta1', 'arta200703@gmail.com', 'Artem', 'Burykin', '1', 0);
+INSERT INTO `publisherhouse`.`account` (`login`, `password`, `email`, `first_name`, `last_name`, `role_id`, `isBlocked`) VALUES ('admin', 'admin1', 'admin@gmail.com', 'Admin', 'Admin', '1', 0);
