@@ -45,7 +45,6 @@ public class LoginServlet extends HttpServlet {
         try {
             if(b & accountService.isAdmin(req.getParameter("login"))){
                session = req.getSession(true);
-               session.setMaxInactiveInterval(-1);
                session.setAttribute("login", req.getParameter("login"));
                session.setAttribute("role", "admin");
                LOG.info("Admin loges in successfully!");

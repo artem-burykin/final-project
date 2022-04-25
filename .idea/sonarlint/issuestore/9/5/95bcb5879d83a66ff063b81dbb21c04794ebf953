@@ -1,0 +1,13 @@
+
+b
+java:S1192%"FDefine a constant instead of duplicating this literal "login" 3 times.(˜ÓÕ+8üÚÜ“…0
+T
+java:S1854 "7Remove this useless assignment to local variable "out".(¾šçŞ8ÛÛÜ“…0
+‰
+java:S1989"lHandle the following exception that could be thrown by "setCharacterEncoding": UnsupportedEncodingException.(±Œ©À8ÜÛÜ“…0
+m
+java:S1989 "PHandle the following exception that could be thrown by "getWriter": IOException.(¾šçŞ8ÜÛÜ“…0
+E
+java:S1481 "(Remove this unused "out" local variable.(¾šçŞ8æÛÜ“…0
+ƒ
+java:S1989="aHandle the following exceptions that could be thrown by "forward": ServletException, IOException.(£ò‰™ÿÿÿÿÿ8Á©ŒÛ…0

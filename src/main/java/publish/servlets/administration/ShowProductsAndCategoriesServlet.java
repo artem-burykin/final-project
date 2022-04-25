@@ -36,8 +36,8 @@ public class ShowProductsAndCategoriesServlet extends HttpServlet {
             req.getSession().setAttribute("products", productList);
             req.getSession().setAttribute("categories", categoryList);
             req.getSession().setAttribute("accounts", accountList);
-            req.getSession().setAttribute("status", "No action.");
-            req.getSession().setAttribute("color", "#212529");
+            req.getSession().setAttribute("admin_status", "No action.");
+            req.getSession().setAttribute("admin_color", "#212529");
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());

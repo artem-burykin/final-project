@@ -37,7 +37,7 @@ public class ChangeProductDescriptionServlet extends HttpServlet {
             req.setAttribute("code", e.getErrorCode());
             getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
-        req.getSession().setAttribute("status", "Description is changed successfully!");
-        req.getSession().setAttribute("color", "#0fdc70");
+        req.getSession().setAttribute("admin_status", "Description is changed successfully!");
+        req.getSession().setAttribute("admin_color", "#0fdc70");
     }
 }

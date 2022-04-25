@@ -37,9 +37,9 @@ public class ShowAllProducts extends HttpServlet {
                 LOG.info("List with all product and category was taken.");
                 req.setAttribute("products", products);
                 req.setAttribute("categories", categories);
+                req.getSession().setMaxInactiveInterval(-1);
                 req.getSession().setAttribute("status", "No action");
                 req.getSession().setAttribute("color", "#212529");
-                req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
             else{
                 List<Product> products = productService.findAllNotSubscribeProduct((String) req.getSession().getAttribute("login"));
@@ -50,11 +50,9 @@ public class ShowAllProducts extends HttpServlet {
                 if (!req.getSession().getAttribute("status").equals("Your score less then product price. Please top up the score!")
                         && !req.getSession().getAttribute("status")
                         .equals("Trade was successfully! You can check your subscription in your profile. Thank you!")){
-                    System.out.println("hello");
                     req.getSession().setAttribute("status", "No action");
                     req.getSession().setAttribute("color", "#212529");
                 }
-                req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
@@ -62,5 +60,6 @@ public class ShowAllProducts extends HttpServlet {
             req.setAttribute("code", e.getErrorCode());
             getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
         }
+        req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
 }
