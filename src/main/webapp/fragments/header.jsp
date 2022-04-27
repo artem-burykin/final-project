@@ -30,7 +30,7 @@
             </c:when>
             <c:otherwise>
                 <c:choose>
-                    <c:when test="${sessionScope.login eq 'admin'}">
+                    <c:when test="${sessionScope.role eq 'admin'}">
                         <div class="col-md-3 text-end">
                             <a href="administration/showProductsAndCategories" class="btn btn-outline-primary me-2"><fmt:message key="admin_page"/></a>
                             <a href="user/logout" class="btn btn-outline-primary me-2"><fmt:message key="log_out"/></a>

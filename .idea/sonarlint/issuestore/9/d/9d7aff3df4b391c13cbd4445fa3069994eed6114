@@ -1,11 +1,0 @@
-
-c
-java:S1192!"FDefine a constant instead of duplicating this literal "score" 3 times.(„îâš8„“•…0
-‰
-java:S1989"lHandle the following exception that could be thrown by "setCharacterEncoding": UnsupportedEncodingException.(±Œ©À8”„“•…0
-m
-java:S1989"PHandle the following exception that could be thrown by "getWriter": IOException.(¾šçŞ8”„“•…0
-y
-java:S1989!"\Handle the following exception that could be thrown by "parseDouble": NumberFormatException.(„îâš8”„“•…0
-ƒ
-java:S1989<"aHandle the following exceptions that could be thrown by "forward": ServletException, IOException.(£ò‰™ÿÿÿÿÿ8¥„“•…0

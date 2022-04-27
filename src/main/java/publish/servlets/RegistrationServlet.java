@@ -54,7 +54,7 @@ public class RegistrationServlet extends HttpServlet {
                     LOG.error(e.getMessage(), e);
                     req.setAttribute("message", e.getMessage());
                     req.setAttribute("code", e.getErrorCode());
-                    getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+                    throw new ServletException(e.getMessage());
                 }
         }
         else {

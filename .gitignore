@@ -1,2 +1,7 @@
 # Project exclude paths
 /target/
+/src/main/webapp/css/
+!/src/main/webapp/css/registration.css
+!/src/main/webapp/css/login.css
+!/src/main/webapp/css/index.css
+!/src/main/webapp/css/error.css

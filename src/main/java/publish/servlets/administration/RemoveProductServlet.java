@@ -35,9 +35,10 @@ public class RemoveProductServlet extends HttpServlet {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
         req.getSession().setAttribute("admin_status", "Product is removed successfully!");
+        req.getSession().setAttribute("admin_status_uk", "Продукт було видалено успішно!");
         req.getSession().setAttribute("admin_color", "#0fdc70");
     }
 }

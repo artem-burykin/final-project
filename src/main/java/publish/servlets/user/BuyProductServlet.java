@@ -29,8 +29,8 @@ public class BuyProductServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
         LOG.info("Starting buy product.");
-        PrintWriter out = resp.getWriter();
         String status = "";
+        String status_uk = "";
         String color = "";
         try {
             Product product = productService.getProductByName(req.getParameter("product"));
@@ -45,22 +45,25 @@ public class BuyProductServlet extends HttpServlet {
                 req.getSession().setAttribute("score", scoreAfterBuying);
                 order.setDescription("");
                 orderService.insertOrder(order);
-                LOG.info("Trade was successfully.");
-                status = "Trade was successfully! You can check your subscription in your profile. Thank you!";
+                LOG.info("Trade was successful.");
+                status = "Trade was successful! You can check your subscription in your profile. Thank you!";
+                status_uk = "Покупка пройшла успішно! Ви можете перевірити підписку у своєму профілі. Дякую!";
                 color = "#0fdc70";
             }
             else{
-                LOG.warn("User score less then product price.");
-                status = "Your score less then product price. Please top up the score!";
+                LOG.warn("User score is less than the product price.");
+                status = "Your score is less than the product price. Please top up the score!";
+                status_uk = "Кількість коштів на вашому рахуноку нижча за ціну продукту. Будь ласка, поповніть рахунок!";
                 color = "#fb0349";
             }
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
         req.getSession().setAttribute("status", status);
+        req.getSession().setAttribute("status_uk", status_uk);
         req.getSession().setAttribute("color", color);
     }
 }

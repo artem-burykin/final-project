@@ -21,7 +21,14 @@
     </p>
     <p class="h4" align="center" style="color: ${sessionScope.admin_color}">
         <fmt:message key="previous_action">
-            <fmt:param value="${sessionScope.admin_status}"/>
+            <c:choose>
+                <c:when test="${sessionScope.locale eq 'uk'}">
+                    <fmt:param value="${sessionScope.admin_status_uk}"/>
+                </c:when>
+                <c:otherwise>
+                    <fmt:param value="${sessionScope.admin_status}"/>
+                </c:otherwise>
+            </c:choose>
         </fmt:message>
     </p>
     <div class="container">

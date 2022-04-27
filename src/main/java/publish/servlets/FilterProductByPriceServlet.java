@@ -21,8 +21,8 @@ import java.util.List;
  * @author Burykin
  */
 @WebServlet("/filterProductByPrice")
-public class FilterProductByPrice extends HttpServlet {
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(FilterProductByPrice.class);
+public class FilterProductByPriceServlet extends HttpServlet {
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(FilterProductByPriceServlet.class);
     private final ProductService productService = new ProductServiceImpl();
     private final CategoryService categoryService = new CategoryServiceImp();
 
@@ -56,13 +56,14 @@ public class FilterProductByPrice extends HttpServlet {
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
             req.getSession().setAttribute("status", "Filtration by price was successful!");
+            req.getSession().setAttribute("status_uk", "Фільтрацію за ціною виконано успішно!");
             req.getSession().setAttribute("color", "#0fdc70");
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
     }
 }

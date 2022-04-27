@@ -36,13 +36,14 @@ public class FilterProductsByCategoryServlet extends HttpServlet {
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
             req.getSession().setAttribute("status", "Filtration by category was successful!");
+            req.getSession().setAttribute("status_uk", "Фільтрацію за категоріями виконано успішно!");
             req.getSession().setAttribute("color", "#0fdc70");
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
     }
 }

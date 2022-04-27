@@ -36,28 +36,28 @@ public class TopUpScoreServlet extends HttpServlet {
             req.getSession().removeAttribute("score");
             req.getSession().setAttribute("score", newScore);
             LOG.info("Topping up was successfully.");
-
-            out.println("<center>");
-            out.println("<div style=\"position: absolute; " +
-                    "top: 50%; " +
-                    "left: 50%; " +
-                    "transform: translate(-50%, -50%);\">");
-            out.println("<h1>Topping up was successfully! You can check your score in your profile. Thank you!</h1>");
-            out.println("<div style=\"margin-top: 40px;\"><a href=\"/publish/showProductWithSubscription\" style=\"" +
-                    "text-align: center; " +
-                    "font-size: 18pt; " +
-                    "color: #F8F2CA; " +
-                    "border-radius: 4px; " +
-                    "background-color: #925C32; " +
-                    "padding: 20px 14px; " +
-                    "text-decoration: none;\">On the profile page</a></div>");
-            out.println("</div>");
-            out.println("</center>");
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
+        
+        out.println("<center>");
+        out.println("<div style=\"position: absolute; " +
+                "top: 50%; " +
+                "left: 50%; " +
+                "transform: translate(-50%, -50%);\">");
+        out.println("<h1>Topping up was successfully! You can check your score in your profile. Thank you!</h1>");
+        out.println("<div style=\"margin-top: 40px;\"><a href=\"/publish/showProductWithSubscription\" style=\"" +
+                "text-align: center; " +
+                "font-size: 18pt; " +
+                "color: #F8F2CA; " +
+                "border-radius: 4px; " +
+                "background-color: #925C32; " +
+                "padding: 20px 14px; " +
+                "text-decoration: none;\">On the profile page</a></div>");
+        out.println("</div>");
+        out.println("</center>");
     }
 }

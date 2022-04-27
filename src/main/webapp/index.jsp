@@ -17,7 +17,14 @@
         <jsp:include page="fragments/header.jsp"></jsp:include>
         <p class="h4" style="color: ${sessionScope.color}" align="center">
             <fmt:message key="user_previous_action">
-                <fmt:param value="${sessionScope.status}"/>
+                <c:choose>
+                    <c:when test="${sessionScope.locale eq 'uk'}">
+                        <fmt:param value="${sessionScope.status_uk}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <fmt:param value="${sessionScope.status}"/>
+                    </c:otherwise>
+                </c:choose>
             </fmt:message>
         </p>
         <div class="container">

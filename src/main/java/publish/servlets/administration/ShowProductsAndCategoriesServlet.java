@@ -36,13 +36,18 @@ public class ShowProductsAndCategoriesServlet extends HttpServlet {
             req.getSession().setAttribute("products", productList);
             req.getSession().setAttribute("categories", categoryList);
             req.getSession().setAttribute("accounts", accountList);
-            req.getSession().setAttribute("admin_status", "No action.");
-            req.getSession().setAttribute("admin_color", "#212529");
+            if((req.getSession().getAttribute("admin_status") == null || req.getSession().getAttribute("admin_status").toString().isEmpty()) &&
+               (req.getSession().getAttribute("admin_status_uk") == null || req.getSession().getAttribute("admin_status_uk").toString().isEmpty()) &&
+               (req.getSession().getAttribute("admin_color") == null || req.getSession().getAttribute("admin_color").toString().isEmpty())){
+                    req.getSession().setAttribute("admin_status", "No action.");
+                    req.getSession().setAttribute("admin_status_uk", "Дій немає.");
+                    req.getSession().setAttribute("admin_color", "#212529");
+            }
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
     }
 }

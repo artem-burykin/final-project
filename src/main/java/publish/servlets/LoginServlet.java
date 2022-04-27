@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
         try {
             if(b & accountService.isAdmin(req.getParameter("login"))){
@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
         int block = 0;
         try {
@@ -64,7 +64,7 @@ public class LoginServlet extends HttpServlet {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
         if(b & block == 0) {
             LOG.info("User isn't blocked and registered.");
@@ -80,7 +80,7 @@ public class LoginServlet extends HttpServlet {
                 LOG.error(e.getMessage(), e);
                 req.setAttribute("message", e.getMessage());
                 req.setAttribute("code", e.getErrorCode());
-                getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+                throw new ServletException(e.getMessage());
             }
             session.setAttribute("login", login);
             session.setAttribute("role", "user");
@@ -95,7 +95,7 @@ public class LoginServlet extends HttpServlet {
                 LOG.error(e.getMessage(), e);
                 req.setAttribute("message", e.getMessage());
                 req.setAttribute("code", e.getErrorCode());
-                getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+                throw new ServletException(e.getMessage());
             }
             if (account == null) {
                 LOG.warn("User isn't registered.");

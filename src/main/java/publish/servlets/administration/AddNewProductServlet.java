@@ -27,6 +27,7 @@ public class AddNewProductServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
         String status = "";
+        String status_uk = "";
         String color = "";
         LOG.info("Forming object of product for adding.");
         Product product = ProductServiceImpl.getProduct(req.getParameter("name"), Double.parseDouble(req.getParameter("price")), Integer.parseInt(req.getParameter("category_id")));
@@ -38,21 +39,24 @@ public class AddNewProductServlet extends HttpServlet {
                 productService.insertProduct(product);
                 LOG.info("Product is inserted successfully!");
                 req.getSession().setAttribute("products", productService.findAllProducts());
-                status= "Product is inserted successfully!";
+                status = "Product is inserted successfully!";
+                status_uk = "Продукт добавлено успішно!";
                 color = "#0fdc70";
             }
             else {
                 LOG.warn("There is product with the same name in db!");
                 status = "There is product with the same name in db!";
+                status_uk = "Продукт з такою ж назвою є у бд!";
                 color = "#fb0349";
             }
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
         req.getSession().setAttribute("admin_status", status);
+        req.getSession().setAttribute("admin_status_yk", status_uk);
         req.getSession().setAttribute("admin_color", color);
     }
 }

@@ -13,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,8 +21,8 @@ import java.util.List;
  * @author Burykin
  */
 @WebServlet("/showAllProducts")
-public class ShowAllProducts extends HttpServlet {
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ShowAllProducts.class);
+public class ShowAllProductsServlet extends HttpServlet {
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(ShowAllProductsServlet.class);
     private final ProductService productService = new ProductServiceImpl();
     private final CategoryService categoryService = new CategoryServiceImp();
 
@@ -39,6 +38,7 @@ public class ShowAllProducts extends HttpServlet {
                 req.setAttribute("categories", categories);
                 req.getSession().setMaxInactiveInterval(-1);
                 req.getSession().setAttribute("status", "No action");
+                req.getSession().setAttribute("status_uk", "Дій немає.");
                 req.getSession().setAttribute("color", "#212529");
             }
             else{
@@ -51,6 +51,7 @@ public class ShowAllProducts extends HttpServlet {
                         && !req.getSession().getAttribute("status")
                         .equals("Trade was successfully! You can check your subscription in your profile. Thank you!")){
                     req.getSession().setAttribute("status", "No action");
+                    req.getSession().setAttribute("status_uk", "Дій немає.");
                     req.getSession().setAttribute("color", "#212529");
                 }
             }
@@ -58,7 +59,7 @@ public class ShowAllProducts extends HttpServlet {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
         req.getRequestDispatcher("index.jsp").forward(req, resp);
     }

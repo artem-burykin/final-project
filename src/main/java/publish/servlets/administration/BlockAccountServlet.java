@@ -25,6 +25,7 @@ public class BlockAccountServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html; charset=UTF-8");
         String status = "";
+        String status_uk = "";
         String color = "";
         LOG.info("Checking state of blocking of user.");
         try {
@@ -33,12 +34,14 @@ public class BlockAccountServlet extends HttpServlet {
                 accountService.changingUserBlock(1, req.getParameter("login"));
                 LOG.info("User is blocked successfully!");
                 status = "User is blocked successfully!";
+                status_uk = "Користувача було заблоковано успішно!";
                 color = "#0fdc70";
                 req.getSession().setAttribute("accounts", accountService.findAllAccounts());
             }
             else {
                 LOG.warn("Blocking is impossible because user has already blocked.");
                 status = "Blocking is impossible because user has already blocked!";
+                status_uk = "Блокування неможливо, тому що користувач вже заблокований!";
                 color = "#fb0349";
 
             }
@@ -46,9 +49,10 @@ public class BlockAccountServlet extends HttpServlet {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
         req.getSession().setAttribute("admin_status", status);
+        req.getSession().setAttribute("admin_status_uk", status_uk);
         req.getSession().setAttribute("admin_color", color);
     }
 }

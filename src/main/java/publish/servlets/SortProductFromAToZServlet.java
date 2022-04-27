@@ -17,32 +17,33 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Servlet for sorting products form New to Old.
+ * Servlet for sorting products from A to Z.
  * @author Burykin
  */
-@WebServlet("/sortProductFromNewToOld")
-public class SortProductFromNewToOld extends HttpServlet {
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SortProductFromNewToOld.class);
+@WebServlet("/sortProductFromAToZ")
+public class SortProductFromAToZServlet extends HttpServlet {
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(SortProductFromAToZServlet.class);
     private final ProductService productService = new ProductServiceImpl();
     private final CategoryService categoryService = new CategoryServiceImp();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            LOG.info("Start sorting from New to Old.");
-            List<Product> products = productService.sortFromNewToOld((String) req.getSession().getAttribute("login"));
+            LOG.info("Start sorting product from A to Z.");
+            List<Product> products = productService.sortFromAToZ((String) req.getSession().getAttribute("login"));
             List<Category> categories = categoryService.findAllCategories();
-            LOG.info("List with sorting product from new to old was taken:");
+            LOG.info("List with sorting product from A to Z was taken.");
             req.setAttribute("products", products);
             req.setAttribute("categories", categories);
-            req.getSession().setAttribute("status", "Sorting from New to Old was successful!");
+            req.getSession().setAttribute("status", "Sorting from A to Z was successful!");
+            req.getSession().setAttribute("status_uk", "Сортування від початку алфавіту до кінця виконано успішно!");
             req.getSession().setAttribute("color", "#0fdc70");
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             req.setAttribute("message", e.getMessage());
             req.setAttribute("code", e.getErrorCode());
-            getServletContext().getRequestDispatcher("error.jsp").forward(req, resp);
+            throw new ServletException(e.getMessage());
         }
     }
 }
