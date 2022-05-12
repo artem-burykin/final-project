@@ -7,6 +7,7 @@ import publish.db.dao.mysql.ConnectionPool;
 import publish.db.entity.Category;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -22,7 +23,11 @@ public class CategoryServiceImp implements CategoryService {
 
     @Override
     public List<Category> findAllCategories() throws DBException {
-        Connection con = ConnectionPool.getInstance().getConnection();
-        return categoryDao.findAllCategories(con);
+        try(Connection con = ConnectionPool.getInstance().getConnection()) {
+            return categoryDao.findAllCategories(con);
+        }
+        catch (SQLException e){
+            throw new DBException("There aren't categories in the database", e);
+        }
     }
 }

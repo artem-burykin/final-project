@@ -13,20 +13,6 @@ public class MysqlOrderDao implements OrderDao {
     MysqlOrderDao(){}
 
     /**
-     * Close connection.
-     * @param con connection, which we try to close.
-     */
-    public void close (AutoCloseable con){
-        if (con != null){
-            try {
-                con.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
      * Private auxiliary method for creating new order.
      * @param rs result set, from which we take data.
      * @return new order.
@@ -44,6 +30,7 @@ public class MysqlOrderDao implements OrderDao {
 
     /**
      * Insert new account into db.
+     * @param con connection with database.
      * @param order order, which would be was inserted into db.
      * @return boolean value (true, if Account was inserted).
      * @throws DBException
@@ -84,6 +71,7 @@ public class MysqlOrderDao implements OrderDao {
 
     /**
      * Find order by id.
+     * @param con connection with database.
      * @param id id, by which we search order.
      * @return order with stated id.
      * @throws DBException
@@ -108,6 +96,7 @@ public class MysqlOrderDao implements OrderDao {
 
     /**
      * Find list of orders by account's id.
+     * @param con connection with database.
      * @param account_id account's id, by which orders found.
      * @return order's list.
      * @throws DBException

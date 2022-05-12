@@ -18,20 +18,6 @@ public class MysqlAccountDao implements AccountDao {
     MysqlAccountDao() {}
 
     /**
-     * Close connection.
-     * @param con connection, which we try to close.
-     */
-    public void close (AutoCloseable con){
-        if (con != null){
-            try {
-                con.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
      * Private auxiliary method for creating new account.
      * @param rs result set, from which we take data.
      * @return new account.
@@ -51,6 +37,7 @@ public class MysqlAccountDao implements AccountDao {
 
     /**
      * Insert new account into db.
+     * @param con connection with database.
      * @param account account, which would be was inserted into db.
      * @return boolean value (true, if Account was inserted).
      * @throws DBException
@@ -93,6 +80,7 @@ public class MysqlAccountDao implements AccountDao {
 
     /**
      * Find all accounts.
+     * @param con connection with database.
      * @return list with account.
      * @throws DBException
      */
@@ -111,8 +99,10 @@ public class MysqlAccountDao implements AccountDao {
             throw new DBException("There aren't accounts in the database", e);
         }
     }
+
     /**
      * Find user by login.
+     * @param con connection with database.
      * @param login login, by which we search user.
      * @return user with stated login.
      * @throws DBException
@@ -136,6 +126,7 @@ public class MysqlAccountDao implements AccountDao {
 
     /**
      * Search user by login and password.
+     * @param con connection with database.
      * @param login login, by which we search user.
      * @param password password, by which we search user.
      * @return boolean value(returns true, if method has found user).
@@ -160,6 +151,7 @@ public class MysqlAccountDao implements AccountDao {
 
     /**
      * Update account score.
+     * @param con connection with database.
      * @param score state of user's score.
      * @param login user's login, which we need to change.
      * @throws DBException
@@ -178,6 +170,7 @@ public class MysqlAccountDao implements AccountDao {
 
     /**
      * Block or unblock user.
+     * @param con connection with database.
      * @param isBlocked state of user's blocking.
      * @param login user's login, which we need to block/unblock.
      * @throws DBException
@@ -196,6 +189,7 @@ public class MysqlAccountDao implements AccountDao {
 
     /**
      * Checks what state of blocking user has.
+     * @param con connection with database.
      * @param login user's login, which state of blocking we need to check.
      * @return state of user's blocking.
      * @throws DBException
@@ -216,6 +210,7 @@ public class MysqlAccountDao implements AccountDao {
 
     /**
      * Checks account on admin role.
+     * @param con connection with database.
      * @param login login, by which checking account on admin.
      * @return boolean value(returns true, if method has found admin).
      * @throws DBException

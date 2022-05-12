@@ -20,20 +20,6 @@ public class MysqlCategoryDao implements CategoryDao {
     MysqlCategoryDao() {}
 
     /**
-     * Close connection.
-     * @param con connection, which we try to close.
-     */
-    public void close (AutoCloseable con){
-        if (con != null){
-            try {
-                con.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
      * Private auxiliary method for creating new category.
      * @param rs result set, from which we take data.
      * @return new category.
@@ -48,6 +34,7 @@ public class MysqlCategoryDao implements CategoryDao {
     }
     /**
      * Find all category.
+     * @param con connection with database.
      * @return category's list.
      * @throws DBException
      */

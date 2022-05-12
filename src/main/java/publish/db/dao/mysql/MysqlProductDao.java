@@ -18,20 +18,6 @@ public class MysqlProductDao implements ProductDao {
     MysqlProductDao() {}
 
     /**
-     * Close connection.
-     * @param con connection, which we try to close.
-     */
-    public void close (AutoCloseable con){
-        if (con != null){
-            try {
-                con.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
      * Private auxiliary method for creating new product.
      * @param rs result set, from which we take data.
      * @return new product.
@@ -50,6 +36,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Insert product to db.
+     * @param con connection with database.
      * @param product product, which we needed to insert.
      * @return boolean value(true, if exist).
      * @throws DBException
@@ -66,6 +53,7 @@ public class MysqlProductDao implements ProductDao {
     }
     /**
      * Supporting method, which help us to insert the product.
+     * @param con connection with database.
      * @param con connection with db.
      * @param product product, which we needed to insert.
      * @throws SQLException
@@ -91,6 +79,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Getting product by full name.
+     * @param con connection with database.
      * @param name name, by which we search product.
      * @return product with those name.
      * @throws DBException
@@ -115,6 +104,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Delete product by name.
+     * @param con connection with database.
      * @param name name, by which we find product.
      * @return boolean value(true, if exist).
      * @throws DBException
@@ -132,6 +122,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Find all products.
+     * @param con connection with database.
      * @return product's list.
      * @throws DBException
      */
@@ -152,7 +143,8 @@ public class MysqlProductDao implements ProductDao {
     }
 
     /**
-     * Find all not subscribe product
+     * Find all not subscribe product.
+     * @param con connection with database.
      * @param login account's login, by which we found not subscribe products.
      * @return product's list.
      * @throws DBException
@@ -176,7 +168,8 @@ public class MysqlProductDao implements ProductDao {
     }
 
     /**
-     *  Find all subscribe product
+     *  Find all subscribe product.
+     *  @param con connection with database.
      *  @param login account's login, by which we found subscribe products.
      *  @return product's list.
      *  @throws DBException
@@ -201,6 +194,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort from low to high price.
+     * @param con connection with database.
      * @param login account's login, by which we found subscribe products.
      * @return product's list.
      * @throws DBException
@@ -224,6 +218,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort from high to low price.
+     * @param con connection with database.
      * @param login login, by which we check not subscription product.
      * @return product's list.
      * @throws DBException
@@ -247,6 +242,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort product's name from A to Z.
+     * @param con connection with database.
      * @param login account's login, by which we found subscribe products.
      * @return product's list.
      * @throws DBException
@@ -270,6 +266,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort product's name from Z to A.
+     * @param con connection with database.
      * @param login account's login, by which we found subscribe products.
      * @return product's list.
      * @throws DBException
@@ -293,6 +290,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort product from new to old.
+     * @param con connection with database.
      * @param login account's login, by which we found subscribe products.
      * @return product's list.
      * @throws DBException
@@ -316,6 +314,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Sort product from old to new.
+     * @param con connection with database.
      * @param login account's login, by which we found subscribe products.
      * @return product's list.
      * @throws DBException
@@ -339,6 +338,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Find product by name.
+     * @param con connection with database.
      * @param login account's login, by which we found subscribe products.
      * @param name name, by which we search product.
      * @return product with those name.
@@ -366,6 +366,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Filter product from startPrice to endPrice.
+     * @param con connection with database.
      * @param login account's login, by which we found subscribe products.
      * @param startPrice startPrice, price from which started find product.
      * @param endPrice endPrice, price to which continued find product.
@@ -394,6 +395,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Filter product by category.
+     * @param con connection with database.
      * @param login account's login, by which we found subscribe products.
      * @param name category's name, by which product user found.
      * @return product's list.
@@ -420,6 +422,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Changes certain product's price.
+     * @param con connection with database.
      * @param price new price for product.
      * @param name product's name, which price we need to change.
      * @throws DBException
@@ -438,6 +441,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Changes certain product's logo.
+     * @param con connection with database.
      * @param logo new logo for product.
      * @param name product's name, which price we need to change.
      * @throws DBException
@@ -456,6 +460,7 @@ public class MysqlProductDao implements ProductDao {
 
     /**
      * Changes certain product's description.
+     * @param con connection with database.
      * @param description new description for product.
      * @param name product's name, which price we need to change.
      * @throws DBException

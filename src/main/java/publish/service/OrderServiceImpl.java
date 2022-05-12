@@ -8,6 +8,7 @@ import publish.db.entity.Order;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -23,19 +24,31 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public boolean insertOrder(Order order) throws DBException {
-        Connection con = ConnectionPool.getInstance().getConnection();
-        return orderDao.insertOrder(con, order);
+        try(Connection con = ConnectionPool.getInstance().getConnection()) {
+            return orderDao.insertOrder(con, order);
+        }
+        catch (SQLException e){
+            throw new DBException("Cannot add this account", e);
+        }
     }
 
     @Override
     public Order findById(int id) throws DBException {
-        Connection con = ConnectionPool.getInstance().getConnection();
-        return orderDao.findById(con, id);
+        try(Connection con = ConnectionPool.getInstance().getConnection()) {
+            return orderDao.findById(con, id);
+        }
+        catch (SQLException e){
+            throw new DBException("This order not found", e);
+        }
     }
 
     @Override
     public List<Order> findByAccountId(int account_id) throws DBException {
-        Connection con = ConnectionPool.getInstance().getConnection();
-        return orderDao.findByAccountId(con, account_id);
+        try(Connection con = ConnectionPool.getInstance().getConnection()) {
+            return orderDao.findByAccountId(con, account_id);
+        }
+        catch (SQLException e){
+            throw new DBException("Orders by this user not found", e);
+        }
     }
 }
