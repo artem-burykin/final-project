@@ -8,11 +8,11 @@
 <head>
     <title><fmt:message key="title"/></title>
     <meta charset="UTF-8">
-    <link rel="icon" href="img/icon.png" type="image/png">
+    <link rel="icon" href="${pageContext.request.contextPath}/img/icon.png" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
 </head>
 <body>
     <main class="d-flex align-items-center min-vh-100 py-3 py-md-0">

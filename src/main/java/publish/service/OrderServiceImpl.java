@@ -3,8 +3,10 @@ package publish.service;
 import publish.db.dao.DBException;
 import publish.db.dao.DaoFactory;
 import publish.db.dao.OrderDao;
+import publish.db.dao.mysql.ConnectionPool;
 import publish.db.entity.Order;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.util.List;
 
@@ -21,16 +23,19 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public boolean insertOrder(Order order) throws DBException {
-        return orderDao.insertOrder(order);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return orderDao.insertOrder(con, order);
     }
 
     @Override
     public Order findById(int id) throws DBException {
-        return orderDao.findById(id);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return orderDao.findById(con, id);
     }
 
     @Override
     public List<Order> findByAccountId(int account_id) throws DBException {
-        return orderDao.findByAccountId(account_id);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return orderDao.findByAccountId(con, account_id);
     }
 }

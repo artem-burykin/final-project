@@ -3,8 +3,10 @@ package publish.service;
 import publish.db.dao.CategoryDao;
 import publish.db.dao.DBException;
 import publish.db.dao.DaoFactory;
+import publish.db.dao.mysql.ConnectionPool;
 import publish.db.entity.Category;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -20,6 +22,7 @@ public class CategoryServiceImp implements CategoryService {
 
     @Override
     public List<Category> findAllCategories() throws DBException {
-        return categoryDao.findAllCategories();
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return categoryDao.findAllCategories(con);
     }
 }

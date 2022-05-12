@@ -1,0 +1,6 @@
+
+k	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆ¨ãüÿÿÿÿ
+\
+java:S19893"AHandle the "ServletException" thrown here in a "try/catch" block.(ŞÕ‡øÿÿÿÿ
+M
+java:S1128"0Remove this unused import 'java.io.PrintWriter'.(ÓŞÏÛ8”Çõİ†0

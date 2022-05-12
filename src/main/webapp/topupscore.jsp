@@ -8,8 +8,8 @@
 <head>
     <title><fmt:message key="title"/></title>
     <meta charset="UTF-8">
-    <link rel="icon" href="img/icon.png" type="image/png">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="icon" href="${pageContext.request.contextPath}/img/icon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 </head>
 <body>
     <jsp:include page="fragments/header.jsp"></jsp:include>

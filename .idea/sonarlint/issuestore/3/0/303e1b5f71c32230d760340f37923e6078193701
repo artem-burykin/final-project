@@ -1,0 +1,19 @@
+
+\
+java:S1192#"FDefine a constant instead of duplicating this literal "login" 4 times.(Ò»ãÒ
+`
+java:S1192""KDefine a constant instead of duplicating this literal "startPrice" 4 times.(™Ñ{
+^
+java:S1192""IDefine a constant instead of duplicating this literal "endPrice" 4 times.(™Ñ{
+w
+java:S1989)"\Handle the following exception that could be thrown by "parseDouble": NumberFormatException.(Ğèæ·şÿÿÿÿ
+r
+java:S1989."\Handle the following exception that could be thrown by "parseDouble": NumberFormatException.(ÎÃ
+r
+java:S19892"\Handle the following exception that could be thrown by "parseDouble": NumberFormatException.(Ò´›ö
+r
+java:S19892"\Handle the following exception that could be thrown by "parseDouble": NumberFormatException.(Ò´›ö
+v
+java:S1989="aHandle the following exceptions that could be thrown by "forward": ServletException, IOException.(ÈŒÊ
+\
+java:S1989B"AHandle the "ServletException" thrown here in a "try/catch" block.(ŞÕ‡øÿÿÿÿ

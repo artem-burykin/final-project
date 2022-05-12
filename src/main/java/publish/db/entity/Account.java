@@ -129,11 +129,14 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return "Account{" +
-                "login = '" + login + '\'' +
+                "login='" + login + '\'' +
                 ", password = '" + "<PROTECTED>" + '\'' +
-                ", role_id = " + role_id +
-                ", create_date = " + create_date +
-                ", last_update = " + last_update +
+                ", email='" + email + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", score=" + score +
+                ", role_id=" + role_id +
+                ", isBlocked=" + isBlocked +
                 '}';
     }
 }

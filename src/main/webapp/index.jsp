@@ -9,9 +9,9 @@
 <head>
     <title><fmt:message key="title"/></title>
     <meta charset="UTF-8">
-    <link rel="icon" href="img/icon.png" type="image/png">
+    <link rel="icon" href="${pageContext.request.contextPath}/img/icon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/index.css">
 </head>
     <body>
         <jsp:include page="fragments/header.jsp"></jsp:include>

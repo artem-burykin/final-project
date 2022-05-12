@@ -48,19 +48,14 @@ public class MysqlOrderDao implements OrderDao {
      * @return boolean value (true, if Account was inserted).
      * @throws DBException
      */
-    public boolean insertOrder (Order order) throws DBException {
-        Connection con = null;
+    public boolean insertOrder (Connection con, Order order) throws DBException {
         try{
-            con = ConnectionPool.getInstance().getConnection();
-            insertOrder(con, order);
+            helperInsertOrder(con, order);
             return true;
         }
         catch (SQLException e){
             e.printStackTrace();
             throw new DBException("Cannot add this account", e);
-        }
-        finally {
-            close(con);
         }
     }
     /**
@@ -69,7 +64,7 @@ public class MysqlOrderDao implements OrderDao {
      * @param order order, which would be been inserted into db.
      * @throws SQLException
      */
-    private void insertOrder(Connection con, Order order) throws SQLException {
+    private void helperInsertOrder(Connection con, Order order) throws SQLException {
         try (PreparedStatement st = con.prepareStatement(DBConstant.INSERT_ORDER, Statement.RETURN_GENERATED_KEYS)) {
             int i = 0;
             st.setDouble(++i, order.getTotal());
@@ -93,9 +88,8 @@ public class MysqlOrderDao implements OrderDao {
      * @return order with stated id.
      * @throws DBException
      */
-    public Order findById(int id) throws DBException{
-        try (Connection con = ConnectionPool.getInstance().getConnection();
-             PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ORDER_BY_ID)) {
+    public Order findById(Connection con, int id) throws DBException{
+        try (PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ORDER_BY_ID)) {
             con.setAutoCommit(false);
             int i = 0;
             stmt.setInt(++i, id);
@@ -118,9 +112,8 @@ public class MysqlOrderDao implements OrderDao {
      * @return order's list.
      * @throws DBException
      */
-    public List<Order> findByAccountId (int account_id) throws DBException{
-        try (Connection con = ConnectionPool.getInstance().getConnection();
-             PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ORDERS_BY_ACCOUNT_ID)) {
+    public List<Order> findByAccountId (Connection con, int account_id) throws DBException{
+        try (PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ORDERS_BY_ACCOUNT_ID)) {
             con.setAutoCommit(false);
             int i = 0;
             stmt.setInt(++i, account_id);

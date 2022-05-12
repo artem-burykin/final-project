@@ -55,19 +55,14 @@ public class MysqlAccountDao implements AccountDao {
      * @return boolean value (true, if Account was inserted).
      * @throws DBException
      */
-    public boolean insertAccount (Account account) throws DBException {
-        Connection con = null;
+    public boolean insertAccount (Connection con, Account account) throws DBException {
         try{
-            con = ConnectionPool.getInstance().getConnection();
-            insertAccount(con, account);
+            helperInsertAccount(con, account);
             return true;
         }
         catch (SQLException e){
             e.printStackTrace();
             throw new DBException("Cannot add this account", e);
-        }
-        finally {
-            close(con);
         }
     }
     /**
@@ -76,7 +71,7 @@ public class MysqlAccountDao implements AccountDao {
      * @param account account, which would be been inserted into db.
      * @throws SQLException
      */
-    private void insertAccount(Connection con, Account account) throws SQLException {
+    private void helperInsertAccount(Connection con, Account account) throws SQLException {
         try (PreparedStatement st = con.prepareStatement(DBConstant.INSERT_ACCOUNT, Statement.RETURN_GENERATED_KEYS)) {
             int i = 0;
             st.setString(++i, account.getLogin());
@@ -101,9 +96,8 @@ public class MysqlAccountDao implements AccountDao {
      * @return list with account.
      * @throws DBException
      */
-    public List<Account> findAllAccounts() throws DBException{
-        try(Connection con = ConnectionPool.getInstance().getConnection();
-            Statement stmt = con.createStatement();
+    public List<Account> findAllAccounts(Connection con) throws DBException{
+        try(Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(DBConstant.FIND_ALL_ACCOUNT)){
             con.setAutoCommit(false);
             List<Account> result = new ArrayList<>();
@@ -123,15 +117,13 @@ public class MysqlAccountDao implements AccountDao {
      * @return user with stated login.
      * @throws DBException
      */
-    public Account findByLogin(String login) throws DBException{
-        try (Connection con = ConnectionPool.getInstance().getConnection();
-             PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ACCOUNT_BY_LOGIN)) {
+    public Account findByLogin(Connection con, String login) throws DBException{
+        try (PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ACCOUNT_BY_LOGIN)) {
             con.setAutoCommit(false);
-            int i = 0;
-            stmt.setString(++i, login);
+            stmt.setString(1, login);
             try (ResultSet rs = stmt.executeQuery()) {
                 Account account = null;
-                while (rs.next()) {
+                if (rs.next()) {
                     account = creatingNewAccount(rs);
                 }
                 return account;
@@ -149,9 +141,8 @@ public class MysqlAccountDao implements AccountDao {
      * @return boolean value(returns true, if method has found user).
      * @throws DBException
      */
-    public boolean findByLoginAndPassword(String login, String password) throws DBException {
-        try (Connection con = ConnectionPool.getInstance().getConnection();
-             PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD)) {
+    public boolean findByLoginAndPassword(Connection con, String login, String password) throws DBException {
+        try (PreparedStatement stmt = con.prepareStatement(DBConstant.FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD)) {
             int i = 0;
             stmt.setString(++i, login);
             stmt.setString(++i, password);
@@ -173,9 +164,8 @@ public class MysqlAccountDao implements AccountDao {
      * @param login user's login, which we need to change.
      * @throws DBException
      */
-    public void updateScore(double score, String login) throws DBException {
-        try(Connection con = ConnectionPool.getInstance().getConnection();
-            PreparedStatement stmt = con.prepareStatement(DBConstant.UPDATE_ACCOUNT_SCORE)) {
+    public void updateScore(Connection con, double score, String login) throws DBException {
+        try(PreparedStatement stmt = con.prepareStatement(DBConstant.UPDATE_ACCOUNT_SCORE)) {
             int i = 0;
             stmt.setDouble(++i, score);
             stmt.setString(++i, login);
@@ -192,9 +182,8 @@ public class MysqlAccountDao implements AccountDao {
      * @param login user's login, which we need to block/unblock.
      * @throws DBException
      */
-    public void changingUserBlock(int isBlocked, String login) throws DBException {
-        try(Connection con = ConnectionPool.getInstance().getConnection();
-            PreparedStatement stmt = con.prepareStatement(DBConstant.BLOCKING_ACCOUNT)) {
+    public void changingUserBlock(Connection con, int isBlocked, String login) throws DBException {
+        try(PreparedStatement stmt = con.prepareStatement(DBConstant.BLOCKING_ACCOUNT)) {
             int i = 0;
             stmt.setInt(++i, isBlocked);
             stmt.setString(++i, login);
@@ -211,9 +200,8 @@ public class MysqlAccountDao implements AccountDao {
      * @return state of user's blocking.
      * @throws DBException
      */
-    public int checkingUserBlock(String login) throws DBException {
-        try(Connection con = ConnectionPool.getInstance().getConnection();
-            PreparedStatement stmt = con.prepareStatement(DBConstant.IS_ACCOUNT_BLOCKED)) {
+    public int checkingUserBlock(Connection con, String login) throws DBException {
+        try(PreparedStatement stmt = con.prepareStatement(DBConstant.IS_ACCOUNT_BLOCKED)) {
             stmt.setString(1, login);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()) {
@@ -232,9 +220,8 @@ public class MysqlAccountDao implements AccountDao {
      * @return boolean value(returns true, if method has found admin).
      * @throws DBException
      */
-    public boolean isAdmin (String login) throws DBException{
-        try (Connection con = ConnectionPool.getInstance().getConnection();
-             PreparedStatement stmt = con.prepareStatement(DBConstant.IS_ADMIN)){
+    public boolean isAdmin (Connection con, String login) throws DBException{
+        try (PreparedStatement stmt = con.prepareStatement(DBConstant.IS_ADMIN)){
             stmt.setString(1, login);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){

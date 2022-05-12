@@ -8,10 +8,10 @@
 <html>
 <head>
     <title><fmt:message key="title"/></title>
-    <link rel="icon" href="img/icon.png" type="image/png">
+    <link rel="icon" href="${pageContext.request.contextPath}/img/icon.png" type="image/png">
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,900" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/error.css"/>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/error.css"/>
 </head>
 <body>
     <div id="notfound">

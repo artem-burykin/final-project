@@ -1,8 +1,0 @@
-
-e	java:S117T"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÖŸÄF
-X
-java:S1128"6Remove this unused import 'publish.db.entity.Product'.(‡¢º³ùÿÿÿÿ8›•¯Ã0
-\
-java:S1128"?Remove this unused import 'publish.service.ProductServiceImpl'.(†õı¥8›•¯Ã0
-a
-java:S1128"?Remove this unused import 'publish.service.PublicationService'.(îåĞ•ûÿÿÿÿ8›•¯Ã0

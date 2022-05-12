@@ -3,8 +3,10 @@ package publish.service;
 import publish.db.dao.AccountDao;
 import publish.db.dao.DBException;
 import publish.db.dao.DaoFactory;
+import publish.db.dao.mysql.ConnectionPool;
 import publish.db.entity.Account;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -20,41 +22,49 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findByLogin(String login) throws DBException {
-        return accountDao.findByLogin(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return accountDao.findByLogin(con, login);
     }
 
     @Override
     public boolean insertAccount(Account account) throws DBException {
-        return accountDao.insertAccount(account);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return accountDao.insertAccount(con, account);
     }
 
     @Override
     public List<Account> findAllAccounts() throws DBException {
-        return accountDao.findAllAccounts();
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return accountDao.findAllAccounts(con);
     }
 
     @Override
     public boolean findByLoginAndPassword(String login, String password) throws DBException {
-        return accountDao.findByLoginAndPassword(login, password);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return accountDao.findByLoginAndPassword(con, login, password);
     }
 
     @Override
     public void updateScore(double score, String login) throws DBException {
-        accountDao.updateScore(score, login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        accountDao.updateScore(con, score, login);
     }
 
     @Override
     public boolean isAdmin(String login) throws DBException {
-        return accountDao.isAdmin(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return accountDao.isAdmin(con, login);
     }
 
     @Override
     public void changingUserBlock(int isBlocked, String login) throws DBException {
-        accountDao.changingUserBlock(isBlocked, login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        accountDao.changingUserBlock(con, isBlocked, login);
     }
 
     @Override
     public int checkingUserBlock(String login) throws DBException {
-        return accountDao.checkingUserBlock(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return accountDao.checkingUserBlock(con, login);
     }
 }

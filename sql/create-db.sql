@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS publisherhouse;
 USE publisherhouse;
 
-DROP TABLE IF EXISTS publisherhouse.order;
+DROP TABLE IF EXISTS `order`;
 DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS publication;
@@ -67,14 +67,12 @@ create table publication (
         ON UPDATE CASCADE ON DELETE SET NULL
 );
 
-CREATE TABLE publisherhouse.order (
+CREATE TABLE `order` (
     id INT PRIMARY KEY AUTO_INCREMENT,
     total DOUBLE CONSTRAINT ch_total CHECK (total >= 0),
     account_id INT,
     product_id INT,
     description VARCHAR(1024),
-	/*date_start DATETIME, 
-    date_end DATETIME,*/
     create_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     last_update DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_order_account_id FOREIGN KEY (account_id)
@@ -90,10 +88,7 @@ INSERT INTO role (id, name, description) VALUES (DEFAULT, 'User', 'Can buy publi
 
 INSERT INTO category(id, name, description) VALUES (DEFAULT, 'Family', 'If you find some information about family and chill time, come to us');
 INSERT INTO category(id, name, description) VALUES (DEFAULT, 'Sport', 'This category is for everyone, who like sport and is interested in it');
-INSERT INTO category(id, name, description) VALUES (DEFAULT, 'Travalling', 'You can find a place to come and take a lot of pleasure');
-/*INSERT INTO category(id, name, parent_id, description) VALUES (DEFAULT, 'Family movies', (SELECT id FROM (SELECT  id FROM category WHERE name = 'Family' LIMIT 1) as `tmp`), 'Here you can find a movie, which you will watch with your family this evening');
-INSERT INTO category(id, name, parent_id, description) VALUES (DEFAULT, 'Rugby', (SELECT id FROM (SELECT  id FROM category WHERE name = 'Sport' LIMIT 1) as `tmp`), 'All news about rugby');
-INSERT INTO category(id, name, parent_id, description) VALUES (DEFAULT, 'Basketball', (SELECT id FROM (SELECT  id FROM category WHERE name = 'Sport' LIMIT 1) as `tmp`), 'All news about basketball here');*/
+INSERT INTO category(id, name, description) VALUES (DEFAULT, 'Travelling', 'You can find a place to come and take a lot of pleasure');
 
 INSERT INTO product(id, name, description, price, category_id, logo, create_date, last_update) VALUES (DEFAULT, 'BBC Sport - Rugby Union', 'Breaking news & live sports coverage including results, video, audio and analysis on Football, F1, Cricket, Rugby Union, Rugby League, Golf, Tennis and all the main world sports, plus major events such as the Olympic Games.', 449.00, (SELECT id FROM category WHERE name = 'Sport'), "bbcsport.png", DEFAULT, DEFAULT);
 INSERT INTO product(id, name, description, price, category_id, logo, create_date, last_update) VALUES (DEFAULT, 'TalkBasket.net', '', 799.00, (SELECT id FROM category WHERE name = 'Sport'), "talkbasketball.jpg", DEFAULT, DEFAULT);

@@ -21,19 +21,19 @@ public abstract class DBConstant {
     //Queries of PRODUCT
     public static final String FIND_ALL_PRODUCTS = "SELECT * FROM product;";
     public static final String GET_PRODUCT_BY_NAME = "SELECT * FROM product WHERE name like (?);";
-    public static final String FIND_ALL_NOT_SUBSCRIBE_PRODUCTS = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?) ));";
-    public static final String FIND_ALL_SUBSCRIBE_PRODUCTS = "SELECT product.* FROM product join publisherhouse.order on product.id = publisherhouse.order.product_id join account on account.id = publisherhouse.order.account_id WHERE publisherhouse.order.account_id = (SELECT account.id FROM account WHERE login = (?));";
-    public static final String GET_PRODUCT_FROM_LOW_TO_HIGH = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY price;";
-    public static final String GET_PRODUCT_FROM_HIGH_TO_LOW = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY price DESC;";
-    public static final String GET_PRODUCT_FROM_Z_TO_A = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY name DESC;";
-    public static final String GET_PRODUCT_FROM_A_TO_Z = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY name;";
-    public static final String FIND_PRODUCT_BY_NAME = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?))) AND name like ?;";
-    public static final String GET_PRODUCT_BY_PRICE = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?))) AND price BETWEEN (?) and (?);";
-    public static final String GET_PRODUCT_FROM_OLD_TO_NEW = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY create_date;";
-    public static final String GET_PRODUCT_FROM_NEW_TO_OLD = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY create_date DESC;";
+    public static final String FIND_ALL_NOT_SUBSCRIBE_PRODUCTS = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM `order` WHERE `order`.product_id = product.id AND `order`.account_id = (SELECT id FROM account WHERE login = (?) ));";
+    public static final String FIND_ALL_SUBSCRIBE_PRODUCTS = "SELECT product.* FROM product join `order` on product.id = `order`.product_id join account on account.id = `order`.account_id WHERE `order`.account_id = (SELECT account.id FROM account WHERE login = (?));";
+    public static final String GET_PRODUCT_FROM_LOW_TO_HIGH = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM `order` WHERE `order`.product_id = product.id AND `order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY price;";
+    public static final String GET_PRODUCT_FROM_HIGH_TO_LOW = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM `order` WHERE `order`.product_id = product.id AND `order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY price DESC;";
+    public static final String GET_PRODUCT_FROM_Z_TO_A = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM `order` WHERE `order`.product_id = product.id AND `order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY name DESC;";
+    public static final String GET_PRODUCT_FROM_A_TO_Z = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM `order` WHERE `order`.product_id = product.id AND `order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY name;";
+    public static final String FIND_PRODUCT_BY_NAME = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM `order` WHERE `order`.product_id = product.id AND `order`.account_id = (SELECT id FROM account WHERE login = (?))) AND name like ?;";
+    public static final String GET_PRODUCT_BY_PRICE = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM `order` WHERE `order`.product_id = product.id AND `order`.account_id = (SELECT id FROM account WHERE login = (?))) AND price BETWEEN (?) and (?);";
+    public static final String GET_PRODUCT_FROM_OLD_TO_NEW = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM `order` WHERE `order`.product_id = product.id AND `order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY create_date;";
+    public static final String GET_PRODUCT_FROM_NEW_TO_OLD = "SELECT product.* FROM product WHERE NOT EXISTS (SELECT * FROM `order` WHERE `order`.product_id = product.id AND `order`.account_id = (SELECT id FROM account WHERE login = (?))) ORDER BY create_date DESC;";
     public static final String INSERT_PRODUCT = "INSERT INTO product (name, description, price, category_id, logo) VALUES ((?), (?), (?), (?), (?));";
     public static final String DELETE_PRODUCT = "DELETE FROM product WHERE name = (?);";
-    public static final String FIND_PRODUCT_BY_CATEGORY = "SELECT product.* FROM product join category on product.category_id = category.id WHERE NOT EXISTS (SELECT * FROM publisherhouse.`order` WHERE publisherhouse.`order`.product_id = product.id AND publisherhouse.`order`.account_id = (SELECT id FROM account WHERE login = (?))) AND category.name = (?);";
+    public static final String FIND_PRODUCT_BY_CATEGORY = "SELECT product.* FROM product join category on product.category_id = category.id WHERE NOT EXISTS (SELECT * FROM `order` WHERE `order`.product_id = product.id AND `order`.account_id = (SELECT id FROM account WHERE login = (?))) AND category.name = (?);";
     public static final String UPDATE_PRODUCT_PRICE = "UPDATE product SET price = (?) WHERE name = (?);";
     public static final String UPDATE_PRODUCT_LOGO = "UPDATE product SET logo = (?) WHERE name = (?);";
     public static final String UPDATE_PRODUCT_DESCRIPTION = "UPDATE product SET description = (?) WHERE name = (?);";
@@ -43,9 +43,9 @@ public abstract class DBConstant {
     public static final String FIND_ALL_CATEGORIES = "SELECT * FROM category;";
 
     //Queries of ORDER
-    public static final String INSERT_ORDER = "INSERT INTO publisherhouse.order (total, account_id, product_id, description) VALUES ((?), (?), (?), (?));";
-    public static final String FIND_ORDER_BY_ID = "SELECT * FROM publisherhouse.order WHERE id = (?);";
-    public static final String FIND_ORDERS_BY_ACCOUNT_ID = "SELECT * FROM publisherhouse.order WHERE account_id = (?);";
+    public static final String INSERT_ORDER = "INSERT INTO `order` (total, account_id, product_id, description) VALUES ((?), (?), (?), (?));";
+    public static final String FIND_ORDER_BY_ID = "SELECT * FROM `order` WHERE id = (?);";
+    public static final String FIND_ORDERS_BY_ACCOUNT_ID = "SELECT * FROM `order` WHERE account_id = (?);";
 
     //Queries of PUBLICATION
     public static final String INSERT_PUBLICATION = "INSERT INTO publication(product_id, name, content, create_date) VALUES ((?),(?), (?), (?));";

@@ -2,6 +2,7 @@ package publish.db.dao;
 
 import publish.db.entity.Category;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -9,5 +10,5 @@ import java.util.List;
  * @author Byrukin
  */
 public interface CategoryDao {
-    List<Category> findAllCategories() throws DBException;
+    List<Category> findAllCategories(Connection con) throws DBException;
 }

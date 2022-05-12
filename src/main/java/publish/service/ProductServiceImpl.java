@@ -3,8 +3,10 @@ package publish.service;
 import publish.db.dao.DBException;
 import publish.db.dao.DaoFactory;
 import publish.db.dao.ProductDao;
+import publish.db.dao.mysql.ConnectionPool;
 import publish.db.entity.Product;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -23,95 +25,113 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductByName(String name) throws DBException {
-        return productDao.getProductByName(name);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.getProductByName(con, name);
     }
 
     @Override
     public List<Product> sortFromLowToHigh(String login) throws DBException {
-        return productDao.sortFromLowToHigh(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.sortFromLowToHigh(con, login);
     }
 
     @Override
     public List<Product> sortFromHighToLow(String login) throws DBException {
-        return productDao.sortFromHighToLow(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.sortFromHighToLow(con, login);
     }
 
     @Override
     public List<Product> sortFromAToZ(String login) throws DBException {
-        return productDao.sortFromAToZ(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.sortFromAToZ(con, login);
     }
 
     @Override
     public List<Product> sortFromZToA(String login) throws DBException {
-        return productDao.sortFromZToA(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.sortFromZToA(con, login);
     }
 
     @Override
     public Product findProductByName(String login, String name) throws DBException {
-        return productDao.findProductByName(login, name);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.findProductByName(con, login, name);
     }
 
     @Override
     public List<Product> findProductByPrice(String login, double startPrice, double endPrice) throws DBException {
-        return productDao.findProductByPrice(login, startPrice, endPrice);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.findProductByPrice(con, login, startPrice, endPrice);
     }
 
 
     @Override
     public List<Product> sortFromOldToNew(String login) throws DBException {
-        return productDao.sortFromOldToNew(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.sortFromOldToNew(con, login);
     }
 
 
     @Override
     public List<Product> sortFromNewToOld(String login) throws DBException {
-        return productDao.sortFromNewToOld(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.sortFromNewToOld(con, login);
     }
 
 
     @Override
     public boolean insertProduct(Product product) throws DBException {
-        return productDao.insertProduct(product);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.insertProduct(con, product);
     }
 
     @Override
     public List<Product> findAllProducts() throws DBException {
-        return productDao.findAllProducts();
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.findAllProducts(con);
     }
 
     @Override
     public List<Product> findAllNotSubscribeProduct(String login) throws DBException {
-        return productDao.findAllNotSubscribeProduct(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.findAllNotSubscribeProduct(con, login);
     }
 
     @Override
     public List<Product> findAllSubscribeProduct(String login) throws DBException {
-        return productDao.findAllSubscribeProduct(login);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.findAllSubscribeProduct(con, login);
     }
 
     @Override
     public boolean deleteProduct(String name) throws DBException {
-        return productDao.deleteProduct(name);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.deleteProduct(con, name);
     }
 
     @Override
     public List<Product> findProductsByCategory(String login, String name) throws DBException {
-        return productDao.findProductsByCategory(login, name);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        return productDao.findProductsByCategory(con, login, name);
     }
 
 
     @Override
     public void updateProductPrice(double price, String name) throws DBException {
-        productDao.updateProductPrice(price, name);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        productDao.updateProductPrice(con, price, name);
     }
 
     @Override
     public void updateProductLogo(String logo, String name) throws DBException {
-        productDao.updateProductLogo(logo, name);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        productDao.updateProductLogo(con, logo, name);
     }
 
     @Override
     public void updateProductDescription(String description, String name) throws DBException {
-        productDao.updateProductDescription(description, name);
+        Connection con = ConnectionPool.getInstance().getConnection();
+        productDao.updateProductDescription(con, description, name);
     }
 }

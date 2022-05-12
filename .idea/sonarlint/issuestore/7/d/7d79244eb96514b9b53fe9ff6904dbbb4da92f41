@@ -1,0 +1,12 @@
+
+k	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆ¨ãüÿÿÿÿ
+‚
+java:S1989"lHandle the following exception that could be thrown by "setCharacterEncoding": UnsupportedEncodingException.(±Œ©À
+q
+java:S1989!"\Handle the following exception that could be thrown by "parseDouble": NumberFormatException.(Ä³ÉR
+n
+java:S1989!"YHandle the following exception that could be thrown by "parseInt": NumberFormatException.(Ä³ÉR
+\
+java:S19898"AHandle the "ServletException" thrown here in a "try/catch" block.(ŞÕ‡øÿÿÿÿ
+F
+java:S1128"0Remove this unused import 'java.io.PrintWriter'.(ÓŞÏÛ

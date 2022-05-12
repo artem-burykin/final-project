@@ -8,9 +8,9 @@
 <head>
     <title><fmt:message key="title"/></title>
     <meta charset="UTF-8">
-    <link rel="icon" href="img/icon.png" type="image/png">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/registration.css">
+    <link rel="icon" href="${pageContext.request.contextPath}/img/icon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/registration.css">
 </head>
 <body>
     <div class="d-lg-flex half">

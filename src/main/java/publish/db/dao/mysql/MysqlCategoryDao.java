@@ -51,9 +51,8 @@ public class MysqlCategoryDao implements CategoryDao {
      * @return category's list.
      * @throws DBException
      */
-    public List<Category> findAllCategories() throws DBException{
-        try(Connection con = ConnectionPool.getInstance().getConnection();
-            Statement stmt = con.createStatement();
+    public List<Category> findAllCategories(Connection con) throws DBException{
+        try(Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(DBConstant.FIND_ALL_CATEGORIES)){
             con.setAutoCommit(false);
             List<Category> result = new ArrayList<>();
