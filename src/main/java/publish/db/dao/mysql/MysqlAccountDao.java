@@ -24,9 +24,14 @@ public class MysqlAccountDao implements AccountDao {
      * @throws SQLException
      */
     private Account creatingNewAccount(ResultSet rs) throws SQLException{
-        Account account = AccountServiceImpl.getAccount(rs.getString(DBConstant.F_ACCOUNT_LOGIN),
-                rs.getString(DBConstant.F_ACCOUNT_PASSWORD), rs.getString(DBConstant.F_ACCOUNT_EMAIL),
-                rs.getString(DBConstant.F_ACCOUNT_FIRST_NAME), rs.getString(DBConstant.F_ACCOUNT_LAST_NAME),
+        Account account = AccountServiceImpl.getAccount(rs.getString(DBConstant.F_ACCOUNT_LOGIN)
+                        .replaceAll("<", "&lt").replaceAll(">", "&gt"),
+                rs.getString(DBConstant.F_ACCOUNT_PASSWORD), rs.getString(DBConstant.F_ACCOUNT_EMAIL)
+                        .replaceAll("<", "&lt").replaceAll(">", "&gt"),
+                rs.getString(DBConstant.F_ACCOUNT_FIRST_NAME)
+                        .replaceAll("<", "&lt").replaceAll(">", "&gt"),
+                rs.getString(DBConstant.F_ACCOUNT_LAST_NAME)
+                        .replaceAll("<", "&lt").replaceAll(">", "&gt"),
                 rs.getDouble(DBConstant.F_ACCOUNT_SCORE), rs.getInt(DBConstant.F_ACCOUNT_ROLE_ID));
         account.setId(rs.getInt(DBConstant.F_ACCOUNT_ID));
         account.setCreate_date(rs.getDate(DBConstant.F_ACCOUNT_CREATE_DATE));

@@ -25,7 +25,6 @@ public class ChangeProductPriceServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = resp.getWriter();
         LOG.info("Changing price of product.");
         try {
             productService.updateProductPrice(Double.parseDouble(req.getParameter("price")), req.getParameter("name"));

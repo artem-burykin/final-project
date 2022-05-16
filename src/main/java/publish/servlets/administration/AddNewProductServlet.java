@@ -26,11 +26,12 @@ public class AddNewProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
-        String status = "";
-        String status_uk = "";
-        String color = "";
+        String status;
+        String status_uk;
+        String color;
         LOG.info("Forming object of product for adding.");
-        Product product = ProductServiceImpl.getProduct(req.getParameter("name"), Double.parseDouble(req.getParameter("price")), Integer.parseInt(req.getParameter("category_id")));
+        Product product = ProductServiceImpl.getProduct(req.getParameter("name"),
+                Double.parseDouble(req.getParameter("price")), Integer.parseInt(req.getParameter("category_id")));
         product.setLogo(req.getParameter("logo"));
         product.setDescription(req.getParameter("description"));
         try {

@@ -23,6 +23,12 @@ public class RegistrationFilter implements Filter {
         String login = servletRequest.getParameter("login");
         String password = servletRequest.getParameter("password");
 
+        name = name.replaceAll("<", "&lt").replaceAll(">", "&gt");
+        surname = surname.replaceAll("<", "&lt").replaceAll(">", "&gt");
+        email = email.replaceAll("<", "&lt").replaceAll(">", "&gt");
+        login = login.replaceAll("<", "&lt").replaceAll(">", "&gt");
+        password = password.replaceAll("<", "&lt").replaceAll(">", "&gt");
+
         StringBuffer incorrect = new StringBuffer();
 
         Pattern forName = Pattern.compile("^[А-ЯA-Z][а-яa-z]{2,}$");

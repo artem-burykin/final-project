@@ -26,8 +26,10 @@ public class MysqlCategoryDao implements CategoryDao {
      * @throws SQLException
      */
     private Category creatingNewCategory(ResultSet rs) throws SQLException{
-        Category category = CategoryServiceImp.getCategory(rs.getString(DBConstant.F_CATEGORY_NAME));
-        category.setDescription(rs.getString(DBConstant.F_CATEGORY_DESCRIPTION));
+        Category category = CategoryServiceImp.getCategory(rs.getString(DBConstant.F_CATEGORY_NAME)
+                .replaceAll("<", "&lt").replaceAll(">", "&gt"));
+        category.setDescription(rs.getString(DBConstant.F_CATEGORY_DESCRIPTION)
+                .replaceAll("<", "&lt").replaceAll(">", "&gt"));
         category.setId(rs.getInt(DBConstant.F_CATEGORY_ID));
         category.setParent_id(rs.getInt(DBConstant.F_CATEGORY_PARENT_ID));
         return category;

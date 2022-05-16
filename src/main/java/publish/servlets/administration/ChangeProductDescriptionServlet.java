@@ -25,7 +25,6 @@ public class ChangeProductDescriptionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = resp.getWriter();
         LOG.info("Changing product description.");
         try {
             productService.updateProductDescription(req.getParameter("description"), req.getParameter("name"));

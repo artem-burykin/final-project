@@ -21,8 +21,6 @@ Z
 *src/main/java/publish/db/entity/Order.java,5\b\5bce478fa0a4acfaae9db2ddd543e1d60b3129dd
 \
 ,src/main/java/publish/db/entity/Product.java,1\0\10e9f9602f88ba48ade617a232678c2f5b064ce2
-e
-5src/main/java/publish/filters/RegistrationFilter.java,1\c\1c5f110566ba8bf6ca74e59c72fc17af226dd605
 \
 ,.idea/inspectionProfiles/Project_Default.xml,4\9\496a238a6afa168dbaf6efd37bb459331589579c
 U
@@ -38,18 +36,10 @@ f
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-w
-Gsrc/main/java/publish/servlets/administration/AddNewProductServlet.java,7\d\7d79244eb96514b9b53fe9ff6904dbbb4da92f41
 v
 Fsrc/main/java/publish/servlets/administration/BlockAccountServlet.java,5\d\5dc5adf61043b3f056f331f96fcd5e607c88f42d
 j
 :src/main/java/publish/servlets/user/BuyProductServlet.java,9\5\95bcb5879d83a66ff063b81dbb21c04794ebf953
-‚
-Rsrc/main/java/publish/servlets/administration/ChangeProductDescriptionServlet.java,4\6\469763dc0561ea57a98ef4f68d7c61a0b3ecae6d
-{
-Ksrc/main/java/publish/servlets/administration/ChangeProductLogoServlet.java,1\9\19e34303c3baa149c2130558889a9f5e1249ab47
-|
-Lsrc/main/java/publish/servlets/administration/ChangeProductPriceServlet.java,6\0\6050bee85f9ad69e3a48ee53d946764200cbf934
 s
 Csrc/main/java/publish/servlets/FilterProductsByCategoryServlet.java,3\8\38eeac238d500b01756b68c8e512a00d324bf888
 e
@@ -84,8 +74,6 @@ O
 src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
 ^
 .src/main/java/publish/filters/AdminFilter.java,4\0\40849e154263c0aec36ee56a927025277300d73b
-ƒ
-Ssrc/main/java/publish/servlets/administration/ShowProductsAndCategoriesServlet.java,2\2\221b1ff870e29e328753c3d89f1a80e93cceadef
 ]
 -src/main/java/publish/db/dao/DBException.java,5\4\5412cac571a8fa6a5527c95dd79b83ebd286f923
 j
@@ -102,8 +90,6 @@ b
 2src/main/java/publish/service/CategoryService.java,f\9\f99e8855ed69fa43a38a91dccc454b1667cac781
 A
 sql/create-db.sql,e\3\e3b9d2a3fe48e69db949ce6bf1887fb4c6fb44de
-^
-..idea/artifacts/Final_project_war_exploded.xml,7\d\7de8b1e5051ec5326ae16981edd58ec94d316195
 \
 ,src/main/java/publish/db/entity/Account.java,f\2\f24bc931a9c720d793b50eda627d2726b2237b11
 \
@@ -122,12 +108,8 @@ I
 src/main/webapp/index.jsp,8\e\8e6d3b70c9f5b02570779b0441540d45eceb0ded
 I
 src/main/webapp/login.jsp,8\5\85ee523d01e5e19376db640e846c91bbcb0a1c22
-k
-;src/test/java/publish/db/dao/mysql/MysqlAccountDaoTest.java,2\e\2e8c8213078987dcbc33d6a12140314522e29cea
 l
 <src/test/java/publish/db/dao/mysql/MysqlCategoryDaoTest.java,b\9\b9b970b55329d89cc4fdb12763818f2c6acce173
-i
-9src/test/java/publish/db/dao/mysql/MysqlOrderDaoTest.java,1\2\12e17814a13015f48250338b94ae6372269b68d2
 k
 ;src/test/java/publish/db/dao/mysql/MysqlProductDaoTest.java,f\a\fab311aaccb6460e39e1a42197b6798e2e3ce523
 Z
@@ -142,3 +124,21 @@ P
  src/main/webapp/registration.jsp,d\d\dd51f7041d5a8d7bb17c79a85099a350e198ae09
 N
 src/main/webapp/topupscore.jsp,f\5\f5495054f382709a2e40b7febd68b2ccdc7a2d0d
+f
+6src/main/java/publish/db/dao/mysql/ConnectionPool.java,c\4\c46592838a794ebd21ea8e6f591eef4882d16c07
+g
+7src/main/java/publish/servlets/RegistrationServlet.java,6\c\6c91ccab516c2c12d8d32a95326400e5312359a2
+j
+:src/main/java/publish/servlets/ShowAllProductsServlet.java,9\a\9a3cee8089322257dbc15ea6f7104d7e5a805925
+e
+5src/main/java/publish/service/CategoryServiceImp.java,3\6\3679d26f13f0d252057b1c92cd349a5bf5ec00c2
+c
+3src/main/java/publish/service/OrderServiceImpl.java,7\4\7436107c86b0a311019b1b981338a67b5d9132f3
+e
+5src/main/java/publish/db/dao/mysql/MysqlOrderDao.java,3\e\3e14610e4dbefe690f1bb2988ca6f9534def2473
+e
+5src/main/java/publish/service/AccountServiceImpl.java,5\0\5047642b6238d40dbdf769ce126aaf082ff2501d
+e
+5src/main/java/publish/service/ProductServiceImpl.java,0\4\041647e551abea4ee119302dfec5052148c299a4
+i
+9src/test/java/publish/db/dao/mysql/MysqlOrderDaoTest.java,1\2\12e17814a13015f48250338b94ae6372269b68d2

@@ -24,11 +24,14 @@ public class MysqlProductDao implements ProductDao {
      * @throws SQLException
      */
     private Product creatingNewProduct (ResultSet rs) throws SQLException {
-        Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME),
+        Product product = ProductServiceImpl.getProduct(rs.getString(DBConstant.F_PRODUCT_NAME)
+                        .replaceAll("<", "&lt").replaceAll(">", "&gt"),
                 rs.getDouble(DBConstant.F_PRODUCT_PRICE), rs.getInt(DBConstant.F_PRODUCT_CATEGORY_ID));
         product.setId(rs.getInt(DBConstant.F_PRODUCT_ID));
-        product.setDescription(rs.getString(DBConstant.F_PRODUCT_DESCRIPTION));
-        product.setLogo(rs.getString(DBConstant.F_PRODUCT_LOGO));
+        product.setDescription(rs.getString(DBConstant.F_PRODUCT_DESCRIPTION)
+                .replaceAll("<", "&lt").replaceAll(">", "&gt"));
+        product.setLogo(rs.getString(DBConstant.F_PRODUCT_LOGO)
+                .replaceAll("<", "&lt").replaceAll(">", "&gt"));
         product.setCreate_date(rs.getDate(DBConstant.F_PRODUCT_CREATE_DATE));
         product.setLast_update(rs.getDate(DBConstant.F_PRODUCT_LAST_UPDATE));
         return product;
